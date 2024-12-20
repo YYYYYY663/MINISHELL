@@ -14,7 +14,7 @@
 #include "ft_env.h"
 #include "ft_system.h"
 
-t_status	builtin_echo(const char *path, char **argv, t_info *info)
+t_status	__echo(const char *path, char **argv, t_info *info)
 {
 	int	i;
 	int	is_option_n;

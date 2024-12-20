@@ -26,7 +26,8 @@ t_status	env_unset(t_list *env, char *key);
 // todo accessは関数ポインタとして渡す、infoを渡す
 t_status	xabsolute_path(char *dstpath, char *srcpath, t_list *env_map,
 				int mode);
-/**** utils ****/
+
+/**** **** **** **** UTILS **** **** **** ****/
 int			_check_key(char *key);
 int			__cmp(void *data, void *key);
 

@@ -14,7 +14,7 @@
 // 	return (0);
 // }
 
-t_status	builtin_cd(const char *path, char **argv, t_info *info)
+t_status	__cd(const char *path, char **argv, t_info *info)
 {
 	t_status	status;
 	char		absolute_path[MAX_PATH];

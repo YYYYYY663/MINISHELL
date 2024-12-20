@@ -5,7 +5,7 @@
 /*
  *ref char * getcwd(char *buf, size_t size);
  */
-t_status	builtin_pwd(const char *path, char **argv, t_info *info)
+t_status	__pwd(const char *path, char **argv, t_info *info)
 {
 	(void)path;
 	(void)argv;

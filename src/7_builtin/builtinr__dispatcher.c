@@ -14,7 +14,7 @@
 #include "ft_system.h"
 
 // ビルトイン関数を実行する
-t_status	xbuiltin(char *path, char **argv, t_info *info)
+t_status	builtin_dispatcher(char *path, char **argv, t_info *info)
 {
 	static const char		*builtin_names[] = {"pwd", "cd", "echo", "export",
 				"unset", "exit", "env"};

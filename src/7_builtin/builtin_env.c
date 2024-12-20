@@ -14,7 +14,7 @@
 // #include "ft_env.h"
 #include "ft_system.h"
 
-t_status	builtin_env(const char *path, char **argv, t_info *info)
+t_status	__env(const char *path, char **argv, t_info *info)
 {
 	char	**envp;
 

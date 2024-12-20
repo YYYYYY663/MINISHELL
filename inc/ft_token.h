@@ -30,6 +30,10 @@ typedef enum e_token_type
 	TT_ERROR		 // エラー
 } t_token_type;
 
+
+
+//外に出さないとこれをnewする関数が作れない。。。
+//todo それぞれnew, free, aplly関数を作る
 typedef struct s_ast_node
 {
 	enum

@@ -2,7 +2,7 @@
 #include "ft_env.h"
 #include "ft_system.h"
 
-t_status	builtin_export(const char *path, char **argv, t_info *info)
+t_status	__export(const char *path, char **argv, t_info *info)
 {
 	int	i;
 
