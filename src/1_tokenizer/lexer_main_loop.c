@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_loop.c                                       :+:      :+:    :+:   */
+/*   lexer_main_loop.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:58:51 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 04:58:57 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 05:43:19 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_lexer.h"
 
 /* ------------------ tokenize_line: 全体メインループ ------------------ */
+
+int	skip_spaces(const char *line, size_t *pos)
+{
+	while (ft_isspace(line[*pos]))
+		(*pos)++;
+	return (1);
+}
 
 static int	process_operator(const char *line, size_t *i, t_info *info)
 {
