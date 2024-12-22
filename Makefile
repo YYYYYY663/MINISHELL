@@ -6,7 +6,7 @@
 #    By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/15 18:05:31 by teando            #+#    #+#              #
-#    Updated: 2024/12/23 05:19:10 by teando           ###   ########.fr        #
+#    Updated: 2024/12/23 05:39:40 by teando           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,10 +34,11 @@ SRCS 		:= \
 		) \
 		$(addprefix 1_tokenizer/, \
 			allocate_token.c \
-			lexer_cmd_helpers.c \
-			lexer_loop.c \
+			lexer_cmds.c \
+			lexer_main_loop.c \
+			lexer_quoted.c \
+			lexer_redirect.c \
 			lexer_utils.c \
-			lexer.c \
 			token_type_identifier.c \
 			tokenizer.c \
 		) \

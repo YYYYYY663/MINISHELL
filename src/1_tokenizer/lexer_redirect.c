@@ -1,18 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_cmd_helpers.c                                :+:      :+:    :+:   */
+/*   lexer_redirect.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/23 05:13:53 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 05:15:51 by teando           ###   ########.fr       */
+/*   Created: 2024/12/23 05:31:24 by teando            #+#    #+#             */
+/*   Updated: 2024/12/23 05:37:48 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_lexer.h"
 
-/* ------------------ parse_one_command のヘルパー ------------------ */
+/* line[*pos] からファイル名となりうる文字列を取得 */
+static char	*read_filename(const char *line, size_t *pos)
+{
+	size_t	start;
+	char	*fname;
+
+	start = *pos;
+	while (line[*pos] && !ft_isspace(line[*pos])
+		&& !is_cmd_delimiter(line[*pos]) && get_two_char_op(&line[*pos],
+			NULL) == TT_ERROR && get_one_char_op(line[*pos]) == TT_ERROR
+		&& get_redirect_type(&line[*pos], NULL) == TT_ERROR)
+		(*pos)++;
+	fname = ft_substr(line, start, (*pos) - start);
+	return (fname);
+}
+
+t_token	*parse_redirect(const char *line, size_t *pos, t_info *info)
+{
+	t_token_type	rtype;
+	size_t			len;
+	char			*op_str;
+	char			*fname;
+	char			**arr;
+
+	len = 0;
+	rtype = get_redirect_type(&line[*pos], &len);
+	op_str = ft_substr(line, *pos, len);
+	(*pos) += len;
+	skip_spaces(line, pos);
+	fname = read_filename(line, pos);
+	arr = NULL;
+	arr = strs_append(arr, op_str, info);
+	if (fname && *fname != '\0')
+		arr = strs_append(arr, fname, info);
+	free(op_str);
+	free(fname);
+	return (create_token(rtype, arr, info));
+}
 
 int	handle_redirect(const char *line, size_t *i, t_info *info,
 		t_list **redir_list)
@@ -23,43 +60,6 @@ int	handle_redirect(const char *line, size_t *i, t_info *info,
 	if (!redir_tok)
 		return (0);
 	ft_lstadd_back(redir_list, ft_lstnew(redir_tok));
-	return (1);
-}
-
-int	handle_quoted(const char *line, size_t *i, t_info *info, char ***cmd_argv)
-{
-	char	*quoted;
-
-	quoted = read_quoted(line, i, info);
-	if (!quoted)
-	{
-		ft_strs_clear(*cmd_argv);
-		return (0);
-	}
-	*cmd_argv = strs_append(*cmd_argv, quoted, info);
-	free(quoted);
-	return (1);
-}
-
-int	handle_word(const char *line, size_t *i, t_info *info, char ***cmd_argv)
-{
-	size_t	start;
-	char	*tmp;
-
-	start = *i;
-	while (line[*i] && !ft_isspace(line[*i]) && !is_cmd_delimiter(line[*i])
-		&& get_two_char_op(&line[*i], NULL) == TT_ERROR
-		&& get_one_char_op(line[*i]) == TT_ERROR && get_redirect_type(&line[*i],
-			NULL) == TT_ERROR)
-		(*i)++;
-	if ((*i - start) > 0)
-	{
-		tmp = ft_substr(line, start, (*i) - start);
-		*cmd_argv = strs_append(*cmd_argv, tmp, info);
-		free(tmp);
-	}
-	if (info->status != E_NONE)
-		return (0);
 	return (1);
 }
 

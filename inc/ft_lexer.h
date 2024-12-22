@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 16:44:20 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 05:18:13 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 05:39:06 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,27 @@ void			debug_print_token_list(t_list *list);
 
 /* <---------------- 内部用プロトタイプ ----------------> */
 
-// lexer_loop.c
+// lexer_main_loop.c
 int				tokenize_line(t_info *info);
 
-// lexer.c
-char			*read_quoted(const char *line, size_t *pos, t_info *info);
-t_token			*parse_redirect(const char *line, size_t *pos, t_info *info);
+// lexer_cmds.c
 int				parse_one_command(const char *line, size_t *i, t_info *info);
 t_token			*get_operator_token(const char *line, size_t *pos,
 					t_info *info);
 
+// lexer_quoted.c
+int				handle_quoted(const char *line, size_t *i, t_info *info,
+					char ***cmd_argv);
+
+// lexer_redirect.c
+t_token			*parse_redirect(const char *line, size_t *pos, t_info *info);
+int				handle_redirect(const char *line, size_t *i, t_info *info,
+					t_list **redir_list);
+int				flush_redir_list(t_list **redir_list, t_info *info);
+
 // allocate_token.c
 t_token			*create_token(t_token_type type, char **value, t_info *info);
 int				add_token(t_info *info, t_token *tok);
-
-// lexer_cmd_helpers.c
-int				handle_redirect(const char *line, size_t *i, t_info *info,
-					t_list **redir_list);
-int				handle_quoted(const char *line, size_t *i, t_info *info,
-					char ***cmd_argv);
-int				handle_word(const char *line, size_t *i, t_info *info,
-					char ***cmd_argv);
-int				flush_redir_list(t_list **redir_list, t_info *info);
 
 // lexer_utils.c
 int				skip_spaces(const char *line, size_t *pos);
