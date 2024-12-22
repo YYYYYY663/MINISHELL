@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:08:08 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 04:23:55 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 04:35:29 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,16 @@ int	is_cmd_delimiter(char c)
 
 t_token_type	get_redirect_type(const char *s, size_t *len)
 {
-	if (ft_strncmp(s, ">>", 2) == 0 && len)
+	if (ft_strncmp(s, ">>", 2) == 0)
 	{
-		*len = 2;
+		if (len)
+			*len = 2;
 		return (TT_APPEND);
 	}
-	if (ft_strncmp(s, "<<", 2) == 0 && len)
+	if (ft_strncmp(s, "<<", 2) == 0)
 	{
-		*len = 2;
+		if (len)
+			*len = 2;
 		return (TT_HEREDOC);
 	}
 	if (*s == '>')
@@ -61,14 +63,16 @@ t_token_type	get_redirect_type(const char *s, size_t *len)
 
 t_token_type	get_two_char_op(const char *s, size_t *len)
 {
-	if (ft_strncmp(s, "&&", 2) == 0 && len)
+	if (ft_strncmp(s, "&&", 2) == 0)
 	{
-		*len = 2;
+		if (len)
+			*len = 2;
 		return (TT_AND_AND);
 	}
-	if (ft_strncmp(s, "||", 2) == 0 && len)
+	if (ft_strncmp(s, "||", 2) == 0)
 	{
-		*len = 2;
+		if (len)
+			*len = 2;
 		return (TT_OR_OR);
 	}
 	return (TT_ERROR);

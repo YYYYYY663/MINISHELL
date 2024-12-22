@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:17:08 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 04:21:46 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 04:32:23 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,13 @@ int	add_token(t_info *info, t_token *tok)
 
 	if (!tok)
 		return (0);
-	node = (t_list *)xmalloc(sizeof(t_list), info);
+	node = ft_lstnew(tok);
 	if (!node)
 	{
 		ft_strs_clear(tok->value);
 		free(tok);
 		return (0);
 	}
-	node->data = tok;
-	node->next = NULL;
 	if (!info->token_list)
 		info->token_list = node;
 	else
