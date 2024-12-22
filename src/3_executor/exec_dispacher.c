@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 16:24:35 by ymizukam          #+#    #+#             */
-/*   Updated: 2024/12/22 16:28:04 by ymizukam         ###   ########.fr       */
+/*   Updated: 2024/12/22 16:51:45 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int	infix_dispatcher(t_btree *current_node, t_info *info)
 {
 	const t_ast_node_item	*item = current_node->item;
 
-	if (item->e_type == NT_PIPE)
+	if (item->e_type == NT_EOP)
 	{
-		return (1);
+		return (process_eop_node(item->u_val.eop_type, info));
 	}
 	// if (item->e_type == NT_CMD)
 	// {

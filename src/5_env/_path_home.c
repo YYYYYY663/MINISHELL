@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   absolute_path.c                                    :+:      :+:    :+:   */
+/*   _path_home.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/18 22:06:10 by ymizukam          #+#    #+#             */
-/*   Updated: 2024/12/20 05:13:55 by ymizukam         ###   ########.fr       */
+/*   Created: 2024/12/22 17:07:04 by ymizukam          #+#    #+#             */
+/*   Updated: 2024/12/22 17:07:51 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_env.h"
 #include "ft_system.h"
 
-t_status	xabsolute_path(char *dstpath, char *srcpath, t_list *env_map,
-		int mode)
+int	resolve_path_home(char path[], char *src, int mode, t_info *info)
 {
-	char	*envpathes;
-
-	envpathes = env_get(env_map, "PATH");
-	ft_strlcpy(dstpath, envpathes, PATH_MAX);
-	ft_strlcat(dstpath, "/", PATH_MAX);
-	ft_strlcat(dstpath, srcpath, PATH_MAX);
-	return (E_NONE);
+	ft_strlcpy(path, src, PATH_MAX);
+	return (access(path, mode));
 }

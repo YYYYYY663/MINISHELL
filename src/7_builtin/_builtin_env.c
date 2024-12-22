@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_env.c                                      :+:      :+:    :+:   */
+/*   _builtin_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 15:47:05 by teando            #+#    #+#             */
-/*   Updated: 2024/12/17 22:49:44 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/22 16:58:43 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_status	__env(const char *path, char **argv, t_info *info)
 {
 	char	**envp;
 
-	envp = xlst_to_strs(info->env_map,info);
+	envp = xlst_to_strs(info->env_map, info);
 	(void)path;
 	(void)argv;
 	ft_putstrs_fd(envp, "\n", STDOUT_FILENO);

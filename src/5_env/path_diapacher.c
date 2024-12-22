@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   node_eop.c                                         :+:      :+:    :+:   */
+/*   path_diapacher.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/22 16:32:13 by ymizukam          #+#    #+#             */
-/*   Updated: 2024/12/22 16:54:53 by ymizukam         ###   ########.fr       */
+/*   Created: 2024/12/22 16:58:58 by ymizukam          #+#    #+#             */
+/*   Updated: 2024/12/22 17:10:57 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_executor.h"
-#include "ft_system.h"
+#include "ft_env.h"
 
-int	process_eop_node(t_token_type type, t_info *info)
+int	path_dispacher(char path[], char *src, int mode, t_info *info)
 {
-	if (type == TT_AND_AND && info->status)
-		return (1);
-	if (type == TT_OR_OR && !info->status)
-		return (1);
-	return (0);
+	if (access(path, mode) == 0)
+	{
+		ft_strlcpy(path, src, PATH_MAX);
+		return (access(path, mode));
+	}
+	if (src[0] == '~')
+	{
+		return (resolve_path_home(path, src, mode, info));
+	}
+	if (src[0] == '.')
+	{
+		return (resolve_path_relative(path, src, mode, info));
+	}
+	return (resolve_path_absolute(path, src, mode, info));
 }
