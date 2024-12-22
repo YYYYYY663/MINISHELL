@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_token.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 18:20:59 by teando            #+#    #+#             */
-/*   Updated: 2024/12/21 00:50:28 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/22 16:41:19 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,8 @@ typedef enum e_token_type
 	TT_ERROR         // エラー
 }						t_token_type;
 
-//外に出さないとこれをnewする関数が作れない。。。
 // todo それぞれnew, free, aplly関数を作る
-typedef struct s_ast_node
+typedef struct s_ast_node_item
 {
 	enum
 	{

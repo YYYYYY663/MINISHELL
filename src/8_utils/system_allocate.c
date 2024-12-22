@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   system_allocate.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 21:27:29 by teando            #+#    #+#             */
-/*   Updated: 2024/12/18 16:48:32 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/22 16:40:32 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,14 @@ char	**xlst_to_strs(t_list *lst, t_info *info)
 	if (!strs)
 		system_exit(info, E_ALLOCATE);
 	return (strs);
+}
+
+char	**xsplit(char *str, char sep, t_info *info)
+{
+	char	**split;
+
+	split = ft_split(str, sep);
+	if (!split)
+		system_exit(info, E_ALLOCATE);
+	return (split);
 }

@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:53:59 by teando            #+#    #+#             */
-/*   Updated: 2024/12/20 05:08:59 by ymizukam         ###   ########.fr       */
+/*   Updated: 2024/12/22 16:40:40 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,5 @@ void			system_exit(t_info *info, t_status status);
 
 /**** **** **** **** READLINE **** **** **** ****/
 char			*read_line_until_balanced(const char *prompt);
-
-/**** **** **** ****ALLOCATE**** **** **** ****/
-void			*xmalloc(size_t size, t_info *info);
-t_list			*xlstnew(char *data, t_info *info);
-t_list			*xlst_from_strs(char **strs, t_info *info);
-char			**xlst_to_strs(t_list *lst, t_info *info);
 
 #endif

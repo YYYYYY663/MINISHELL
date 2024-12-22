@@ -1,19 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_executor.h                                      :+:      :+:    :+:   */
+/*   node_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/17 19:28:38 by teando            #+#    #+#             */
-/*   Updated: 2024/12/22 16:45:32 by ymizukam         ###   ########.fr       */
+/*   Created: 2024/12/22 16:32:17 by ymizukam          #+#    #+#             */
+/*   Updated: 2024/12/22 16:33:10 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_EXECUTOR_H
-# define FT_EXECUTOR_H
+#include "ft_executor.h"
+#include "ft_system.h"
 
-// # include "ft_builtin.h"
-// # include "ft_redirect.h"
-t_status	traverse_ast_nodes(t_btree *current_node, t_info *info);
-#endif
+void	setup_pipe(int pipefds[], t_info *info)
+{
+	if (pipe(pipefds))
+	{
+		perror("pipe");
+		system_exit(info, errno);
+	}
+	info->pipefds[0] = pipefds[0];
+	info->pipefds[1] = pipefds[1];
+}
+void	cleanup_pipe(int pipefds[], t_info *info)
+{
+	// Close the write end of the pipe
+	xclose(&pipefds[1]);
+	xclose(&pipefds[2]);
+}
