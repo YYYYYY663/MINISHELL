@@ -6,11 +6,33 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 15:29:01 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 04:18:59 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 04:24:27 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_lexer.h"
+
+/* --- クォートで囲まれた文字列を取り出す --- */
+char	*read_quoted(const char *line, size_t *pos, t_info *info)
+{
+	char	quote;
+	size_t	start;
+	char	*content;
+
+	quote = line[*pos];
+	start = *pos + 1;
+	(*pos)++;
+	while (line[*pos] && line[*pos] != quote)
+		(*pos)++;
+	if (!line[*pos])
+	{
+		info->status = E_SYNTAX;
+		return (NULL);
+	}
+	content = ft_substr(line, start, (*pos) - start);
+	(*pos)++;
+	return (content);
+}
 
 /*
 ** ========= 5) リダイレクト(> >> < <<)解析 parse_redirect ===========
@@ -165,7 +187,7 @@ static t_token	*get_operator_token(const char *line, size_t *pos, t_info *info)
 **  3) 最後に EOFトークンを付与
 */
 
-static int	tokenize_line(t_info *info)
+int	tokenize_line(t_info *info)
 {
 	size_t		i;
 	const char	*line;

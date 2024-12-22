@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_ops.c                                        :+:      :+:    :+:   */
+/*   token_type_identifier.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:08:08 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 04:13:58 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 04:23:55 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*
 ** ========= Command判定ヘルパー ===========
-** is_cmd_delimiter, read_quoted
+** is_cmd_delimiter
 */
 
 /* --- 行末, パイプ, 括弧, セミコロンなどをコマンド区切りとする --- */
@@ -25,28 +25,6 @@ int	is_cmd_delimiter(char c)
 	if (c == '|' || c == ';' || c == '(' || c == ')')
 		return (1);
 	return (0);
-}
-
-/* --- クォートで囲まれた文字列を取り出す --- */
-char	*read_quoted(const char *line, size_t *pos, t_info *info)
-{
-	char	quote;
-	size_t	start;
-	char	*content;
-
-	quote = line[*pos];
-	start = *pos + 1;
-	(*pos)++;
-	while (line[*pos] && line[*pos] != quote)
-		(*pos)++;
-	if (!line[*pos])
-	{
-		info->status = E_SYNTAX;
-		return (NULL);
-	}
-	content = ft_substr(line, start, (*pos) - start);
-	(*pos)++;
-	return (content);
 }
 
 /*
