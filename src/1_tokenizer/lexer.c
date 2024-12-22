@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 15:29:01 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 03:24:39 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 04:04:57 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,66 +15,50 @@
 /************************************
  * 文字列配列操作のヘルパー
  ************************************/
-static char	**make_str_array1(const char *s)
+/* --- 文字列配列の末尾に一要素追加した新配列を返す --- */
+/* 要素数カウント -> 再alloc -> 代入 */
+static char	**strs_append(char **src, const char *newstr, t_info *info)
 {
-	char	**arr;
+	int		i;
+	char	**dst;
 
-	arr = (char **)malloc(sizeof(char *) * 2);
-	if (!arr)
-		return (NULL);
-	arr[0] = ft_strdup(s ? s : "");
-	if (!arr[0])
+	if (!newstr)
+		return (src);
+	i = 0;
+	while (src && src[i])
+		i++;
+	dst = xmalloc(sizeof(char *) * (i + 2), info);
+	if (!dst)
 	{
-		free(arr);
+		ft_strs_clear(src);
 		return (NULL);
 	}
-	arr[1] = NULL;
-	return (arr);
+	i = 0;
+	while (src && src[i])
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = ft_strdup(newstr);
+	dst[i + 1] = NULL;
+	free(src);
+	return (dst);
 }
 
-static char	**append_str_to_array(char **arr, const char *s)
-{
-	size_t	len;
-	char	**newarr;
+/*
+** ========= 2) トークン生成系 ===========
+** create_token, add_token
+*/
 
-	if (!s)
-		return (arr);
-	if (!arr)
-		return (make_str_array1(s));
-	len = 0;
-	while (arr[len])
-		len++;
-	newarr = (char **)malloc(sizeof(char *) * (len + 2));
-	if (!newarr)
-		return (NULL);
-	for (size_t i = 0; i < len; i++)
-		newarr[i] = arr[i];
-	newarr[len] = ft_strdup(s);
-	newarr[len + 1] = NULL;
-	free(arr);
-	return (newarr);
-}
-
-static void	free_str_array(char **arr)
-{
-	if (!arr)
-		return ;
-	for (size_t i = 0; arr[i]; i++)
-		free(arr[i]);
-	free(arr);
-}
-
-/************************************
- * トークン生成
- ************************************/
-static t_token	*create_token(t_token_type type, char **value)
+/* --- t_token を新規作成 --- */
+static t_token	*create_token(t_token_type type, char **value, t_info *info)
 {
 	t_token	*tok;
 
-	tok = malloc(sizeof(t_token));
+	tok = (t_token *)xmalloc(sizeof(t_token), info);
 	if (!tok)
 	{
-		free_str_array(value);
+		ft_strs_clear(value);
 		return (NULL);
 	}
 	tok->type = type;
@@ -82,6 +66,7 @@ static t_token	*create_token(t_token_type type, char **value)
 	return (tok);
 }
 
+/* --- t_list (info->token_list) にトークンを追加 --- */
 static int	add_token(t_info *info, t_token *tok)
 {
 	t_list	*node;
@@ -89,10 +74,10 @@ static int	add_token(t_info *info, t_token *tok)
 
 	if (!tok)
 		return (0);
-	node = malloc(sizeof(t_list));
+	node = (t_list *)xmalloc(sizeof(t_list), info);
 	if (!node)
 	{
-		free_str_array(tok->value);
+		ft_strs_clear(tok->value);
 		free(tok);
 		return (0);
 	}
@@ -110,21 +95,21 @@ static int	add_token(t_info *info, t_token *tok)
 	return (1);
 }
 
-/************************************
- * 演算子判定
- ************************************/
+/*
+** ========= 3) 演算子チェック:リダイレクト, 1文字/2文字演算子 ===========
+** get_redirect_type, get_two_char_op, get_one_char_op
+*/
+
 static t_token_type	get_redirect_type(const char *s, size_t *len)
 {
-	if (ft_strncmp(s, ">>", 2) == 0)
+	if (ft_strncmp(s, ">>", 2) == 0 && len)
 	{
-		if (len)
-			*len = 2;
+		*len = 2;
 		return (TT_APPEND);
 	}
-	if (ft_strncmp(s, "<<", 2) == 0)
+	if (ft_strncmp(s, "<<", 2) == 0 && len)
 	{
-		if (len)
-			*len = 2;
+		*len = 2;
 		return (TT_HEREDOC);
 	}
 	if (*s == '>')
@@ -144,16 +129,14 @@ static t_token_type	get_redirect_type(const char *s, size_t *len)
 
 static t_token_type	get_two_char_op(const char *s, size_t *len)
 {
-	if (ft_strncmp(s, "&&", 2) == 0)
+	if (ft_strncmp(s, "&&", 2) == 0 && len)
 	{
-		if (len)
-			*len = 2;
+		*len = 2;
 		return (TT_AND_AND);
 	}
-	if (ft_strncmp(s, "||", 2) == 0)
+	if (ft_strncmp(s, "||", 2) == 0 && len)
 	{
-		if (len)
-			*len = 2;
+		*len = 2;
 		return (TT_OR_OR);
 	}
 	return (TT_ERROR);
@@ -172,14 +155,14 @@ static t_token_type	get_one_char_op(char c)
 	return (TT_ERROR);
 }
 
-/************************************
- * コマンド区切り演算子かどうか
- ************************************/
+/*
+** ========= 4) 判定ヘルパー ===========
+** is_cmd_delimiter, read_quoted
+*/
+
+/* --- 行末, パイプ, 括弧, セミコロンなどをコマンド区切りとする --- */
 static int	is_cmd_delimiter(char c)
 {
-	// ここでは |, ;, (, ), \0 を例示
-	// &&, || は2文字チェックが必要なので
-	// 実際にはもう少し考慮が必要
 	if (c == '\0')
 		return (1);
 	if (c == '|' || c == ';' || c == '(' || c == ')')
@@ -187,18 +170,17 @@ static int	is_cmd_delimiter(char c)
 	return (0);
 }
 
-/************************************
- * クォート読み取り
- ************************************/
+/* --- クォートで囲まれた文字列を取り出す --- */
 static char	*read_quoted(const char *line, size_t *pos, t_info *info)
 {
+	char	quote;
 	size_t	start;
 	char	*content;
 
-	char quote_char = line[*pos]; // ' or "
-	start = (*pos) + 1;
+	quote = line[*pos];
+	start = *pos + 1;
 	(*pos)++;
-	while (line[*pos] && line[*pos] != quote_char)
+	while (line[*pos] && line[*pos] != quote)
 		(*pos)++;
 	if (!line[*pos])
 	{
@@ -206,15 +188,16 @@ static char	*read_quoted(const char *line, size_t *pos, t_info *info)
 		return (NULL);
 	}
 	content = ft_substr(line, start, (*pos) - start);
-	(*pos)++; // 終端クォートをスキップ
+	(*pos)++;
 	return (content);
 }
 
-/************************************
- * リダイレクトをパースして
- * そのトークンを返す
- ************************************/
-static t_token	*parse_redirect(const char *line, size_t *pos)
+/*
+** ========= 5) リダイレクト(> >> < <<)解析 parse_redirect ===========
+** 後続のファイル名 (空白区切り or 演算子区切り) を収集してトークンを作成
+*/
+
+static t_token	*parse_redirect(const char *line, size_t *pos, t_info *info)
 {
 	size_t			len;
 	t_token_type	rtype;
@@ -227,288 +210,200 @@ static t_token	*parse_redirect(const char *line, size_t *pos)
 	rtype = get_redirect_type(&line[*pos], &len);
 	op_str = ft_substr(line, *pos, len);
 	(*pos) += len;
-	// 後続の空白スキップ
 	while (ft_isspace(line[*pos]))
 		(*pos)++;
-	// ファイル名を(空白 or 演算子 or 区切りに当たるまで)取得
 	start = *pos;
-	while (line[*pos])
+	while (line[*pos] && !ft_isspace(line[*pos])
+		&& is_cmd_delimiter(line[*pos]) == 0 && get_two_char_op(&line[*pos],
+			NULL) == TT_ERROR && get_one_char_op(line[*pos]) == TT_ERROR
+		&& get_redirect_type(&line[*pos], NULL) == TT_ERROR)
 	{
-		if (ft_isspace(line[*pos]) || is_cmd_delimiter(line[*pos]))
-			break ;
-		// 2文字/1文字 演算子やリダイレクトが始まったら break
-		if (get_two_char_op(&line[*pos], NULL) != TT_ERROR)
-			break ;
-		if (get_one_char_op(line[*pos]) != TT_ERROR)
-			break ;
-		if (get_redirect_type(&line[*pos], NULL) != TT_ERROR)
-			break ;
 		(*pos)++;
 	}
 	fname = ft_substr(line, start, (*pos) - start);
-	// value = [">", "x"], [">>", "filename"], etc.
 	arr = NULL;
-	arr = append_str_to_array(arr, op_str);
-	if (fname && *fname)
-		arr = append_str_to_array(arr, fname);
+	arr = strs_append(arr, op_str, info);
+	if (fname && *fname != '\0')
+		arr = strs_append(arr, fname, info);
 	free(op_str);
 	free(fname);
-	return (create_token(rtype, arr));
+	return (create_token(rtype, arr, info));
 }
 
-/************************************
- * 1コマンドをパースする
- * - 引数は cmd_argv に貯める
- * - リダイレクトは redir_list に貯めておいて、
- *   最後にまとめて token_list に繋ぐ
- ************************************/
-static int	parse_one_command(const char *line, size_t *pos, t_info *info)
-{
-	t_token	*r_tok;
-	t_list	*n;
-	t_list	*tmp;
-	char	*q;
-	size_t	start;
-	size_t	length;
-	char	*seg;
-	t_token	*cmd_tok;
-	t_list	*cur;
-	t_list	*nx;
+/*
+** ========= 6) 1コマンド文を解析する parse_one_command ===========
+** コマンド本体 + クォート内文字列 + リダイレクト をまとめる。
+*/
 
-	char **cmd_argv = NULL;    // コマンド引数たち
-	t_list *redir_list = NULL; // リダイレクトトークンをつなぐリスト
+static int	parse_one_command(const char *line, size_t *i, t_info *info)
+{
+	char	**cmd_argv;
+	t_list	*redir_list;
+	t_token	*redir_tok;
+	char	*quoted;
+	size_t	start;
+
+	cmd_argv = NULL;
+	redir_list = NULL;
 	while (1)
 	{
-		// 空白スキップ
-		while (ft_isspace(line[*pos]))
-			(*pos)++;
-		// コマンド区切り or 行末なら終了
-		if (is_cmd_delimiter(line[*pos]))
+		while (ft_isspace(line[*i]))
+			(*i)++;
+		if (is_cmd_delimiter(line[*i]) || get_two_char_op(&line[*i],
+				NULL) != TT_ERROR || line[*i] == '\0')
 			break ;
-		// 2文字演算子(&&, ||)のチェック
-		if (get_two_char_op(&line[*pos], NULL) != TT_ERROR)
-			break ; // コマンド区切りとして扱うなら
-		// リダイレクト？
-		if (get_redirect_type(&line[*pos], NULL) != TT_ERROR)
+		if (get_redirect_type(&line[*i], NULL) != TT_ERROR)
 		{
-			// ここでは“すぐに add_token”しないで、
-			// redir_list にだけ繋いでおく
-			r_tok = parse_redirect(line, pos);
-			if (!r_tok)
-			{
-				free_str_array(cmd_argv);
-				return (0);
-			}
-			// redir_list へ追加
-			n = malloc(sizeof(t_list));
-			if (!n)
-			{
-				free_str_array(r_tok->value);
-				free(r_tok);
-				free_str_array(cmd_argv);
-				return (0);
-			}
-			n->data = r_tok;
-			n->next = NULL;
-			// append to redir_list
-			if (!redir_list)
-				redir_list = n;
-			else
-			{
-				tmp = redir_list;
-				while (tmp->next)
-					tmp = tmp->next;
-				tmp->next = n;
-			}
+			redir_tok = parse_redirect(line, i, info);
+			if (!redir_tok)
+				return (ft_strs_clear(cmd_argv), 0);
+			ft_lstadd_back(&redir_list, ft_lstnew(redir_tok));
 			continue ;
 		}
-		// 通常の単語 or クォート
-		if (line[*pos] == '"' || line[*pos] == '\'')
+		if (line[*i] == '"' || line[*i] == '\'')
 		{
-			q = read_quoted(line, pos, info);
-			if (!q)
-			{
-				free_str_array(cmd_argv);
-				// redir_listの開放も必要
-				return (0);
-			}
-			cmd_argv = append_str_to_array(cmd_argv, q);
-			free(q);
+			quoted = read_quoted(line, i, info);
+			if (!quoted)
+				return (ft_strs_clear(cmd_argv), 0);
+			cmd_argv = strs_append(cmd_argv, quoted, info);
+			free(quoted);
 		}
 		else
 		{
-			// 空白・演算子・区切りに当たるまでを1単語取得
-			start = *pos;
-			while (line[*pos])
-			{
-				if (ft_isspace(line[*pos]) || is_cmd_delimiter(line[*pos]))
-					break ;
-				if (get_two_char_op(&line[*pos], NULL) != TT_ERROR)
-					break ;
-				if (get_one_char_op(line[*pos]) != TT_ERROR)
-					break ;
-				if (get_redirect_type(&line[*pos], NULL) != TT_ERROR)
-					break ;
-				(*pos)++;
-			}
-			length = (*pos) - start;
-			if (length > 0)
-			{
-				seg = ft_substr(line, start, length);
-				cmd_argv = append_str_to_array(cmd_argv, seg);
-				free(seg);
-			}
+			start = *i;
+			while (line[*i] && !ft_isspace(line[*i])
+				&& is_cmd_delimiter(line[*i]) == 0 && get_two_char_op(&line[*i],
+					NULL) == TT_ERROR && get_one_char_op(line[*i]) == TT_ERROR
+				&& get_redirect_type(&line[*i], NULL) == TT_ERROR)
+				(*i)++;
+			if ((*i - start) > 0)
+				cmd_argv = strs_append(cmd_argv, ft_substr(line, start, (*i)
+							- start), info);
 		}
-		// エラー処理
 		if (info->status != E_NONE)
-		{
-			free_str_array(cmd_argv);
-			// redir_listもfree必要
-			return (0);
-		}
+			return (ft_strs_clear(cmd_argv), 0);
 	}
-	// ここでコマンドの単語が一つでもあればコマンドトークン生成
 	if (cmd_argv)
 	{
-		cmd_tok = create_token(TT_CMD, cmd_argv);
-		if (!cmd_tok || !add_token(info, cmd_tok))
-		{
-			// メモリ解放等
+		if (!add_token(info, create_token(TT_CMD, cmd_argv, info)))
+			return (ft_strs_clear(cmd_argv), 0);
+	}
+	while (redir_list)
+	{
+		redir_tok = (t_token *)redir_list->data;
+		if (!add_token(info, redir_tok))
 			return (0);
-		}
-	}
-	else
-	{
-		// cmd_argvが無い(空) = 引数無しのコマンドかもしれない
-		// たとえば行頭で区切りにぶつかった場合など
-		// ここで何もしない or ダミーtoken作る等、要件次第
-	}
-	// 続いて、溜め込んでいたリダイレクトトークンを「まとめて」追加
-	// 順番は入力に出現した順をキープ
-	{
-		cur = redir_list;
-		while (cur)
-		{
-			nx = cur->next;
-			r_tok = (t_token *)cur->data;
-			// r_tok はすでに中身あり
-			if (!add_token(info, r_tok))
-			{
-				// エラー処理
-				free(cur);
-				// 残りのノードもfree
-				return (0);
-			}
-			// リダイレクトトークンは既にtoken_listにつながった
-			free(cur);
-			cur = nx;
-		}
+		ft_lstdel_front(&redir_list, NULL);
 	}
 	return (1);
 }
 
-/************************************
- * 演算子トークン (パイプ, ;など)
- ************************************/
-static t_token	*get_operator_token(const char *line, size_t *pos)
+/*
+** ========= 7) 区切り演算子トークン ( | ; && || ... ) 取得 get_operator_token
+*/
+
+static t_token	*get_operator_token(const char *line, size_t *pos, t_info *info)
 {
-	size_t			len;
-	t_token_type	opt;
+	t_token_type	op;
 	char			*op_str;
 	char			**arr;
+	size_t			len;
 
 	len = 0;
-	opt = get_two_char_op(&line[*pos], &len);
-	if (opt != TT_ERROR)
+	op = get_two_char_op(&line[*pos], &len);
+	if (op != TT_ERROR)
 	{
 		op_str = ft_substr(line, *pos, len);
 		(*pos) += len;
-		arr = make_str_array1(op_str);
-		free(op_str);
-		return (create_token(opt, arr));
+		arr = xmalloc(sizeof(char *) * 2, info);
+		if (!arr)
+			return (NULL);
+		arr[0] = op_str;
+		arr[1] = NULL;
+		return (create_token(op, arr, info));
 	}
-	opt = get_one_char_op(line[*pos]);
-	if (opt != TT_ERROR)
+	op = get_one_char_op(line[*pos]);
+	if (op != TT_ERROR)
 	{
 		len = 1;
 		op_str = ft_substr(line, *pos, len);
 		(*pos)++;
-		arr = make_str_array1(op_str);
-		free(op_str);
-		return (create_token(opt, arr));
+		arr = xmalloc(sizeof(char *) * 2, info);
+		if (!arr)
+			return (NULL);
+		arr[0] = op_str;
+		arr[1] = NULL;
+		return (create_token(op, arr, info));
 	}
 	return (NULL);
 }
 
-/************************************
- * tokenize_line (メインループ)
- ************************************/
+/*
+** ========= 8) tokenize_line: 全体のメインループ ===========
+**  1) 1コマンドを parse_one_command
+**  2) 区切り演算子(|, &&, ||, ;, ...) をトークン追加
+**  3) 最後に EOFトークンを付与
+*/
+
 static int	tokenize_line(t_info *info)
 {
 	size_t		i;
-	const char	*line = info->source_line;
+	const char	*line;
 	t_token		*op_tok;
 	char		**arr;
-	t_token		*eof_token;
+	t_token		*eof_tok;
 
+	line = info->source_line;
 	i = 0;
 	while (1)
 	{
-		// 空白スキップ
 		while (ft_isspace(line[i]))
 			i++;
-		if (line[i] == '\0')
-			break ;
-		// 1コマンドを parse
 		if (!parse_one_command(line, &i, info))
+		{
+			if (info->status == E_NONE)
+				info->status = E_SYNTAX;
 			return (0);
+		}
 		if (info->status != E_NONE)
 			return (0);
-		// parse_one_command を抜けたら、いま指している文字が
-		// 区切り演算子(|, ;, &&, ||, ...) か、'\0' か
-		if (line[i] != '\0')
-		{
-			// 区切り演算子トークンを作ってリストに追加
-			op_tok = get_operator_token(line, &i);
-			if (op_tok)
-			{
-				if (!add_token(info, op_tok))
-					return (0);
-			}
-		}
+		if (line[i] == '\0')
+			break ;
+		op_tok = get_operator_token(line, &i, info);
+		if (op_tok && !add_token(info, op_tok))
+			return (0);
 		if (line[i] == '\0')
 			break ;
 	}
-	// 最後に EOF トークンを追加
-	{
-		arr = make_str_array1("EOF");
-		eof_token = create_token(TT_EOF, arr);
-		if (!eof_token || !add_token(info, eof_token))
-			return (0);
-	}
+	arr = (char **)xmalloc(sizeof(char *) * 2, info);
+	if (!arr)
+		return (0);
+	arr[0] = ft_strdup("EOF");
+	arr[1] = NULL;
+	eof_tok = create_token(TT_EOF, arr, info);
+	if (!eof_tok || !add_token(info, eof_tok))
+		return (0);
 	return (1);
 }
 
-/************************************
- * xlexer (外部インターフェース)
- ************************************/
+/*
+** ========= 9) 外部公開関数 ===========
+	xlexer,
+	token_list_free,
+	debug_print_token_list
+*/
+
 t_status	xlexer(t_info *info)
 {
 	info->token_list = NULL;
 	info->status = E_NONE;
 	if (!info->source_line)
 		return (info->status);
-	if (!tokenize_line(info))
-	{
-		if (info->status == E_NONE)
-			info->status = E_SYNTAX;
-	}
+	if (!tokenize_line(info) && info->status == E_NONE)
+		info->status = E_SYNTAX;
 	return (info->status);
 }
 
-/************************************
- * token_list_free / debug_print
- ************************************/
 void	token_list_free(t_list **token_list)
 {
 	t_list	*cur;
@@ -522,7 +417,7 @@ void	token_list_free(t_list **token_list)
 		tok = (t_token *)cur->data;
 		if (tok)
 		{
-			free_str_array(tok->value);
+			ft_strs_clear(tok->value);
 			free(tok);
 		}
 		free(cur);
@@ -546,9 +441,7 @@ void	debug_print_token_list(t_list *list)
 			ft_printf("]");
 		}
 		else
-		{
 			ft_printf("[NULL]");
-		}
 		ft_printf("\n");
 		list = list->next;
 	}
