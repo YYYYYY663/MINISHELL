@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 18:20:59 by teando            #+#    #+#             */
-/*   Updated: 2024/12/21 00:50:28 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 02:27:48 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef struct s_ast_node
 typedef struct s_token
 {
 	t_token_type		type;
-	char				*value;
+	char				**value;
 }						t_token;
 
 #endif

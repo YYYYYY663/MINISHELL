@@ -7,7 +7,8 @@ t_info	*system_init(char **envp)
 	info = ft_calloc(sizeof(t_info), 1);
 	if (!info)
 		return (NULL);
-	info->env_map = x_lst_from_strs(envp);
+	(void)envp;
+	// info->env_map = x_lst_from_strs(envp);
 	getcwd(info->cwd, PATH_MAX);
 	return (info);
 }
