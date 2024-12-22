@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 16:44:20 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 03:17:57 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 04:38:46 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,22 @@ void			token_list_free(t_list **token_list);
 void			debug_print_token_list(t_list *list);
 
 /* <---------------- 内部用プロトタイプ ----------------> */
+
+// lexer.c
+int				tokenize_line(t_info *info);
+
+// allocate_token.c
+t_token			*create_token(t_token_type type, char **value, t_info *info);
+int				add_token(t_info *info, t_token *tok);
+
+// lexer_utils.c
+int				skip_spaces(const char *line, size_t *pos);
+char			**strs_append(char **src, const char *newstr, t_info *info);
+
+// token_type_identifier.c
+int				is_cmd_delimiter(char c);
+t_token_type	get_redirect_type(const char *s, size_t *len);
+t_token_type	get_two_char_op(const char *s, size_t *len);
+t_token_type	get_one_char_op(char c);
 
 #endif
