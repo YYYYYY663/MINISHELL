@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:17:08 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 18:36:54 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 19:00:06 by teando           ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -48,4 +48,26 @@ int add_token(t_info *info, t_token *tok)
 		tmp->next = node;
 	}
 	return (1);
+}
+
+void token_list_free(t_list **token_list)
+{
+	t_list *cur;
+	t_list *nx;
+	t_token *tok;
+
+	cur = *token_list;
+	while (cur)
+	{
+		nx = cur->next;
+		tok = (t_token *)cur->data;
+		if (tok)
+		{
+			free(tok->value);
+			free(tok);
+		}
+		free(cur);
+		cur = nx;
+	}
+	*token_list = NULL;
 }

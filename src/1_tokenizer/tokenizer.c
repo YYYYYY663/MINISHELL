@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:10:42 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 18:44:09 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 19:00:00 by teando           ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -27,28 +27,6 @@ t_status xlexer(t_info *info)
 	if (!validate_syntax(info))
 		return (info->status);
 	return (info->status);
-}
-
-void token_list_free(t_list **token_list)
-{
-	t_list *cur;
-	t_list *nx;
-	t_token *tok;
-
-	cur = *token_list;
-	while (cur)
-	{
-		nx = cur->next;
-		tok = (t_token *)cur->data;
-		if (tok)
-		{
-			free(tok->value);
-			free(tok);
-		}
-		free(cur);
-		cur = nx;
-	}
-	*token_list = NULL;
 }
 
 static const char *type_to_str(t_token_type t)
