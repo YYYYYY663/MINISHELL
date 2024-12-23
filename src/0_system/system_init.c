@@ -1,8 +1,8 @@
 #include "ft_system.h"
 
-t_info	*system_init(char **envp)
+t_info *system_init(char **envp)
 {
-	t_info	*info;
+	t_info *info;
 
 	info = ft_calloc(sizeof(t_info), 1);
 	if (!info)
@@ -13,10 +13,10 @@ t_info	*system_init(char **envp)
 	return (info);
 }
 
-void	system_deinit(t_info *info)
+void system_deinit(t_info *info)
 {
 	if (!info)
-		return ;
+		return;
 	free(info->source_line);
 	if (!info->token_list)
 		ft_lstclear(&info->token_list, free);

@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   lexer_main_loop.c                                  :+:      :+:    :+:   */
@@ -6,13 +6,13 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:58:51 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 15:48:19 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 17:45:57 by teando           ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "ft_lexer.h"
 
-int	skip_spaces(const char *line, size_t *pos)
+int skip_spaces(const char *line, size_t *pos)
 {
 	while (ft_isspace(line[*pos]))
 		(*pos)++;
@@ -28,52 +28,99 @@ int	skip_spaces(const char *line, size_t *pos)
 **   メモリ割り当てに失敗した場合やトークン追加に失敗した場合は0を返す。
 **   成功した場合は1を返す。
 */
-static int	add_eof_token(t_info *info)
+static t_token *create_eof_token(t_info *info)
 {
-	char	**arr;
-	t_token	*eof_tok;
+	char *value;
+	t_token *eof_tok;
 
-	arr = ft_calloc(sizeof(char *), 2);
-	if (!arr)
+	value = ft_strdup("");
+	if (!value)
+		return (NULL);
+	eof_tok = create_token(TT_EOF, value, info);
+	if (!eof_tok)
+		free(value);
+	return (eof_tok);
+}
+
+static t_token_type get_operator_token(const char *line,
+									   size_t *pos, size_t *op_len)
+{
+	t_token_type op;
+
+	op = get_two_char_op(&line[*pos], op_len);
+	if (op != TT_ERROR)
+		return (op);
+	op = get_one_char_op(line[*pos]);
+	if (op != TT_ERROR)
+	{
+		*op_len = 1;
+		return (op);
+	}
+	return (TT_ERROR);
+}
+
+static int process_one_token(const char *line, size_t *i, t_info *info)
+{
+	t_token_type op_type;
+	size_t op_len;
+	char *value;
+
+	skip_spaces(line, i);
+	if (!line[*i])
+		return (add_token(info, create_eof_token(info)));
+	op_len = 0;
+	op_type = get_operator_token(line, i, &op_len);
+	if (op_type != TT_ERROR)
+	{
+		(*i) += op_len;
+		value = ft_strdup("");
+		if (!value)
+			return (0);
+		if (!add_token(info, create_token(op_type, value, info)))
+		{
+			free(value);
+			return (0);
+		}
+		/* リダイレクト系なら直後にwordを取り込む => 例: > filename */
+		if (op_type == TT_REDIR_IN || op_type == TT_REDIR_OUT || op_type == TT_APPEND || op_type == TT_HEREDOC)
+		{
+			skip_spaces(line, i);
+			if (line[*i])
+			{
+				/* 次のwordをtokenにして、「そのtoken->value[0] = filename」 */
+				if (!handle_word(line, i, info, &value))
+					return (0);
+				if (!add_token(info, create_token(op_type, value, info)))
+					return (0);
+			}
+			return (1);
+		}
+		return (1);
+	}
+	if (!handle_word(line, i, info, &value))
 		return (0);
-	arr[0] = ft_strdup("EOF");
-	eof_tok = create_token(TT_EOF, arr, info);
-	if (!eof_tok || !add_token(info, eof_tok))
+	if (!add_token(info, create_token(TT_WORD, value, info)))
 		return (0);
 	return (1);
 }
 
-/*
-** ========= tokenize_line: 1行をトークン化 ===========
-**
-**   info: system_info
-**
-**   1行をトークン化し、token_listに追加する。
-**   syntax errorが起きた場合はinfo->statusにE_SYNTAXを設定し、0を返す。
-**   それ以外は、1を返す。
-*/
-int	tokenize_line(t_info *info)
+int tokenize_line(t_info *info)
 {
-	size_t		i;
-	const char	*line;
-	t_token		*op_tok;
+	size_t i;
+	char *line;
 
 	line = info->source_line;
 	i = 0;
 	while (1)
 	{
-		skip_spaces(line, &i);
-		if (!parse_one_command(line, &i, info))
+		if (!process_one_token(line, &i, info))
 		{
 			if (info->status == E_NONE)
 				info->status = E_SYNTAX;
 			return (0);
 		}
-		op_tok = get_operator_token(line, &i, info);
-		if (op_tok && !add_token(info, op_tok))
-			return (0);
 		if (!line[i])
-			break ;
+			break;
 	}
-	return (add_eof_token(info));
+	return (1);
 }

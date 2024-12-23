@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   validate_syntax.c                                  :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 14:02:42 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 16:40:57 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 17:48:30 by teando           ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "ft_lexer.h"
 
@@ -86,10 +86,9 @@
 **   - () は演算子というよりはグルーピングトークンだが、
 **     「コマンドが無いのに演算子が並んでる」等のチェックに含めたい場合はtrueにしてもOK。
 */
-static int	is_operator_token(t_token_type ttype)
+static int is_operator_token(t_token_type ttype)
 {
-	if (ttype == TT_PIPE || ttype == TT_AND_AND || ttype == TT_OR_OR
-		|| ttype == TT_SEMICOLON || ttype == TT_LPAREN || ttype == TT_RPAREN)
+	if (ttype == TT_PIPE || ttype == TT_AND_AND || ttype == TT_OR_OR || ttype == TT_SEMICOLON || ttype == TT_LPAREN || ttype == TT_RPAREN)
 		return (1);
 	return (0);
 }
@@ -101,77 +100,77 @@ static int	is_operator_token(t_token_type ttype)
 **   - `||` はトークンとしてはOKだが、同様に先頭/末尾にあるときはエラー
 **   - セミコロンの連続 `;;` など
 */
-static int	check_operator_positions(t_list *lst, t_info *info)
-{
-	t_token	*prev_tok;
-	t_token	*curr_tok;
-	t_list	*head;
-	int		index;
+// static int	check_operator_positions(t_list *lst, t_info *info)
+// {
+// 	t_token	*prev_tok;
+// 	t_token	*curr_tok;
+// 	t_list	*head;
+// 	int		index;
 
-	prev_tok = NULL;
-	head = lst;
-	index = 0;
-	// 空なら何もしない(source_line = ""など) → シェル的には何も実行しないだけ
-	if (!head)
-		return (1);
-	while (head)
-	{
-		curr_tok = (t_token *)head->data;
-		// unknown token (TT_ERROR) が混入していれば構文エラーにする
-		if (curr_tok->type == TT_ERROR)
-		{
-			info->status = E_SYNTAX;
-			return (0);
-		}
-		// 先頭で不正トークンかどうか
-		if (index == 0)
-		{
-			// 先頭にこれらがあるとエラー
-			if (curr_tok->type == TT_PIPE || curr_tok->type == TT_AND_AND
-				|| curr_tok->type == TT_SEMICOLON
-				|| curr_tok->type == TT_RPAREN)
-			{
-				info->status = E_SYNTAX;
-				return (0);
-			}
-		}
-		// 末尾で不正トークンかどうか (次が無いのに演算子だけで終わる など)
-		if (!head->next)
-		{
-			// 例えば末尾が `|`, `&&`, `(` の場合はエラー
-			if (curr_tok->type == TT_PIPE || curr_tok->type == TT_AND_AND
-				|| curr_tok->type == TT_LPAREN)
-			{
-				info->status = E_SYNTAX;
-				return (0);
-			}
-		}
-		// 演算子の連続チェック
-		if (prev_tok && is_operator_token(prev_tok->type)
-			&& is_operator_token(curr_tok->type))
-		{
-			/*
-			** 例:  ';;' or '| |' or '&& &&' など
-			** ただし '&& ||' のように別演算子の並びもNG とするかは要件次第
-			** ここでは一律「演算子同士が連続」でエラーにしている。
-			*/
-			info->status = E_SYNTAX;
-			return (0);
-		}
-		// セミコロンの連続 ;; だけを個別に見たい場合:
-		if (prev_tok && prev_tok->type == TT_SEMICOLON
-			&& curr_tok->type == TT_SEMICOLON)
-		{
-			// ;; は構文エラー
-			info->status = E_SYNTAX;
-			return (0);
-		}
-		prev_tok = curr_tok;
-		head = head->next;
-		index++;
-	}
-	return (1);
-}
+// 	prev_tok = NULL;
+// 	head = lst;
+// 	index = 0;
+// 	// 空なら何もしない(source_line = ""など) → シェル的には何も実行しないだけ
+// 	if (!head)
+// 		return (1);
+// 	while (head)
+// 	{
+// 		curr_tok = (t_token *)head->data;
+// 		// unknown token (TT_ERROR) が混入していれば構文エラーにする
+// 		if (curr_tok->type == TT_ERROR)
+// 		{
+// 			info->status = E_SYNTAX;
+// 			return (0);
+// 		}
+// 		// 先頭で不正トークンかどうか
+// 		if (index == 0)
+// 		{
+// 			// 先頭にこれらがあるとエラー
+// 			if (curr_tok->type == TT_PIPE || curr_tok->type == TT_AND_AND
+// 				|| curr_tok->type == TT_SEMICOLON
+// 				|| curr_tok->type == TT_RPAREN)
+// 			{
+// 				info->status = E_SYNTAX;
+// 				return (0);
+// 			}
+// 		}
+// 		// 末尾で不正トークンかどうか (次が無いのに演算子だけで終わる など)
+// 		if (!head->next)
+// 		{
+// 			// 例えば末尾が `|`, `&&`, `(` の場合はエラー
+// 			if (curr_tok->type == TT_PIPE || curr_tok->type == TT_AND_AND
+// 				|| curr_tok->type == TT_LPAREN)
+// 			{
+// 				info->status = E_SYNTAX;
+// 				return (0);
+// 			}
+// 		}
+// 		// 演算子の連続チェック
+// 		if (prev_tok && is_operator_token(prev_tok->type)
+// 			&& is_operator_token(curr_tok->type))
+// 		{
+// 			/*
+// 			** 例:  ';;' or '| |' or '&& &&' など
+// 			** ただし '&& ||' のように別演算子の並びもNG とするかは要件次第
+// 			** ここでは一律「演算子同士が連続」でエラーにしている。
+// 			*/
+// 			info->status = E_SYNTAX;
+// 			return (0);
+// 		}
+// 		// セミコロンの連続 ;; だけを個別に見たい場合:
+// 		if (prev_tok && prev_tok->type == TT_SEMICOLON
+// 			&& curr_tok->type == TT_SEMICOLON)
+// 		{
+// 			// ;; は構文エラー
+// 			info->status = E_SYNTAX;
+// 			return (0);
+// 		}
+// 		prev_tok = curr_tok;
+// 		head = head->next;
+// 		index++;
+// 	}
+// 	return (1);
+// }
 
 /*
 ** check_redirect_rules:
@@ -180,30 +179,30 @@ static int	check_operator_positions(t_list *lst, t_info *info)
 **   - 例: echo >>         → ファイル名不在
 **   - 例: cat << &&       → '<<' の直後が '&&' なのでNG
 */
-static int	check_redirect_rules(t_list *lst, t_info *info)
-{
-	t_token	*curr;
-	t_list	*node;
-	char	**redirect_value;
+// static int	check_redirect_rules(t_list *lst, t_info *info)
+// {
+// 	t_token	*curr;
+// 	t_list	*node;
+// 	char	**redirect_value;
 
-	node = lst;
-	while (node)
-	{
-		curr = (t_token *)node->data;
-		if (curr->type == TT_REDIR_IN || curr->type == TT_REDIR_OUT
-			|| curr->type == TT_APPEND || curr->type == TT_HEREDOC)
-		{
-			redirect_value = (char **)curr->value;
-			if (!redirect_value[0] || !redirect_value[1])
-			{
-				info->status = E_SYNTAX;
-				return (0);
-			}
-		}
-		node = node->next;
-	}
-	return (1);
-}
+// 	node = lst;
+// 	while (node)
+// 	{
+// 		curr = (t_token *)node->data;
+// 		if (curr->type == TT_REDIR_IN || curr->type == TT_REDIR_OUT
+// 			|| curr->type == TT_APPEND || curr->type == TT_HEREDOC)
+// 		{
+// 			redirect_value = (char **)curr->value;
+// 			if (!redirect_value[0] || !redirect_value[1])
+// 			{
+// 				info->status = E_SYNTAX;
+// 				return (0);
+// 			}
+// 		}
+// 		node = node->next;
+// 	}
+// 	return (1);
+// }
 
 /*
 ** check_empty_command:
@@ -214,11 +213,11 @@ static int	check_redirect_rules(t_list *lst, t_info *info)
 ** シンプルには "CMD またはリダイレクト系 の間に何もなく演算子が続いたら空" とみなしてエラー。
 ** ここでは例示的に、もっと簡易な判定で済ませています。
 */
-static int	check_empty_command(t_list *lst, t_info *info)
+static int check_empty_command(t_list *lst, t_info *info)
 {
-	t_token_type	prev_type;
-	t_token_type	curr_type;
-	t_list			*node;
+	t_token_type prev_type;
+	t_token_type curr_type;
+	t_list *node;
 
 	prev_type = TT_ERROR;
 	node = lst;
@@ -246,7 +245,7 @@ static int	check_empty_command(t_list *lst, t_info *info)
 **    - tokenize_line() 後に呼び出し、構文を最終判定する
 ** ------------------------------------------------------------
 */
-int	validate_syntax(t_info *info)
+int validate_syntax(t_info *info)
 {
 	if (!info->token_list)
 		return (0);
@@ -254,11 +253,11 @@ int	validate_syntax(t_info *info)
 	// if (!check_parentheses_stack(info->token_list, info))
 	// 	return (0);
 	/* 2) 演算子位置/連続チェック */
-	if (!check_operator_positions(info->token_list, info))
-		return (0);
-	/* 3) リダイレクト後のファイル名などのチェック */
-	if (!check_redirect_rules(info->token_list, info))
-		return (0);
+	// if (!check_operator_positions(info->token_list, info))
+	// 	return (0);
+	// /* 3) リダイレクト後のファイル名などのチェック */
+	// if (!check_redirect_rules(info->token_list, info))
+	// 	return (0);
 	/* 4) 空コマンド(演算子だけ)チェック */
 	if (!check_empty_command(info->token_list, info))
 		return (0);

@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   allocate_token.c                                   :+:      :+:    :+:   */
@@ -6,26 +6,22 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:17:08 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 15:40:39 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 17:49:23 by teando           ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "ft_lexer.h"
 
-/*
-** ========= トークン生成系 ===========
-** create_token, add_token
-*/
-
-/* --- t_token を新規作成 --- */
-t_token	*create_token(t_token_type type, char **value, t_info *info)
+t_token *create_token(t_token_type type, char *value, t_info *info)
 {
-	t_token	*tok;
+	t_token *tok;
 
-	tok = (t_token *)xmalloc(sizeof(t_token), info);
+	(void)info;
+	tok = (t_token *)ft_calloc(1, sizeof(t_token));
 	if (!tok)
 	{
-		ft_strs_clear(value);
+		if (value)
+			ft_strs_clear(value);
 		return (NULL);
 	}
 	tok->type = type;
@@ -33,11 +29,10 @@ t_token	*create_token(t_token_type type, char **value, t_info *info)
 	return (tok);
 }
 
-/* --- t_list (info->token_list) にトークンを追加 --- */
-int	add_token(t_info *info, t_token *tok)
+int add_token(t_info *info, t_token *tok)
 {
-	t_list	*node;
-	t_list	*tmp;
+	t_list *node;
+	t_list *tmp;
 
 	if (!tok)
 		return (0);
@@ -60,15 +55,9 @@ int	add_token(t_info *info, t_token *tok)
 	return (1);
 }
 
-/*
-** Append a string `newstr` to the end of `src`, returning a new array.
-** Freed `src` internally. Use ft_strdup
-	/ ft_strs_clear from libft where possible.
-*/
-static char	**do_append(char **dst, char **src, const char *newstr,
-		t_info *info)
+static char **do_append(char **dst, char **src, const char *newstr, t_info *inf)
 {
-	size_t	i;
+	size_t i;
 
 	i = 0;
 	while (src && src[i])
@@ -81,26 +70,26 @@ static char	**do_append(char **dst, char **src, const char *newstr,
 	{
 		ft_strs_clear(src);
 		ft_strs_clear(dst);
-		system_exit(info, E_ALLOCATE);
+		system_exit(inf, E_ALLOCATE);
 	}
 	dst[i + 1] = NULL;
 	free(src);
 	return (dst);
 }
 
-char	**strs_append(char **src, const char *newstr, t_info *info)
+char **strs_append(char **src, const char *newstr, t_info *inf)
 {
-	char	**dst;
-	size_t	len;
+	char **dst;
+	size_t len;
 
 	if (!newstr)
 		return (src);
 	len = ft_count_strs(src);
-	dst = xmalloc(sizeof(char *) * (len + 2), info);
+	dst = ft_calloc(sizeof(char *), (len + 2));
 	if (!dst)
 	{
 		ft_strs_clear(src);
-		return (NULL);
+		system_exit(inf, E_ALLOCATE);
 	}
-	return (do_append(dst, src, newstr, info));
+	return (do_append(dst, src, newstr, inf));
 }
