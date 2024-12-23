@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   allocate_token.c                                   :+:      :+:    :+:   */
@@ -6,15 +6,23 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:17:08 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 19:00:06 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 20:28:41 by teando           ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "ft_lexer.h"
 
-t_token *create_token(t_token_type type, char *value, t_info *info)
+/**
+ * 指定されたトークンタイプと値を持つ新しいトークンを作成
+ *
+ * @param type トークンのタイプを指定する `t_token_type` 列挙型。
+ * @param value トークンに関連付ける文字列値。
+ * @param info メモリ確保のために使用されるシェルの状態情報。
+ * @return 成功した場合は新しいトークンのポインタを返し、失敗した場合は `NULL` を返します。
+ */
+t_token	*create_token(t_token_type type, char *value, t_info *info)
 {
-	t_token *tok;
+	t_token	*tok;
 
 	tok = (t_token *)xmalloc(sizeof(t_token), info);
 	if (!tok)
@@ -24,10 +32,17 @@ t_token *create_token(t_token_type type, char *value, t_info *info)
 	return (tok);
 }
 
-int add_token(t_info *info, t_token *tok)
+/**
+ * トークンをトークンリストに追加
+ *
+ * @param info トークンリストを保持する `t_info` 構造体へのポインタ。
+ * @param tok 追加するトークンを指す `t_token` 構造体へのポインタ。
+ * @return 成功した場合は1を返し、失敗した場合は0を返します。
+ */
+int	add_token(t_info *info, t_token *tok)
 {
-	t_list *node;
-	t_list *tmp;
+	t_list	*node;
+	t_list	*tmp;
 
 	if (!tok)
 		return (0);
@@ -50,11 +65,11 @@ int add_token(t_info *info, t_token *tok)
 	return (1);
 }
 
-void token_list_free(t_list **token_list)
+void	token_list_free(t_list **token_list)
 {
-	t_list *cur;
-	t_list *nx;
-	t_token *tok;
+	t_list	*cur;
+	t_list	*nx;
+	t_token	*tok;
 
 	cur = *token_list;
 	while (cur)
