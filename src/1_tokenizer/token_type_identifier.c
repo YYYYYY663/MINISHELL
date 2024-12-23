@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:08:08 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 14:29:03 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 16:40:57 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ t_token_type	get_redirect_type(const char *s, size_t *len)
 	{
 		if (len)
 			*len = 1;
-		return (TT_REDIRECT_OUT);
+		return (TT_REDIR_OUT);
 	}
 	if (*s == '<')
 	{
 		if (len)
 			*len = 1;
-		return (TT_REDIRECT_IN);
+		return (TT_REDIR_IN);
 	}
 	return (TT_ERROR);
 }

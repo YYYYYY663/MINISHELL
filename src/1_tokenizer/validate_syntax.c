@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 14:02:42 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 16:21:51 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 16:40:57 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ static int	check_redirect_rules(t_list *lst, t_info *info)
 	while (node)
 	{
 		curr = (t_token *)node->data;
-		if (curr->type == TT_REDIRECT_IN || curr->type == TT_REDIRECT_OUT
+		if (curr->type == TT_REDIR_IN || curr->type == TT_REDIR_OUT
 			|| curr->type == TT_APPEND || curr->type == TT_HEREDOC)
 		{
 			redirect_value = (char **)curr->value;

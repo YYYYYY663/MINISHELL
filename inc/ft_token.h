@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 18:20:59 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 02:27:48 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 16:50:34 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,19 @@
 
 typedef enum e_token_type
 {
-	TT_CMD,          // コマンドトークン
-	TT_PIPE,         // パイプ
-	TT_REDIRECT_IN,  // 入力リダイレクト
-	TT_REDIRECT_OUT, // 出力リダイレクト
-	TT_APPEND,       // 追記リダイレクト
-	TT_HEREDOC,      // ヒアドキュメント
-	TT_LPAREN,       // (
-	TT_RPAREN,       // )
-	TT_AND_AND,      // &&
-	TT_OR_OR,        // ||
-	TT_SEMICOLON,    // ;
-	TT_EOF,          // 終端
-	TT_ERROR         // エラー
+	TT_WORD,      // text
+	TT_PIPE,      // |
+	TT_REDIR_IN,  // >
+	TT_APPEND,    // >>
+	TT_REDIR_OUT, // <
+	TT_HEREDOC,   // <<
+	TT_LPAREN,    // (
+	TT_RPAREN,    // )
+	TT_AND_AND,   // &&
+	TT_OR_OR,     // ||
+	TT_SEMICOLON, // ;
+	TT_EOF,       // 終端
+	TT_ERROR      // エラー
 }						t_token_type;
 
 //外に出さないとこれをnewする関数が作れない。。。
@@ -55,7 +55,7 @@ typedef struct s_ast_node
 typedef struct s_token
 {
 	t_token_type		type;
-	char				**value;
+	char				*value;
 }						t_token;
 
 #endif

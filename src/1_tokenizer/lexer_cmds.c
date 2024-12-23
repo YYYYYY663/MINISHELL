@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 15:29:01 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 15:42:36 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 16:40:28 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int	parse_one_command(const char *line, size_t *i, t_info *info)
 		else if (!handle_word(line, i, info, &cmd_argv))
 			return (0);
 	}
-	if (cmd_argv && !add_token(info, create_token(TT_CMD, cmd_argv, info)))
+	if (cmd_argv && !add_token(info, create_token(TT_WORD, cmd_argv, info)))
 		return (ft_strs_clear(cmd_argv), 0);
 	if (!flush_redir_list(&redir_list, info))
 		return (0);
