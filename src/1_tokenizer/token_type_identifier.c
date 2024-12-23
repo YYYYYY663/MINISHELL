@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:08:08 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 18:40:28 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 18:49:24 by teando           ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -16,28 +16,24 @@ t_token_type get_two_char_op(const char *s, size_t *len)
 {
 	if (!s || !s[0] || !s[1])
 		return (TT_ERROR);
-	if (ft_strncmp(s, ">>", 2) == 0)
+	if (ft_strncmp(s, ">>", 2) == 0 && len)
 	{
-		if (len)
-			*len = 2;
+		*len = 2;
 		return (TT_APPEND);
 	}
-	if (ft_strncmp(s, "<<", 2) == 0)
+	if (ft_strncmp(s, "<<", 2) == 0 && len)
 	{
-		if (len)
-			*len = 2;
+		*len = 2;
 		return (TT_HEREDOC);
 	}
-	if (ft_strncmp(s, "&&", 2) == 0)
+	if (ft_strncmp(s, "&&", 2) == 0 && len)
 	{
-		if (len)
-			*len = 2;
+		*len = 2;
 		return (TT_AND_AND);
 	}
-	if (ft_strncmp(s, "||", 2) == 0)
+	if (ft_strncmp(s, "||", 2) == 0 && len)
 	{
-		if (len)
-			*len = 2;
+		*len = 2;
 		return (TT_OR_OR);
 	}
 	return (TT_ERROR);

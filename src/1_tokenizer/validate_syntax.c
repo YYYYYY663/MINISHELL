@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 14:02:42 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 18:42:29 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 18:46:06 by teando           ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -53,26 +53,14 @@ static int check_redirect_token(t_token *curr, t_info *info)
 	return (1);
 }
 
-// static int check_consecutive_tokens(t_token *prev, t_token *curr, t_info *info)
-// {
-// 	if (prev && (prev->type != TT_WORD && prev->type != TT_EOF && curr->type != TT_WORD && curr->type != TT_EOF && curr->type != TT_REDIR_IN && curr->type != TT_REDIR_OUT && curr->type != TT_APPEND && curr->type != TT_HEREDOC))
-// 	{
-// 		info->status = E_SYNTAX;
-// 		return (0);
-// 	}
-// 	return (1);
-// }
-
 int validate_syntax(t_info *info)
 {
 	t_list *node;
-	// t_token *prev;
 	t_token *curr;
 
 	node = info->token_list;
 	if (!node)
 		return (1);
-	// prev = NULL;
 	while (node)
 	{
 		curr = (t_token *)node->data;
@@ -80,9 +68,6 @@ int validate_syntax(t_info *info)
 			return (0);
 		if (!check_redirect_token(curr, info))
 			return (0);
-		// if (!check_consecutive_tokens(prev, curr, info))
-		// 	return (0);
-		// prev = curr;
 		node = node->next;
 	}
 	return (1);
