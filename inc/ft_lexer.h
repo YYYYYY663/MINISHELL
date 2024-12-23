@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 16:44:20 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 14:14:57 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 15:47:26 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_token			*get_operator_token(const char *line, size_t *pos,
 int				handle_quoted(const char *line, size_t *i, t_info *info,
 					char ***cmd_argv);
 int				handle_redirect(const char *line, size_t *i, t_info *info,
-					t_list **redir_list);
+					t_list **redir);
 int				handle_word(const char *line, size_t *i, t_info *info,
 					char ***cmd_argv);
 

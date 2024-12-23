@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:17:08 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 05:42:59 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 15:40:39 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,19 +65,11 @@ int	add_token(t_info *info, t_token *tok)
 ** Freed `src` internally. Use ft_strdup
 	/ ft_strs_clear from libft where possible.
 */
-char	**strs_append(char **src, const char *newstr, t_info *info)
+static char	**do_append(char **dst, char **src, const char *newstr,
+		t_info *info)
 {
 	size_t	i;
-	char	**dst;
 
-	if (!newstr)
-		return (src);
-	i = 0;
-	while (src && src[i])
-		i++;
-	dst = xmalloc(sizeof(char *) * (i + 2), info);
-	if (!dst)
-		return (ft_strs_clear(src), NULL);
 	i = 0;
 	while (src && src[i])
 	{
@@ -85,7 +77,30 @@ char	**strs_append(char **src, const char *newstr, t_info *info)
 		i++;
 	}
 	dst[i] = ft_strdup(newstr);
+	if (!dst[i])
+	{
+		ft_strs_clear(src);
+		ft_strs_clear(dst);
+		system_exit(info, E_ALLOCATE);
+	}
 	dst[i + 1] = NULL;
 	free(src);
 	return (dst);
+}
+
+char	**strs_append(char **src, const char *newstr, t_info *info)
+{
+	char	**dst;
+	size_t	len;
+
+	if (!newstr)
+		return (src);
+	len = ft_count_strs(src);
+	dst = xmalloc(sizeof(char *) * (len + 2), info);
+	if (!dst)
+	{
+		ft_strs_clear(src);
+		return (NULL);
+	}
+	return (do_append(dst, src, newstr, info));
 }

@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 14:02:42 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 15:20:32 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 16:21:51 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,65 +19,65 @@
 **   - ')' が先に来てしまう
 **   - () の中身が完全に空 (必要に応じてチェック)
 */
-static int	check_parentheses_stack(t_list *lst, t_info *info)
-{
-	char	stack[256];
-	int		top;
-	t_token	*tok;
-	int		i;
+// static int	check_parentheses_stack(t_list *lst, t_info *info)
+// {
+// 	char	stack[256];
+// 	int		top;
+// 	t_token	*tok;
+// 	int		i;
 
-	int last_lparen_index; // '(' 直後に何も無いかを調べる例
-	top = -1;
-	last_lparen_index = -1;
-	i = 0;
-	while (lst)
-	{
-		tok = (t_token *)lst->data;
-		if (tok->type == TT_LPAREN)
-		{
-			if (top < 255)
-			{
-				stack[++top] = '(';
-				last_lparen_index = i; // '(' が出現したリスト上のインデックスを記録
-			}
-			else
-			{
-				// スタックオーバーフロー(極端に多い括弧)
-				info->status = E_SYNTAX;
-				return (0);
-			}
-		}
-		else if (tok->type == TT_RPAREN)
-		{
-			// '(' がないのに ')' が来た
-			if (top < 0)
-			{
-				info->status = E_SYNTAX;
-				return (0);
-			}
-			top--;
-			/* 空括弧チェック (optional):
-				* もし '(' 直後がすぐ ')' で、その間にコマンド等トークンがなければエラーにしたい場合
-				* 例: () → エラー
-				*/
-			if (i == last_lparen_index + 1)
-			{
-				// ( ) 直後 => 中身空 → エラー
-				info->status = E_SYNTAX;
-				return (0);
-			}
-		}
-		lst = lst->next;
-		i++;
-	}
-	// '(' が余っている
-	if (top != -1)
-	{
-		info->status = E_SYNTAX;
-		return (0);
-	}
-	return (1);
-}
+// 	int last_lparen_index; // '(' 直後に何も無いかを調べる例
+// 	top = -1;
+// 	last_lparen_index = -1;
+// 	i = 0;
+// 	while (lst)
+// 	{
+// 		tok = (t_token *)lst->data;
+// 		if (tok->type == TT_LPAREN)
+// 		{
+// 			if (top < 255)
+// 			{
+// 				stack[++top] = '(';
+// 				last_lparen_index = i; // '(' が出現したリスト上のインデックスを記録
+// 			}
+// 			else
+// 			{
+// 				// スタックオーバーフロー(極端に多い括弧)
+// 				info->status = E_SYNTAX;
+// 				return (0);
+// 			}
+// 		}
+// 		else if (tok->type == TT_RPAREN)
+// 		{
+// 			// '(' がないのに ')' が来た
+// 			if (top < 0)
+// 			{
+// 				info->status = E_SYNTAX;
+// 				return (0);
+// 			}
+// 			top--;
+// 			/* 空括弧チェック (optional):
+// 				* もし '(' 直後がすぐ ')' で、その間にコマンド等トークンがなければエラーにしたい場合
+// 				* 例: () → エラー
+// 				*/
+// 			if (i == last_lparen_index + 1)
+// 			{
+// 				// ( ) 直後 => 中身空 → エラー
+// 				info->status = E_SYNTAX;
+// 				return (0);
+// 			}
+// 		}
+// 		lst = lst->next;
+// 		i++;
+// 	}
+// 	// '(' が余っている
+// 	if (top != -1)
+// 	{
+// 		info->status = E_SYNTAX;
+// 		return (0);
+// 	}
+// 	return (1);
+// }
 
 /*
 ** is_operator_token:
@@ -183,35 +183,22 @@ static int	check_operator_positions(t_list *lst, t_info *info)
 static int	check_redirect_rules(t_list *lst, t_info *info)
 {
 	t_token	*curr;
-	t_token	*next;
 	t_list	*node;
+	char	**redirect_value;
 
 	node = lst;
 	while (node)
 	{
 		curr = (t_token *)node->data;
-		// リダイレクト系
 		if (curr->type == TT_REDIRECT_IN || curr->type == TT_REDIRECT_OUT
 			|| curr->type == TT_APPEND || curr->type == TT_HEREDOC)
 		{
-			// 次が無い (末尾で終わってる) → ファイル名/ヒアドキュメント終端文字列が無い
-			if (!node->next)
+			redirect_value = (char **)curr->value;
+			if (!redirect_value[0] || !redirect_value[1])
 			{
 				info->status = E_SYNTAX;
 				return (0);
 			}
-			next = (t_token *)node->next->data;
-			// 次が演算子やEOFだったらエラー
-			if (is_operator_token(next->type) || next->type == TT_EOF)
-			{
-				info->status = E_SYNTAX;
-				return (0);
-			}
-			/*
-			** さらに ">> file" の後すぐ ">" が続くケースなどもチェックしたい場合:
-			**   echo >> file >  → fileが無くても直後リダイレクト?
-			**   これは実装ポリシー次第(合法にするなら何もしない)。
-			*/
 		}
 		node = node->next;
 	}
@@ -264,8 +251,8 @@ int	validate_syntax(t_info *info)
 	if (!info->token_list)
 		return (0);
 	/* 1) 括弧の対応チェック */
-	if (!check_parentheses_stack(info->token_list, info))
-		return (0);
+	// if (!check_parentheses_stack(info->token_list, info))
+	// 	return (0);
 	/* 2) 演算子位置/連続チェック */
 	if (!check_operator_positions(info->token_list, info))
 		return (0);

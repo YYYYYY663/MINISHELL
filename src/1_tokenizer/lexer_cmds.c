@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 15:29:01 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 14:49:22 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 15:42:36 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,9 @@ t_token	*get_operator_token(const char *line, size_t *pos, t_info *info)
 		op_str = ft_substr(line, *pos, len);
 		(*pos)++;
 	}
-	arr = ft_calloc(sizeof(char *), 2);
+	arr = (char **)ft_calloc(sizeof(char *), 2);
+	if (!arr)
+		return (NULL);
 	arr[0] = op_str;
 	return (create_token(op, arr, info));
 }

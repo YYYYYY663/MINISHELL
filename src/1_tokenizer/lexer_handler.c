@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 14:07:53 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 14:19:54 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 15:47:43 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,22 @@ int	handle_quoted(const char *line, size_t *i, t_info *info, char ***cmd_argv)
 **   syntax errorが起きた場合はinfo->statusにE_SYNTAXを設定し、0を返す。
 **   それ以外は、(*i)++を行い1を返す。
 */
-int	handle_redirect(const char *line, size_t *i, t_info *info,
-		t_list **redir_list)
+int	handle_redirect(const char *line, size_t *i, t_info *info, t_list **redir)
 {
 	t_token	*redir_tok;
+	t_list	*node;
 
 	redir_tok = parse_redirect(line, i, info);
 	if (!redir_tok)
 		return (0);
-	ft_lstadd_back(redir_list, ft_lstnew(redir_tok));
+	node = ft_lstnew(redir_tok);
+	if (!node)
+	{
+		free(redir_tok->value);
+		free(redir_tok);
+		return (0);
+	}
+	ft_lstadd_back(redir, node);
 	return (1);
 }
 

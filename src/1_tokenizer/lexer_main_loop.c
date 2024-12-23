@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:58:51 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 14:52:38 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 15:48:19 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	tokenize_line(t_info *info)
 		op_tok = get_operator_token(line, &i, info);
 		if (op_tok && !add_token(info, op_tok))
 			return (0);
-		if (line[i] == '\0')
+		if (!line[i])
 			break ;
 	}
 	return (add_eof_token(info));
