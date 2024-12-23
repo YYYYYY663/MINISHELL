@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 14:07:53 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 20:29:16 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 20:33:27 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ void	skip_spaces(const char *line, size_t *pos)
 
 /**
  * read_quoted_word:
- *  line[pos]から始まる文字列をreadし、line[pos] = quote,  line[pos + 1] - line[pos] = len という文字列を抽出して返す
+ *  line[pos]から始まる文字列をreadし、line[pos] = quote,  line[pos + 1]
+	- line[pos] = len という文字列を抽出して返す
  *  その後、line[pos]をlenぶん進める
  *  例えばline[pos] = ' " 'の場合、line[pos] = " " という文字列を抽出して返し、line[pos]を進める
  *  quoteがなくてEOFに達した場合はinfo->status = E_SYNTAXを設定してNULLを返す

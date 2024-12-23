@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:58:51 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 20:32:15 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 20:33:36 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ static int	handle_two_char_op(const char *line, size_t *pos, t_info *info)
 /**
  * @brief 1項演算子をトークン化する
  *
- * 1項演算子 (TT_REDIR_IN, TT_REDIR_OUT, TT_PIPE, TT_LPAREN, TT_RPAREN, TT_SEMICOLON) をトークン化し、
+ * 1項演算子 (TT_REDIR_IN, TT_REDIR_OUT, TT_PIPE, TT_LPAREN, TT_RPAREN,
+	TT_SEMICOLON) をトークン化し、
  * info->token_list に追加します。
  *
  * @param line トークン化対象のソースライン

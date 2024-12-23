@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   validate_syntax.c                                  :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 14:02:42 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 18:46:06 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 20:33:43 by teando           ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "ft_lexer.h"
 
@@ -19,9 +19,10 @@
 **   - () は演算子というよりはグルーピングトークンだが、
 **     「コマンドが無いのに演算子が並んでる」等のチェックに含めたい場合はtrueにしてもOK。
 */
-int is_operator_token(t_token_type ttype)
+int	is_operator_token(t_token_type ttype)
 {
-	if (ttype == TT_PIPE || ttype == TT_AND_AND || ttype == TT_OR_OR || ttype == TT_SEMICOLON || ttype == TT_LPAREN || ttype == TT_RPAREN)
+	if (ttype == TT_PIPE || ttype == TT_AND_AND || ttype == TT_OR_OR
+		|| ttype == TT_SEMICOLON || ttype == TT_LPAREN || ttype == TT_RPAREN)
 		return (1);
 	return (0);
 }
@@ -33,7 +34,7 @@ int is_operator_token(t_token_type ttype)
 ** ------------------------------------------------------------
 */
 
-static int check_error_token(t_token *curr, t_info *info)
+static int	check_error_token(t_token *curr, t_info *info)
 {
 	if (curr->type == TT_ERROR)
 	{
@@ -43,9 +44,11 @@ static int check_error_token(t_token *curr, t_info *info)
 	return (1);
 }
 
-static int check_redirect_token(t_token *curr, t_info *info)
+static int	check_redirect_token(t_token *curr, t_info *info)
 {
-	if ((curr->type == TT_REDIR_IN || curr->type == TT_APPEND || curr->type == TT_REDIR_OUT || curr->type == TT_HEREDOC) && (!curr->value || curr->value[0] == '\0'))
+	if ((curr->type == TT_REDIR_IN || curr->type == TT_APPEND
+			|| curr->type == TT_REDIR_OUT || curr->type == TT_HEREDOC)
+		&& (!curr->value || curr->value[0] == '\0'))
 	{
 		info->status = E_SYNTAX;
 		return (0);
@@ -53,10 +56,10 @@ static int check_redirect_token(t_token *curr, t_info *info)
 	return (1);
 }
 
-int validate_syntax(t_info *info)
+int	validate_syntax(t_info *info)
 {
-	t_list *node;
-	t_token *curr;
+	t_list	*node;
+	t_token	*curr;
 
 	node = info->token_list;
 	if (!node)
