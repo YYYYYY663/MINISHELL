@@ -1,41 +1,113 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   lexer_cmds.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 15:29:01 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 05:32:05 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 14:21:53 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_lexer.h"
 
-static int	handle_word(const char *line, size_t *i, t_info *info,
-		char ***cmd_argv)
+/*
+** ========= filenameを1トークンに分解 read_filename ===========
+**
+**   line: 1行の文字列
+**   pos: line[]の現在のインデックス
+**
+**   1つのfilenameをパースし、stringを返す
+**   syntax errorが起きた場合はNULLを返す
+*/
+static char	*read_filename(const char *line, size_t *pos)
 {
 	size_t	start;
-	char	*tmp;
+	char	*fname;
 
-	start = *i;
-	while (line[*i] && !ft_isspace(line[*i]) && !is_cmd_delimiter(line[*i])
-		&& get_two_char_op(&line[*i], NULL) == TT_ERROR
-		&& get_one_char_op(line[*i]) == TT_ERROR && get_redirect_type(&line[*i],
-			NULL) == TT_ERROR)
-		(*i)++;
-	if ((*i - start) > 0)
+	start = *pos;
+	while (line[*pos] && !ft_isspace(line[*pos])
+		&& !is_cmd_delimiter(line[*pos]) && get_two_char_op(&line[*pos],
+			NULL) == TT_ERROR && get_one_char_op(line[*pos]) == TT_ERROR
+		&& get_redirect_type(&line[*pos], NULL) == TT_ERROR)
+		(*pos)++;
+	fname = ft_substr(line, start, (*pos) - start);
+	return (fname);
+}
+
+/*
+** ========= Redirectトークンを1トークンに分解 parse_redirect ===========
+**
+**   line: 1行の文字列
+**   pos: line[]の現在のインデックス
+**   info: system_info
+**
+**   Redirectトークンを1トークンに分解し、token_typeとfile nameを保持する。
+**   syntax errorが起きた場合はinfo->statusにE_SYNTAXを設定し、NULLを返す。
+**   それ以外は、(*i)++を行い、トークンを返す。
+*/
+t_token	*parse_redirect(const char *line, size_t *pos, t_info *info)
+{
+	t_token_type	rtype;
+	size_t			len;
+	char			*op_str;
+	char			*fname;
+	char			**arr;
+
+	len = 0;
+	rtype = get_redirect_type(&line[*pos], &len);
+	op_str = ft_substr(line, *pos, len);
+	(*pos) += len;
+	skip_spaces(line, pos);
+	fname = read_filename(line, pos);
+	arr = NULL;
+	arr = strs_append(arr, op_str, info);
+	if (fname && *fname != '\0')
+		arr = strs_append(arr, fname, info);
+	free(op_str);
+	free(fname);
+	return (create_token(rtype, arr, info));
+}
+
+/*
+** ========= redir_list全てをtoken_listに追加 flush_redir_list ===========
+**
+**   redir_list: Redirectトークンのリスト
+**   info: system_info
+**
+**   redir_listの全ての要素をtoken_listに追加する。
+**   syntax errorが起きた場合はinfo->statusにE_SYNTAXを設定し、0を返す。
+**   それ以外は、1を返す。
+*/
+int	flush_redir_list(t_list **redir_list, t_info *info)
+{
+	t_list	*next;
+	t_token	*tok;
+
+	while (*redir_list)
 	{
-		tmp = ft_substr(line, start, (*i) - start);
-		*cmd_argv = strs_append(*cmd_argv, tmp, info);
-		free(tmp);
+		next = (*redir_list)->next;
+		tok = (t_token *)(*redir_list)->data;
+		if (!add_token(info, tok))
+			return (ft_lstdel_front(redir_list, NULL), 0);
+		ft_lstdel_front(redir_list, NULL);
+		*redir_list = next;
 	}
-	if (info->status != E_NONE)
-		return (0);
 	return (1);
 }
 
-/* ------------------ 1コマンド分解析 parse_one_command ------------------ */
+/*
+** ========= 1つのcommandをパース parse_one_command ===========
+**
+**   line: 1行の文字列
+**   i: line[]の現在のインデックス
+**   info: system_info
+**
+**   1つのcommandをパースし、token_listに追加する。
+**   syntax errorが起きた場合はinfo->statusにE_SYNTAXを設定し、0を返す。
+**   それ以外は、(*i)++を行い1を返す。
+*/
 int	parse_one_command(const char *line, size_t *i, t_info *info)
 {
 	char	**cmd_argv;
@@ -65,7 +137,17 @@ int	parse_one_command(const char *line, size_t *i, t_info *info)
 	return (1);
 }
 
-/* ------------------ 区切り演算子トークン取得 ------------------ */
+/*
+** ========= 演算子トークン取得 get_operator_token ===========
+**
+**   line: 入力行の文字列
+**   pos: 現在の文字位置
+**   info: システム情報
+**
+**   1文字または2文字の演算子を解析し、対応するトークンを作成して返す
+**   演算子が見つからない場合、NULLを返す
+**   posは解析した演算子の長さ分進められる
+*/
 t_token	*get_operator_token(const char *line, size_t *pos, t_info *info)
 {
 	t_token_type	op;

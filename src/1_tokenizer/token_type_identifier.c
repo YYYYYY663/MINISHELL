@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:08:08 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 04:35:29 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 14:29:03 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	is_cmd_delimiter(char c)
 
 /*
 ** ========= 演算子チェック:リダイレクト, 1文字/2文字演算子 ===========
-** get_redirect_type, get_two_char_op, get_one_char_op
 */
 
 t_token_type	get_redirect_type(const char *s, size_t *len)

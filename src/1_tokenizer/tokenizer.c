@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:10:42 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 04:36:43 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 14:09:28 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,14 @@ t_status	xlexer(t_info *info)
 	info->status = E_NONE;
 	if (!info->source_line)
 		return (info->status);
-	if (!tokenize_line(info) && info->status == E_NONE)
-		info->status = E_SYNTAX;
+	if (!tokenize_line(info))
+	{
+		if (info->status == E_NONE)
+			info->status = E_SYNTAX;
+		return (info->status);
+	}
+	if (!validate_syntax(info))
+		return (info->status);
 	return (info->status);
 }
 
