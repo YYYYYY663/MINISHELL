@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   lexer_handler.c                                    :+:      :+:    :+:   */
@@ -6,40 +6,54 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 14:07:53 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 17:51:18 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/25 09:52:00 by teando           ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "ft_lexer.h"
 
-/*
-** ========= 1つのwordをパースしcmd_argvに追加 handle_word ===========
-**
-**   line: 1行の文字列
-**   i: line[]の現在のインデックス
-**   info: system_info
-**   value: wordの文字列を格納するポインタ
-**
-**   1つのwordをパースしvalueに格納する
-**   syntax errorが起きた場合はinfo->statusにE_SYNTAXを設定し、0を返す
-**   それ以外は、(*i)++を行い1を返す
-*/
-int handle_word(const char *line, size_t *i, t_info *info, char **value)
+void	skip_spaces(const char *line, size_t *pos)
 {
-	size_t start;
+	while (line[*pos] && ft_isspace(line[*pos]))
+		(*pos)++;
+}
 
-	(void)info;  // Suppress unused parameter warning
-	start = *i;
-	while (line[*i] && !ft_isspace(line[*i]))
+static char	*read_quoted_word(const char *line, size_t *pos, t_info *info)
+{
+	char	quote;
+	size_t	start;
+	char	*content;
+
+	quote = line[*pos];
+	start = *pos + 1;
+	(*pos)++;
+	while (line[*pos] && line[*pos] != quote)
+		(*pos)++;
+	if (!line[*pos])
 	{
-		/* 演算子にぶつかったらword終了 */
-		if (get_two_char_op(&line[*i], NULL) != TT_ERROR || get_one_char_op(line[*i]) != TT_ERROR)
-			break;
-		(*i)++;
+		info->status = E_SYNTAX;
+		return (NULL);
 	}
-	if ((*i - start) > 0)
-		*value = ft_substr(line, start, (*i - start));
-	else
-		*value = ft_strdup("");
-	return (*value != NULL);
+	content = ft_substr(line, start, (*pos - start));
+	(*pos)++;
+	return (content);
+}
+
+char	*read_word(const char *line, size_t *pos, t_info *info)
+{
+	size_t	start;
+	char	*res;
+
+	if (line[*pos] == '\'' || line[*pos] == '"')
+		return (read_quoted_word(line, pos, info));
+	start = *pos;
+	while (line[*pos])
+	{
+		if (ft_isspace(line[*pos]) || get_two_char_op(&line[*pos], NULL) != TT_ERROR
+			|| get_one_char_op(line[*pos]) != TT_ERROR)
+			break ;
+		(*pos)++;
+	}
+	res = ft_substr(line, start, (*pos - start));
+	return (res);
 }

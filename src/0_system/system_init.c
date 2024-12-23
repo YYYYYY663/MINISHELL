@@ -9,7 +9,7 @@ t_info *system_init(char **envp)
 		return (NULL);
 	(void)envp;
 	// info->env_map = x_lst_from_strs(envp);
-	getcwd(info->cwd, PATH_MAX);
+	// getcwd(info->cwd, PATH_MAX);
 	return (info);
 }
 
