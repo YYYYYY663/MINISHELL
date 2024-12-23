@@ -6,22 +6,12 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:58:51 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 14:27:31 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 14:52:38 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_lexer.h"
 
-/*
-** ========= スペースをスキップ skip_spaces ===========
-**
-**   line: 1行の文字列
-**   pos: 現在の文字位置
-**
-**   line内の現在位置から連続するスペースをスキップし、
-**   posを次の非スペース文字の位置に更新します。
-**   常に1を返します。
-*/
 int	skip_spaces(const char *line, size_t *pos)
 {
 	while (ft_isspace(line[*pos]))

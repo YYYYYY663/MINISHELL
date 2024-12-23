@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 15:29:01 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 14:21:53 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 14:49:22 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,15 @@
 */
 static char	*read_filename(const char *line, size_t *pos)
 {
-	size_t	start;
+	size_t	len;
 	char	*fname;
 
-	start = *pos;
-	while (line[*pos] && !ft_isspace(line[*pos])
-		&& !is_cmd_delimiter(line[*pos]) && get_two_char_op(&line[*pos],
-			NULL) == TT_ERROR && get_one_char_op(line[*pos]) == TT_ERROR
-		&& get_redirect_type(&line[*pos], NULL) == TT_ERROR)
-		(*pos)++;
-	fname = ft_substr(line, start, (*pos) - start);
+	// 区切り文字になるまで進める（スペースやリダイレクション記号など）
+	// ft_strcspn は文字列中で任意の文字集合が最初に現れる位置までを取得
+	// 区切り文字を " \t\n\v\f\r<>|&();" 等に
+	len = ft_strcspn(&line[*pos], " \t\n\v\f\r|&()<>;");
+	fname = ft_substr(line, *pos, len); // 開始位置は *pos で正しい
+	*pos += len;
 	return (fname);
 }
 
