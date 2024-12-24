@@ -29,7 +29,7 @@
  * 4. validate_syntax関数を呼び出して、得られたトークンの構文を検証します。
  * 5. すべての処理が成功した場合、E_NONEを返します。
  */
-t_status	xlexer(t_info *info)
+t_status	launch_lexer(t_info *info)
 {
 	info->token_list = NULL;
 	info->status = E_NONE;

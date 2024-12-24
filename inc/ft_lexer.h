@@ -23,7 +23,7 @@ typedef struct s_lexer
 }				t_lexer;
 
 /* <---------------- 外部インターフェース ----------------> */
-t_status		xlexer(t_info *info);
+t_status		launch_lexer(t_info *info);
 void			token_list_free(t_list **token_list);
 void			debug_print_token_list(t_list *list);
 

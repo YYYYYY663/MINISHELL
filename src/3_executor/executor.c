@@ -12,3 +12,8 @@
 
 #include "ft_executor.h"
 #include "ft_system.h"
+
+t_status launch_executor(t_info *info)
+{
+    return E_NONE;
+}

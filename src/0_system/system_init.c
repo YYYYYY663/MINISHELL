@@ -11,6 +11,29 @@
 /* ************************************************************************** */
 
 #include "ft_system.h"
+#include "ft_token.h"
+
+void token_clear(void *ptr)
+{
+	t_token *token = (t_token *)ptr; 
+	if (!token)
+        return ;
+    free(token->value);
+    free(token);
+}
+
+void	ast_clear(t_ast *node)
+{
+	if (!node)
+		return ;
+	ast_clear(node->left);
+	ast_clear(node->right);
+	if (node->args)
+	{
+		ft_lstclear(&node->args,token_clear);
+	}
+	free(node);
+}
 
 t_info *system_init(char **envp)
 {
@@ -34,6 +57,6 @@ void system_deinit(t_info *info)
 		ft_lstclear(&info->token_list, free);
 	if (!info->env_map)
 		ft_lstclear(&info->env_map, free);
-	// ast_clear(info->ast);
+	ast_clear(info->ast);
 	free(info);
 }

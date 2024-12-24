@@ -11,7 +11,7 @@ static void	print_tokens(t_token *tokens)
 		switch (tokens[i].type)
 		{
 		case TT_WORD:
-			type_str = "CMD";
+			type_str = "WORD";
 			break ;
 		case TT_PIPE:
 			type_str = "PIPE";

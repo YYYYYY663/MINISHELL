@@ -10,50 +10,21 @@
 #                                                                              #
 #******************************************************************************#
 
-NAME		:= minishell
+NAME		:= parser
 CC			:= cc
 CFLAGS		:= -Wall -Wextra -Werror
 LFLAGS		:= -lreadline
 RM			:= rm -rf
 ROOT_DIR	:= .
 OUT_DIR		:= $(ROOT_DIR)/obj
-INCS_DIR	:= $(ROOT_DIR)/inc
-LIBFT_DIR	:= $(ROOT_DIR)/lib/libft
+INCS_DIR	:= ../../inc
+LIBFT_DIR	:= ../../lib/libft
+LEX_DIR     := ../1_tokenizer
+LEX         := $(LEX_DIR)/liblexer.a
 LIBFT		:= $(LIBFT_DIR)/libft.a
 IDFLAGS		:= -I$(INCS_DIR) -I$(LIBFT_DIR)
 
-SRCS 		:= \
-	$(addprefix src/, \
-		$(addprefix 0_system/, \
-			readline.c \
-			system_exit.c \
-			system_init.c \
-			system_io.c \
-		) \
-		$(addprefix 1_tokenizer/, \
-			allocate_token.c \
-			lexer_handler.c \
-			lexer_main_loop.c \
-			tokenizer.c \
-			validate_syntax.c \
-		) \
-		$(addprefix 2_parser/, \
-		) \
-		$(addprefix 3_executor/, \
-		) \
-		$(addprefix 4_redirect/, \
-		) \
-		$(addprefix 5_env/, \
-		) \
-		$(addprefix 6_signals/, \
-			sig_setup.c \
-		) \
-		$(addprefix 7_builtin/, \
-		) \
-		$(addprefix 8_utils/, \
-		) \
-		main.c \
-	)
+SRCS 		:= __tst.c
 	
 OBJS		:= $(addprefix $(OUT_DIR)/, $(SRCS:.c=.o))
 DEPS		:= $(OBJS:.o=.d)
@@ -66,11 +37,14 @@ endif
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) $(LIBFT) -o $@
+$(NAME): $(LIBFT) $(LEX) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) $(LIBFT) $(LEX) -o $@
 
 $(LIBFT): | $(LIBFT_DIR)/Makefile
 	$(MAKE) -C $(LIBFT_DIR)
+
+$(LEX): | $(LEX_DIR)/Makefile
+	$(MAKE) -C $(LEX_DIR)
 
 $(OUT_DIR)/%.o: $(ROOT_DIR)/%.c
 	@mkdir -p $(@D)

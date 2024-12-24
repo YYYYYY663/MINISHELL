@@ -14,6 +14,7 @@
 # define FT_SYSTEM_H
 
 # include "libft.h"
+# include "ft_token.h"
 # include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -45,12 +46,15 @@ typedef struct s_info
 {
 	char		*source_line;
 	t_list		*token_list;
-	t_btree		*ast;
+	t_ast 		*ast;
 	t_list		*env_map;
 	char		cwd[PATH_MAX];
 	t_status	status;
 }				t_info;
 
+
+void token_clear(void *ptr);
+void	ast_clear(t_ast *node);
 t_info			*system_init(char **envp);
 void			system_deinit(t_info *info);
 

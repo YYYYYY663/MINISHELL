@@ -19,7 +19,7 @@ t_ast	*ast_node_new(int type, t_list *args, t_info *info)
 	t_ast	*new_node;
 
 	new_node = xmalloc(sizeof(t_ast), info);
-	new_node->type = type;
+	new_node->e_type = type;
 	new_node->args = args;
 	return (new_node);
 }
@@ -27,7 +27,7 @@ t_list	*consume_token(t_token_type type, t_list **lst)
 {
 	t_list	*args;
 
-	while (*lst->type != t_token_type)
+	while ((*lst) != type)
 	{
 	}
 }
@@ -40,11 +40,11 @@ t_ast	*ast_pipe_new(t_list *list, t_info *info)
 
 	pipe_node = astnew_node(NT_PIPE, NULL, info);
 	current_node = pipe_node;
-	while (*argv != NULL)
+	while (list != NULL)
 	{
 		current_node->left = astnew_node(NT_CMD, consume_token(TT_WORD, &list),
 				info);
-		if (*argv)
+		if (list)
 			current_node->right = astnew_node(NT_PIPE, NULL, info);
 		current_node = current_node->right;
 	}
