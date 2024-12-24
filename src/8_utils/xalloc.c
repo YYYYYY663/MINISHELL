@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   system_allocate.c                                  :+:      :+:    :+:   */
+/*   xalloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 21:27:29 by teando            #+#    #+#             */
-/*   Updated: 2024/12/22 16:40:32 by ymizukam         ###   ########.fr       */
+/*   Updated: 2024/12/24 20:16:05 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	*xmalloc(size_t size, t_info *info)
 	{
 		system_exit(info, E_ALLOCATE);
 	}
+	ft_bzero(memory, size);
 	return ((void *)memory);
 }
 

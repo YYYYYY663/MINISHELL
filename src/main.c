@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:45:19 by teando            #+#    #+#             */
-/*   Updated: 2024/12/18 22:30:50 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 01:49:55 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	shell_loop(t_info *info)
 		}
 		if (xlexer(info) == E_NONE)
 		{
-			print_cmd_tokens(info->token_list);
-			ft_lstclear(&info->token_list, free_cmd_token);
+			debug_print_token_list(info->token_list);
+			token_list_free(&info->token_list);
 		}
 		free(info->source_line);
 		info->source_line = NULL;
