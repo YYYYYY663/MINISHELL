@@ -18,9 +18,9 @@ t_status	builtin_dispatcher(char *path, char **argv, t_info *info)
 {
 	static const char		*builtin_names[] = {"pwd", "cd", "echo", "export",
 				"unset", "exit", "env"};
-	static t_builtin_func	builtin_funcs[] = {builtin_pwd, builtin_cd,
-			builtin_echo, builtin_export, builtin_unset, builtin_exit,
-			builtin_env};
+	static t_builtin_func	builtin_funcs[] = {__pwd, __cd,
+			__echo, __export, __unset, __exit,
+			__env};
 	size_t					i;
 
 	i = 0;

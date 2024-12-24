@@ -15,6 +15,17 @@
 
 # include "ft_system.h"
 
+typedef struct s_map
+{
+	char * key;
+	char * val;
+	int opt;
+} t_map;
+
+
+
+
+
 /**** ENV ****/
 // keyから値を取得、なかったらNULL
 char		*env_get(t_list *env, char *key);

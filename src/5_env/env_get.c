@@ -22,5 +22,8 @@ char	*env_get(t_list *env, char *key)
 	// note leak!!!MAX_PATHとして持っても良い
 	if (!lst)
 		return (ft_strdup(""));
-	return (ft_substr_r(lst->data, '='));
+	t_map *map = (t_map *)lst->data;
+	if (!map)
+		return (ft_strdup(""));
+	return (ft_strdup(map->val));
 }
