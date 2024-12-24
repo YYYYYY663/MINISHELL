@@ -24,7 +24,7 @@ t_token	*create_token(t_token_type type, char *value, t_info *info)
 {
 	t_token	*tok;
 
-	tok = (t_token *)malloc(sizeof(t_token));//xmalloc
+	tok = (t_token *)xmalloc(sizeof(t_token), info);
 	if (!tok)
 		return (NULL);
 	tok->type = type;

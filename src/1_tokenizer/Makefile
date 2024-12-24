@@ -1,9 +1,11 @@
-NAME        := liblexer.a
+NAME        := liblex.a
 CC          := cc
-CFLAGS      := -Wall -Wextra #-Werror todo
+CFLAGS      := -Wall -Wextra -Werror
 INCS_DIR	:= ../../inc
 LIBFT_DIR	:= ../../lib/libft
 LIBFT		:= $(LIBFT_DIR)/libft.a
+LIBSYS_DIR  := ../0_system
+LIBSYS     := $(LIBSYS_DIR)/libsys.a
 IDFLAGS		:= -I$(INCS_DIR) -I$(LIBFT_DIR)
 
 RM          := rm -rf
@@ -20,32 +22,33 @@ else
     CFLAGS   += -O2
 endif
 
-# 全体のターゲット
+
 all: $(NAME)
 
-# 静的ライブラリの作成
-$(NAME): $(LIBFT) $(OBJS)
-	ar rcs $@ $(OBJS)
-
+$(NAME): $(LIBFT) $(LIBSYS) $(OBJS)
+	ar rcs $@ $(OBJS) $(LIBFT) $(LIBSYS)
 
 $(LIBFT): | $(LIBFT_DIR)/Makefile
 	$(MAKE) -C $(LIBFT_DIR)
 
-$(OUT_DIR)/%.o: %.c
+$(LIBSYS): | $(LIBSYS_DIR)/Makefile
+	$(MAKE) -C $(LIBSYS_DIR)
+
+$(OUT_DIR)/%.o: $(ROOT_DIR)/%.c
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -MMD -MP $(IDFLAGS) -c $< -o $@
 
-# クリーンターゲット
 clean:
+	$(MAKE) -C $(LIBFT_DIR) clean
 	$(RM) $(OUT_DIR)
 
 fclean: clean
+	$(MAKE) -C $(LIBFT_DIR) fclean
 	$(RM) $(NAME)
 
-# 再ビルド
 re: fclean all
 
-# 依存ファイルをインクルード
+
 -include $(DEPS)
 
 .PHONY: all clean fclean re

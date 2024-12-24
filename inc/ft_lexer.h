@@ -15,6 +15,7 @@
 
 # include "ft_system.h"
 # include "ft_token.h"
+# include "xunistd.h"
 
 typedef struct s_lexer
 {

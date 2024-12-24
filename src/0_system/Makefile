@@ -1,4 +1,4 @@
-NAME        := libsystem.a
+NAME        := libsys.a
 CC          := cc
 CFLAGS      := -Wall -Wextra -Werror
 INCS_DIR	:= ../../inc
@@ -9,7 +9,7 @@ IDFLAGS		:= -I$(INCS_DIR) -I$(LIBFT_DIR)
 RM          := rm -rf
 ROOT_DIR    := .
 OUT_DIR     := $(ROOT_DIR)/obj
-SRCS        := system_exit.c system_init.c
+SRCS        := system_exit.c system_init.c xalloc.c xunistd.c
 OBJS        := $(addprefix $(OUT_DIR)/, $(SRCS:.c=.o))
 DEPS        := $(OBJS:.o=.d)
 
@@ -20,10 +20,9 @@ else
     CFLAGS   += -O2
 endif
 
-# 全体のターゲット
+
 all: $(NAME)
 
-# 静的ライブラリの作成
 $(NAME): $(LIBFT) $(OBJS)
 	ar rcs $@ $(OBJS)
 
@@ -35,17 +34,15 @@ $(OUT_DIR)/%.o: %.c
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -MMD -MP $(IDFLAGS) -c $< -o $@
 
-# クリーンターゲット
+
 clean:
 	$(RM) $(OUT_DIR)
 
 fclean: clean
 	$(RM) $(NAME)
 
-# 再ビルド
 re: fclean all
 
-# 依存ファイルをインクルード
 -include $(DEPS)
 
 .PHONY: all clean fclean re
