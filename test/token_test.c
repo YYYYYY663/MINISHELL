@@ -17,7 +17,7 @@ int	main(int argc, char **argv, char **env)
 	while (head)
 	{
 		t = head->data;
-		if (t->type == TT_CMD)
+		if (t->type == TT_WORD)
 			xbuiltin(t->path, t->args, info);
 		head = head->next;
 	}

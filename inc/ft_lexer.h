@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 16:44:20 by teando            #+#    #+#             */
-/*   Updated: 2024/12/18 22:24:49 by teando           ###   ########.fr       */
+/*   Updated: 2024/12/23 20:26:33 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,42 +24,26 @@ typedef struct s_lexer
 
 /* <---------------- 外部インターフェース ----------------> */
 t_status		xlexer(t_info *info);
+void			token_list_free(t_list **token_list);
+void			debug_print_token_list(t_list *list);
 
 /* <---------------- 内部用プロトタイプ ----------------> */
 
-/* lexer_cmd_token.c */
-t_status		convert_tokens_to_cmd_tokens(t_list *tokens, t_info *info);
+// lexer_main_loop.c
+int				tokenize_line(t_info *info);
 
-/* lexer_error.c */
-t_list			*add_error_token(t_list *tokens);
+// lexer_handler.c
+void			skip_spaces(const char *line, size_t *pos);
+char			*read_word(const char *line, size_t *pos, t_info *info);
+t_token_type	get_two_char_op(const char *s, size_t *len);
+t_token_type	get_one_char_op(char c);
 
-/* lexer_loop.c */
-t_list			*lexer_loop(t_lexer *lx);
+// allocate_token.c
+t_token			*create_token(t_token_type type, char *value, t_info *info);
+int				add_token(t_info *info, t_token *tok);
+void			token_list_free(t_list **token_list);
 
-/* lexer_quote.c */
-char			*read_quoted_word(t_lexer *lx, char quote);
-
-/* lexer_read_word.c */
-char			*read_word(t_lexer *lx);
-
-/* lexer_token_manage.c */
-t_token			make_token(t_token_type type, const char *val);
-void			free_token(void *content);
-t_list			*token_list_add(t_list *lst, t_token tk);
-
-/* lexer_utils.c */
-t_cmd_token		*create_cmd_token(t_info *info, t_token_type type, char *path,
-					char **args);
-void			skip_spaces(t_lexer *lx);
-int				is_special_char(char c);
-int				is_token_special(t_token_type type);
-int				is_token_redirect(t_token_type type);
-
-/* lexer_wildcards */
-void			expand_wildcards(t_list **tokens, t_info *info);
-
-// test
-void			print_cmd_tokens(const t_list *tokens);
-void			free_cmd_token(void *data);
+// validate_syntax.c
+int				validate_syntax(t_info *info);
 
 #endif

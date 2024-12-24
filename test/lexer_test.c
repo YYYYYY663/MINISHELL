@@ -10,16 +10,16 @@ static void	print_tokens(t_token *tokens)
 	{
 		switch (tokens[i].type)
 		{
-		case TT_CMD:
+		case TT_WORD:
 			type_str = "CMD";
 			break ;
 		case TT_PIPE:
 			type_str = "PIPE";
 			break ;
-		case TT_REDIRECT_IN:
+		case TT_REDIR_IN:
 			type_str = "REDIRECT_IN";
 			break ;
-		case TT_REDIRECT_OUT:
+		case TT_REDIR_OUT:
 			type_str = "REDIRECT_OUT";
 			break ;
 		case TT_APPEND:

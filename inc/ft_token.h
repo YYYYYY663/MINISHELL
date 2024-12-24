@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_token.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 18:20:59 by teando            #+#    #+#             */
-/*   Updated: 2024/12/22 16:41:19 by ymizukam         ###   ########.fr       */
+/*   Updated: 2024/12/24 19:32:03 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef TOKEN_H
 # define TOKEN_H
@@ -17,23 +18,26 @@
 
 typedef enum e_token_type
 {
-	TT_CMD,          // コマンドトークン
-	TT_PIPE,         // パイプ
-	TT_REDIRECT_IN,  // 入力リダイレクト
-	TT_REDIRECT_OUT, // 出力リダイレクト
-	TT_APPEND,       // 追記リダイレクト
-	TT_HEREDOC,      // ヒアドキュメント
-	TT_LPAREN,       // (
-	TT_RPAREN,       // )
-	TT_AND_AND,      // &&
-	TT_OR_OR,        // ||
-	TT_SEMICOLON,    // ;
-	TT_EOF,          // 終端
-	TT_ERROR         // エラー
+	TT_WORD,      // text
+	TT_PIPE,      // |
+	TT_REDIR_IN,  // <
+	TT_APPEND,    // >>
+	TT_REDIR_OUT, // >
+	TT_HEREDOC,   // <<
+	TT_LPAREN,    // (
+	TT_RPAREN,    // )
+	TT_AND_AND,   // &&
+	TT_OR_OR,     // ||
+	TT_SEMICOLON, // ;
+	TT_EOF,       // 終端
+	TT_ERROR      // エラー
 }						t_token_type;
 
 // todo それぞれnew, free, aplly関数を作る
 typedef struct s_ast_node_item
+	// 外に出さないとこれをnewする関数が作れない。。。
+	//  todo それぞれnew, free, aplly関数を作る
+	typedef struct s_ast_node
 {
 	enum
 	{
