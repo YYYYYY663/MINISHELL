@@ -31,7 +31,9 @@ pid_t	cmd_node(t_ast *node, int in_fd, int out_fd, t_info *info)
 	//cmd, rd_i, rd_oの変数展開
 	//redirectの解決
 	char 	**argv = ft_list_to_strs(node->args->cmd);
-	ft_putstrs_endl_fd(argv,"\n",2);
+	#ifdef FUNC_OUT
+		ft_putstrs_endl_fd(argv,"\n",2);
+	#endif
 
 	if (in_fd == -1 || out_fd == -1)
 		return (-1);
