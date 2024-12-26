@@ -12,10 +12,11 @@
 
 #include "ft_system.h"
 #include "ft_token.h"
+#include "xunistd.h"
 
 void token_clear(void *ptr)
 {
-	#ifdef FUNC_OUT
+	#ifdef FUNC_OUT_ALLOCATE
 		printf("%s\n",__func__);
 	#endif
 	t_token *token = (t_token *)ptr; 
@@ -27,17 +28,21 @@ void token_clear(void *ptr)
 
 void	ast_clear(t_ast *node)
 {
-	#ifdef FUNC_OUT
+	#ifdef FUNC_OUT_ALLOCATE
 		printf("%s\n",__func__);
 	#endif
 	if (!node)
 		return ;
 	ast_clear(node->left);
 	ast_clear(node->right);
-	if (node->args)
-	{
-		ft_lstclear(&node->args,token_clear);
-	}
+	if (node->args->cmd)
+		ft_lstclear(&node->args->cmd,token_clear);
+	if (node->args->rd_i)
+		ft_lstclear(&node->args->rd_i,token_clear);
+	if (node->args->rd_o)
+		ft_lstclear(&node->args->rd_o, token_clear);
+	xclose(&node->args->fds[0]);
+	xclose(&node->args->fds[1]);
 	free(node);
 }
 

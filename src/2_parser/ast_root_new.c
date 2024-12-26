@@ -38,16 +38,23 @@ t_ast	*ast_node_new(int type, t_info *info)
 
 t_args	*consume_args(t_list **lst, t_info *info)
 {
+    #ifdef FUNC_OUT
+		printf("%s\n",__func__);
+	#endif
 	t_args	*args = ast_args_new(info);
 	t_token *token = (t_token *)(*lst)->data;
+    t_list *new_lst;
 	while ((token->type & 0xF000) == CMD_ARG)
 	{
+        printf("consume %s\n", token->value);
+        new_lst = ft_lstnew(token->value);
         if (token->type == TT_WORD)
-		    ft_lstadd_back(&args->cmd, *lst);//todo *lstのコピーを渡さなければならない！！！！！
+		    ft_lstadd_back(&args->cmd, new_lst);
         if (token->type == TT_HEREDOC || token->type == TT_REDIR_IN)
-            ft_lstadd_back(&args->rd_i, *lst);
+            ft_lstadd_back(&args->rd_i, new_lst);
         if (token->type == TT_APPEND || token->type == TT_REDIR_OUT)
-            ft_lstadd_back(&args->rd_o, *lst);
+            ft_lstadd_back(&args->rd_o, new_lst);
+        (*lst)->data = NULL;
         (*lst) = (*lst)->next;
         token = (t_token *)(*lst)->data;
 	}

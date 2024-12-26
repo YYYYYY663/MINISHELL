@@ -16,7 +16,7 @@ CFLAGS		:= -Wall -Wextra
 
 
 
-NAME		:= parser
+NAME		:= libpars.a
 CC			:= cc
 LFLAGS		:= -lreadline
 RM			:= rm -rf
@@ -71,7 +71,7 @@ re:	fclean all
 test: $(NAME)
 	@$(CC) -Wall -Wextra  $(IDFLAGS) $(DEBUGFLAGS) $(NAME) $(LIBFT) $(LIBSYS) $(LIBLEX) __2main.c -o test2XXXX
 	@./test2XXXX
-	@rm test2XXXX
+	@rm -rf test2XXXX
 
 
 .PHONY: all clean fclean re initsub sub norm debug
