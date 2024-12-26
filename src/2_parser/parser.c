@@ -43,6 +43,7 @@ t_list *expect(int type, t_list **lst)
 
 }
 
+
 t_status  aligne_token(t_info *info)
 {
     t_list *lst = info->token_list;

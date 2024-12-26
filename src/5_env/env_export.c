@@ -32,7 +32,7 @@ t_status	env_export(t_info *info, char *key, char *val)
 	if (lst) //すでに存在する場合上書き
 	{
 		xfree(&lst->data);
-		lst->data = key
+		lst->data = key;
 		return (info->status);
 	}
 	map_append(info,key,val);

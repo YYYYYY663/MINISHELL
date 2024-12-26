@@ -43,6 +43,12 @@ fclean: clean
 
 re: fclean all
 
+test: $(NAME)
+	$(CC) -Wall -Wextra $(IDFLAGS) $(NAME) $(LIBFT) __0main.c -o test0
+	./test0
+	rm test0
+
+
 -include $(DEPS)
 
 .PHONY: all clean fclean re

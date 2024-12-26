@@ -14,15 +14,32 @@
 # define TOKEN_H
 
 # include "libft.h"
+#define CONNECT 01000 //&& || ; EOF 
+#define CMD_ARG 00400
+#define WORD 00500
+#define REDIRECT 00600
+#define SINGLE_QUOTE 00010
+#define DOUBLE_QUOTE 00020
+
+
+
+
+/*
+* USAGE
+* 00510[WORD | SINGLE_QUOTE] 'HI WHATS UP!'
+* []
+*
+*/
+
 
 typedef enum e_token_type
 {
-	TT_WORD,      // text
+	TT_WORD = 0051,      // text
 	TT_PIPE,      // |
-	TT_REDIR_IN,  // <
-	TT_APPEND,    // >>
-	TT_REDIR_OUT, // >
-	TT_HEREDOC,   // <<
+	TT_REDIR_IN = 061,  // <
+	TT_APPEND = 062,    // >>
+	TT_REDIR_OUT = 063, // >
+	TT_HEREDOC = 064,   // <<
 	TT_LPAREN,    // (
 	TT_RPAREN,    // )
 	TT_AND_AND,   // &&
