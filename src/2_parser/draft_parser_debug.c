@@ -26,21 +26,19 @@ static const char	*e_type_to_str(int t)
 	if (t == NT_EOF)
 		return ("NT_EOF");
 	if (t == NT_OR)
-		return ("NT_OR")
+		return ("NT_OR");
 	return ("UNKNOWN");
 }
 
-void	debug_print_ast(t_btree *root, int depth)
+void	debug_print_ast(t_ast *ast, int depth)
 {
-	t_ast	*ast;
 	t_list			*p;
 	char			*word;
 
-	if (!root)
+	if (!ast)
 		return ;
 	for (int i = 0; i < depth; i++)
 		ft_dprintf(STDOUT_FILENO, "  ");
-	ast = (t_ast *)root->item;
 	if (!ast)
 	{
 		ft_dprintf(STDOUT_FILENO, "(null)\n");
@@ -52,7 +50,7 @@ void	debug_print_ast(t_btree *root, int depth)
 	if (ast->e_type == NT_CMD && ast->args)
 	{
 		ft_dprintf(STDOUT_FILENO, " args=[");
-		p = ast->args;
+		p = ast->args->cmd;
 		while (p)
 		{
 			word = (char *)p->data;
@@ -65,6 +63,6 @@ void	debug_print_ast(t_btree *root, int depth)
 	}
 	ft_dprintf(STDOUT_FILENO, "\n");
 	// 再帰
-	debug_print_ast(root->left, depth + 1);
-	debug_print_ast(root->right, depth + 1);
+	debug_print_ast(ast->left, depth + 1);
+	debug_print_ast(ast->right, depth + 1);
 }
