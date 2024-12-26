@@ -15,11 +15,6 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_info	*info;
-
-	printf("%s\n", envp[0]);
 	info = system_init(envp);
-	// envcp = ft_list_to_strs(info->env_map);
-	// ft_putstrs_fd(envcp, "\n", STDOUT_FILENO);
-	// ft_strs_clear(envcp);
-	// system_exit(info, 0);
+	system_exit(info, 0);
 }

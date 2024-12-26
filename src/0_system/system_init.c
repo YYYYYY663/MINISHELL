@@ -15,6 +15,9 @@
 
 void token_clear(void *ptr)
 {
+	#ifdef FUNC_OUT
+		printf("%s\n",__func__);
+	#endif
 	t_token *token = (t_token *)ptr; 
 	if (!token)
         return ;
@@ -24,6 +27,9 @@ void token_clear(void *ptr)
 
 void	ast_clear(t_ast *node)
 {
+	#ifdef FUNC_OUT
+		printf("%s\n",__func__);
+	#endif
 	if (!node)
 		return ;
 	ast_clear(node->left);
@@ -37,19 +43,27 @@ void	ast_clear(t_ast *node)
 
 t_info *system_init(char **envp)
 {
+	#ifdef FUNC_OUT
+		printf("%s\n",__func__);
+	#endif
 	t_info *info;
 
 	info = ft_calloc(sizeof(t_info), 1);
 	if (!info)
 		return (NULL);
 	(void)envp;
-	// info->env_map = x_lst_from_strs(envp);
-	// getcwd(info->cwd, PATH_MAX);
+	info->env_map = ft_list_from_strs(envp);
+	if(getcwd(info->cwd, PATH_MAX))
+		//todo 
+		;
 	return (info);
 }
 
 void system_deinit(t_info *info)
 {
+	#ifdef FUNC_OUT
+		printf("%s\n",__func__);
+	#endif
 	if (!info)
 		return;
 	free(info->source_line);

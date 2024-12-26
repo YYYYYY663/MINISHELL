@@ -5,6 +5,7 @@ INCS_DIR	:= ../../inc
 LIBFT_DIR	:= ../../lib/libft
 LIBFT		:= $(LIBFT_DIR)/libft.a
 IDFLAGS		:= -I$(INCS_DIR) -I$(LIBFT_DIR)
+DEBUGFLAGS  := -DFUNC_OUT
 
 RM          := rm -rf
 ROOT_DIR    := .
@@ -32,7 +33,7 @@ $(LIBFT): | $(LIBFT_DIR)/Makefile
 
 $(OUT_DIR)/%.o: %.c
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) -MMD -MP $(IDFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(DEBUGFLAGS) -MMD -MP $(IDFLAGS) -c $< -o $@
 
 
 clean:
@@ -44,9 +45,9 @@ fclean: clean
 re: fclean all
 
 test: $(NAME)
-	$(CC) -Wall -Wextra $(IDFLAGS) $(NAME) $(LIBFT) __0main.c -o test0
-	./test0
-	rm test0
+	@$(CC) -Wall -Wextra  $(IDFLAGS) $(DEBUGFLAGS) $(NAME) $(LIBFT) __0main.c -o test0XXXX
+	@./test0XXXX
+	@rm test0XXXX
 
 
 -include $(DEPS)
