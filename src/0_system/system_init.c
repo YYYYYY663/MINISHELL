@@ -16,11 +16,11 @@
 
 void token_clear(void *ptr)
 {
-	#ifdef FUNC_OUT_ALLOCATE
+	#ifdef FUNC_OUT
 		printf("%s\n",__func__);
 	#endif
 	t_token *token = (t_token *)ptr; 
-	if (!token)
+	if (token == NULL)
         return ;
     free(token->value);
     free(token);
@@ -28,7 +28,7 @@ void token_clear(void *ptr)
 
 void	ast_clear(t_ast *node)
 {
-	#ifdef FUNC_OUT_ALLOCATE
+	#ifdef FUNC_OUT
 		printf("%s\n",__func__);
 	#endif
 	if (!node)
