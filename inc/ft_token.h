@@ -41,7 +41,7 @@ typedef enum e_token_type
     TT_AND_AND = 0x2001,     // &&
     TT_OR_OR = 0x2002,       // ||
     TT_SEMICOLON = 0x2003,   // ;
-    TT_EOF = 0x2001,         // End of file
+    TT_EOF = 0x2004,         // End of file
     TT_ERROR = 0x002        // Error
 } t_token_type;
 
