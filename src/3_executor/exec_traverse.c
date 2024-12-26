@@ -90,7 +90,7 @@ t_status pipe_node(t_ast *node, int in_fd, int out_fd, t_info *info)
 		// if (node->left->ntype != NT_CMD)
 		// 	traverse_ast_nodes(node,info);
 		waitpid(cmd_node(node->left, in_fd, out_fd, info), &status, 0);
-		xclose(&in_fd);
+		// xclose(&in_fd);
 	}
 	return ((t_status)status);
 }

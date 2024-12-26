@@ -1,6 +1,5 @@
 
-DEBUGFLAGS  := -DTEST
-#-DFUNC_OUT
+DEBUGFLAGS  := -DFUNC_OUT
 SRCS 		:= executor.c exec_traverse.c
 CFLAGS		:= -Wall -Wextra
 
