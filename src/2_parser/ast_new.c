@@ -102,8 +102,9 @@ t_ast	*pipeline(t_list **list, t_info *info)
 		printf("%s node: %s\n",__func__,type_to_str(token->type));
 	#endif
 
-	pipe_node = primary(list, info);
-	//pipe_node = ast_node_new(NT_PIPE, NULL,NULL ,info);
+	//pipe_node = primary(list, info);
+	pipe_node = ast_node_new(NT_PIPE, primary(list,info), NULL ,info);
+	//*list = (*list)->next;
 	current_node = pipe_node;
 	while (1)//まず読むのはWORD REDIRのどれか
 	{
@@ -113,13 +114,15 @@ t_ast	*pipeline(t_list **list, t_info *info)
 		//leftにargsを加えていく
         //current_node->left = primary(list,info);
         token = (t_token *)(*list)->data;
+		printf("..........: %s\n", type_to_str(token->type));
         if (token->type != TT_PIPE)
             break;
-		current_node->right = ast_node_new(NT_PIPE,NULL,NULL, info);
-        *list = (*list)->next;
+		*list = (*list)->next;
+		current_node->right = ast_node_new(NT_PIPE,primary(list,info) ,NULL, info);
 		current_node = current_node->right;
 	}
-    //pipe以外のものがきたら抜ける（bonus)
+	printf("..........pipeout.........\n");
+	printf("%s\n",e_type_to_str(pipe_node->ntype));
 	return (pipe_node);
 }
 
@@ -133,6 +136,9 @@ t_ast	*expr(t_list **list, t_info *info)
 		printf("%s node: %s\n",__func__,type_to_str(token->type));
 	#endif
 	t_ast	*node = pipeline(list, info);
+	
+	printf("node:\n");
+
 	token = (t_token *)(*list)->data;
 	while (1)
 	{
@@ -140,19 +146,27 @@ t_ast	*expr(t_list **list, t_info *info)
 		{
 			*list = (*list)->next;
 			node = ast_node_new(NT_AND, node, pipeline(list,info),info);
+			token = (t_token *)(*list)->data;
 		}
 		else if (token->type == TT_OR_OR)
 		{
 			*list = (*list)->next;
 			node = ast_node_new(NT_OR, node, pipeline(list,info),info);
+			token = (t_token *)(*list)->data;
 		}
 		else if (token->type == TT_SEMICOLON)
 		{
 			*list = (*list)->next;
 			node = ast_node_new(NT_EOF, node, pipeline(list,info),info);
+			token = (t_token *)(*list)->data;
 		}
 		else
+		{
+			#ifdef FUNC_OUT
+				printf("%s node: %s\n","expr last",type_to_str(token->type));
+			#endif
 			break;
+		}
 	}
 	return (node);
 }
