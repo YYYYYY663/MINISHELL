@@ -42,13 +42,14 @@ t_ast	*ast_node_new(int type, t_ast *left, t_ast *right, t_info *info)
 t_args	*consume_args(t_list **lst, t_info *info)
 {
 	t_args	*args = ast_args_new(info);
-    t_list *new_lst;
 	t_token *token = (t_token *)(*lst)->data;
+    t_list *new_lst;
     #ifdef FUNC_OUT
 		printf("%s node: %s\n",__func__,type_to_str(token->type));
 	#endif
 	while ((token->type & 0xF000) == CMD_ARG)
 	{
+        printf("consume %s\n", token->value);
         new_lst = ft_lstnew(token->value);
         if (token->type == TT_WORD)
 		    ft_lstadd_back(&args->cmd, new_lst);
@@ -96,9 +97,8 @@ t_ast *primary(t_list **list, t_info *info)
 	t_ast *node;
 	if (consume(TT_LPAREN,list))
 	{
-		node = expr(list,info);
+		expr(list,info);
 		expect(TT_RPAREN,list);
-		return node;
 	}
 	node = ast_node_new(NT_CMD ,NULL, NULL, info);
     node->args = consume_args(list,info);
@@ -116,13 +116,24 @@ t_ast	*pipeline(t_list **list, t_info *info)
 		t_token *token = (t_token *)(*list)->data;
 		printf("%s node: %s\n",__func__,type_to_str(token->type));
 	#endif
+
+	//pipe_node = primary(list, info);
 	pipe_node = ast_node_new(NT_PIPE, primary(list,info), NULL ,info);
+	// *list = (*list)->next;
 	current_node = pipe_node;
-	while (consume(TT_PIPE, list))
+	while (1)//まず読むのはWORD REDIRのどれか
 	{
+		#ifdef FUNC_OUT
+        	token = (t_token *)(*list)->data;
+			printf("..........: %s\n", type_to_str(token->type));
+		#endif
+        if (!consume(TT_PIPE, list))
+            break;
 		current_node->right = ast_node_new(NT_PIPE, primary(list,info) ,NULL, info);
 		current_node = current_node->right;
 	}
+	printf("..........pipeout.........\n");
+	printf("%s\n",e_type_to_str(pipe_node->ntype));
 	return (pipe_node);
 }
 
@@ -130,6 +141,11 @@ t_ast	*pipeline(t_list **list, t_info *info)
 
 t_ast	*expr(t_list **list, t_info *info)
 {
+	t_token *token;
+	token = (t_token *)(*list)->data;
+	#ifdef FUNC_OUT
+		printf("%s node: %s\n",__func__,type_to_str(token->type));
+	#endif
 	t_ast	*node = pipeline(list, info);
 	
 	while (1)
@@ -148,6 +164,9 @@ t_ast	*expr(t_list **list, t_info *info)
 		}
 		else
 		{
+			#ifdef FUNC_OUT
+				printf("%s node: %s\n","expr last",type_to_str(token->type));
+			#endif
 			break;
 		}
 	}

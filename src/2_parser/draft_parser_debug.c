@@ -59,16 +59,16 @@ void	debug_print_ast(t_ast *ast, int depth)
 			if (p)
 				ft_dprintf(STDOUT_FILENO, ", ");
 		}
-		ft_dprintf(STDOUT_FILENO, "%s", " :in: ");
-		p = ast->args->rd_i;
-		while (p)
-		{
-			word = (char *)p->data;
-			ft_dprintf(STDOUT_FILENO, "%s", word);
-			p = p->next;
-			if (p)
-				ft_dprintf(STDOUT_FILENO, ", ");
-		}
+		// ft_dprintf(STDOUT_FILENO, "%s", " :in: ");
+		// p = ast->args->rd_i;
+		// while (p)
+		// {
+		// 	word = (char *)p->data;
+		// 	ft_dprintf(STDOUT_FILENO, "%s", word);
+		// 	p = p->next;
+		// 	if (p)
+		// 		ft_dprintf(STDOUT_FILENO, ", ");
+		// }
 		ft_dprintf(STDOUT_FILENO, "]");
 	}
 	ft_dprintf(STDOUT_FILENO, "\n");
