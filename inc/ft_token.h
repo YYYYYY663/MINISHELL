@@ -49,10 +49,17 @@ typedef enum e_token_type
 	TT_ERROR      // エラー
 }					t_token_type;
 
-// todo それぞれnew, free, aplly関数を作る
-// typedef struct s_ast_node_item
-// 外に出さないとこれをnewする関数が作れない。。。
-//  todo それぞれnew, free, aplly関数を作る
+
+typedef struct s_args
+{
+	t_list *cmd;
+	t_list *rd_i;
+	t_list *rd_o;
+	int fds[2];
+	pid_t pid;
+} t_args;
+
+
 typedef struct s_ast
 {
 	struct s_ast	*left;
@@ -66,7 +73,7 @@ typedef struct s_ast
 		NT_AND,
 		NT_OR
 	} e_type;
-	t_list *args; // CMDの時のみ使用 WORDとREDIRの線形リスト
+	t_args *args; // CMDの時のみ使用 WORDとREDIRの線形リスト
 }					t_ast;
 
 typedef struct s_token

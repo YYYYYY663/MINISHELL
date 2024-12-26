@@ -14,7 +14,7 @@
 
 void	*xmalloc(size_t size, t_info *info)
 {
-	#ifdef FUNC_OUT
+	#ifdef FUNC_OUT_ALLOCATE
 		printf("%s\n",__func__);
 	#endif
 	char	*memory;
@@ -30,7 +30,7 @@ void	*xmalloc(size_t size, t_info *info)
 
 t_list	*xlstnew(char *data, t_info *info)
 {
-	#ifdef FUNC_OUT
+	#ifdef FUNC_OUT_ALLOCATE
 		printf("%s\n",__func__);
 	#endif
 	t_list	*list;

@@ -67,9 +67,12 @@ void system_deinit(t_info *info)
 	if (!info)
 		return;
 	free(info->source_line);
-	if (!info->token_list)
-		ft_lstclear(&info->token_list, free);
-	if (!info->env_map)
+	if (info->token_list != NULL)
+	{
+		//ft_lstclear(&info->token_list, &token_clear);でも動く。。。謎
+		ft_lstclear(&info->token_list, token_clear);
+	}
+	if (info->env_map != NULL)
 		ft_lstclear(&info->env_map, free);
 	ast_clear(info->ast);
 	free(info);

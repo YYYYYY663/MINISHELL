@@ -31,6 +31,10 @@
  */
 t_status	launch_lexer(t_info *info)
 {
+	#ifdef FUNC_OUT
+		printf("%s\n",__func__);
+	#endif
+
 	info->token_list = NULL;
 	info->status = E_NONE;
 	if (!info->source_line)

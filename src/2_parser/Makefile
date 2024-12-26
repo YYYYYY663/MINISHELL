@@ -12,12 +12,12 @@
 
 DEBUGFLAGS  := -DFUNC_OUT
 SRCS 		:= parser.c ast_root_new.c
+CFLAGS		:= -Wall -Wextra
 
 
 
 NAME		:= parser
 CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror
 LFLAGS		:= -lreadline
 RM			:= rm -rf
 ROOT_DIR	:= .
@@ -68,7 +68,7 @@ fclean: clean
 
 
 test: $(NAME)
-	@$(CC) -Wall -Wextra  $(IDFLAGS) $(DEBUGFLAGS) $(NAME) $(LIBFT) $(LIBSYS) $(LIBLEX) __1main.c -o test2XXXX
+	@$(CC) -Wall -Wextra  $(IDFLAGS) $(DEBUGFLAGS) $(NAME) $(LIBFT) $(LIBSYS) $(LIBLEX) __2main.c -o test2XXXX
 	@./test2XXXX
 	@rm test2XXXX
 

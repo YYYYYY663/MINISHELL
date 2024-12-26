@@ -22,30 +22,30 @@ LIBFT_DIR	:= $(ROOT_DIR)/lib/libft
 LIBFT		:= $(LIBFT_DIR)/libft.a
 IDFLAGS		:= -I$(INCS_DIR) -I$(LIBFT_DIR)
 
-SRCS 		:= \
-	$(addprefix src/, \
-		$(addprefix 0_system/, \
+# SRCS 		:= \
+# 	$(addprefix src/, \
+# 		$(addprefix 0_system/, \
 
-		) \
-		$(addprefix 1_lexer/, \
+# 		) \
+# 		$(addprefix 1_lexer/, \
 	
-		) \
-		$(addprefix 2_parser/, \
-		) \
-		$(addprefix 3_executor/, \
-		) \
-		$(addprefix 4_redirect/, \
-		) \
-		$(addprefix 5_env/, \
-		) \
-		$(addprefix 6_signals/, \
-		) \
-		$(addprefix 7_builtin/, \
-		) \
-		$(addprefix 8_utils/, \
-		) \
-		main.c \
-	)
+# 		) \
+# 		$(addprefix 2_parser/, \
+# 		) \
+# 		$(addprefix 3_executor/, \
+# 		) \
+# 		$(addprefix 4_redirect/, \
+# 		) \
+# 		$(addprefix 5_env/, \
+# 		) \
+# 		$(addprefix 6_signals/, \
+# 		) \
+# 		$(addprefix 7_builtin/, \
+# 		) \
+# 		$(addprefix 8_utils/, \
+# 		) \
+# 		main.c \
+# 	)
 	
 OBJS		:= $(addprefix $(OUT_DIR)/, $(SRCS:.c=.o))
 DEPS		:= $(OBJS:.o=.d)

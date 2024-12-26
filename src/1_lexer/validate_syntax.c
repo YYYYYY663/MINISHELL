@@ -21,6 +21,9 @@
 */
 int	is_operator_token(t_token_type ttype)
 {
+	#ifdef FUNC_OUT
+		printf("%s\n",__func__);
+	#endif
 	if (ttype == TT_PIPE || ttype == TT_AND_AND || ttype == TT_OR_OR
 		|| ttype == TT_SEMICOLON || ttype == TT_LPAREN || ttype == TT_RPAREN)
 		return (1);

@@ -1,9 +1,10 @@
-// #include "ft_parser.h"
-// t_status launch_parser(t_info *info)
-// {
-//     t_ast *ast = aligne_token(info);
-//     return E_NONE;
-// }
+#include "ft_parser.h"
+
+t_status launch_parser(t_info *info)
+{
+
+    return E_NONE;
+}
 
 
 // t_ast	*ast_node_new(int type, t_list *args, t_info *info)
