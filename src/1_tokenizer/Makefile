@@ -1,3 +1,11 @@
+
+DEBUGFLAGS  := -DFUNC_OUT
+
+
+#変更を加えるかもしれないものと分ける
+
+
+
 NAME        := liblex.a
 CC          := cc
 CFLAGS      := -Wall -Wextra -Werror
@@ -25,8 +33,8 @@ endif
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(LIBSYS) $(OBJS)
-	ar rcs $@ $(OBJS) $(LIBFT) $(LIBSYS)
+$(NAME): $(OBJS)
+	ar rcs $@ $(OBJS)
 
 $(LIBFT): | $(LIBFT_DIR)/Makefile
 	$(MAKE) -C $(LIBFT_DIR)
@@ -36,7 +44,7 @@ $(LIBSYS): | $(LIBSYS_DIR)/Makefile
 
 $(OUT_DIR)/%.o: $(ROOT_DIR)/%.c
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) -MMD -MP $(IDFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(DEBUGFLAGS) -MMD -MP $(IDFLAGS) -c $< -o $@
 
 clean:
 	$(MAKE) -C $(LIBFT_DIR) clean
@@ -47,6 +55,16 @@ fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
+
+
+test: $(NAME)
+	@$(CC) -Wall -Wextra  $(IDFLAGS) $(DEBUGFLAGS) $(NAME) $(LIBFT) $(LIBSYS) __1main.c -o test1XXXX
+	@./test1XXXX
+	@rm test1XXXX
+
+
+
+
 
 
 -include $(DEPS)

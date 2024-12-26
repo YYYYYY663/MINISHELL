@@ -24,7 +24,7 @@ endif
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJS)
+$(NAME): $(OBJS)
 	ar rcs $@ $(OBJS)
 
 
