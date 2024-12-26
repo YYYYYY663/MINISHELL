@@ -10,6 +10,11 @@
 #                                                                              #
 #******************************************************************************#
 
+DEBUGFLAGS  := -DFUNC_OUT
+SRCS 		:= parser.c ast_root_new.c
+
+
+
 NAME		:= parser
 CC			:= cc
 CFLAGS		:= -Wall -Wextra -Werror
@@ -20,11 +25,14 @@ OUT_DIR		:= $(ROOT_DIR)/obj
 INCS_DIR	:= ../../inc
 LIBFT_DIR	:= ../../lib/libft
 LIBSYS_DIR  := ../0_system
-LIBSYS     := $(LIBSYS_DIR)/libsys.a
+LIBLEX_DIR  := ../1_lexer
+
+LIBLEX      := $(LIBLEX_DIR)/liblex.a
+LIBSYS      := $(LIBSYS_DIR)/libsys.a
 LIBFT		:= $(LIBFT_DIR)/libft.a
 IDFLAGS		:= -I$(INCS_DIR) -I$(LIBFT_DIR)
 
-SRCS 		:= __tst.c
+
 	
 OBJS		:= $(addprefix $(OUT_DIR)/, $(SRCS:.c=.o))
 DEPS		:= $(OBJS:.o=.d)
@@ -37,14 +45,14 @@ endif
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(LIBSYS) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) $(LIBFT) $(LIBSYS) -o $@
+$(NAME): $(OBJS)
+	ar rcs $@ $(OBJS)
 
-$(LIBFT): | $(LIBFT_DIR)/Makefile
-	$(MAKE) -C $(LIBFT_DIR)
+# $(LIBFT): | $(LIBFT_DIR)/Makefile
+# 	$(MAKE) -C $(LIBFT_DIR)
 
-$(LIBSYS): | $(LIBSYS_DIR)/Makefile
-	$(MAKE) -C $(LIBSYS_DIR)
+# $(LIBSYS): | $(LIBSYS_DIR)/Makefile
+# 	$(MAKE) -C $(LIBSYS_DIR)
 
 $(OUT_DIR)/%.o: $(ROOT_DIR)/%.c
 	@mkdir -p $(@D)
@@ -58,19 +66,12 @@ fclean: clean
 	$(MAKE) -C $(LIBFT_DIR) fclean
 	$(RM) $(NAME)
 
-re: fclean all
 
-$(LIBFT_DIR)/Makefile:
-	git submodule update --init --recursive
+test: $(NAME)
+	@$(CC) -Wall -Wextra  $(IDFLAGS) $(DEBUGFLAGS) $(NAME) $(LIBFT) $(LIBSYS) $(LIBLEX) __1main.c -o test2XXXX
+	@./test2XXXX
+	@rm test2XXXX
 
-sub:
-	git submodule update --remote
-
-norm:
-	@norminette $(SRCS) $(INCS_DIR)
-
-debug:
-	$(MAKE) DEBUG=1
 
 .PHONY: all clean fclean re initsub sub norm debug
 

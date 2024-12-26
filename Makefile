@@ -25,17 +25,10 @@ IDFLAGS		:= -I$(INCS_DIR) -I$(LIBFT_DIR)
 SRCS 		:= \
 	$(addprefix src/, \
 		$(addprefix 0_system/, \
-			readline.c \
-			system_exit.c \
-			system_init.c \
-			system_io.c \
+
 		) \
-		$(addprefix 1_tokenizer/, \
-			allocate_token.c \
-			lexer_handler.c \
-			lexer_main_loop.c \
-			tokenizer.c \
-			validate_syntax.c \
+		$(addprefix 1_lexer/, \
+	
 		) \
 		$(addprefix 2_parser/, \
 		) \
@@ -46,7 +39,6 @@ SRCS 		:= \
 		$(addprefix 5_env/, \
 		) \
 		$(addprefix 6_signals/, \
-			sig_setup.c \
 		) \
 		$(addprefix 7_builtin/, \
 		) \
