@@ -40,7 +40,7 @@ t_args	*consume_args(t_list **lst, t_info *info)
 {
 	t_args	*args = ast_args_new(info);
 	t_token *token = (t_token *)(*lst)->data;
-	while (token->type != TT_WORD && token->type >> REDIRECT & 1 != 0)
+	while ((token->type & 0xF000) == CMD_ARG)
 	{
         if (token->type == TT_WORD)
 		    ft_lstadd_back(&args->cmd, *lst);//todo *lstのコピーを渡さなければならない！！！！！
@@ -59,6 +59,9 @@ t_args	*consume_args(t_list **lst, t_info *info)
 //最初に|, && ||がきたらsyntax error
 t_ast	*ast_pipeline_new(t_list *list, t_info *info)
 {
+    #ifdef FUNC_OUT
+		printf("%s\n",__func__);
+	#endif
 	t_ast	*pipe_node;
 	t_ast	*current_node;
 	t_token *token = (t_token *)list->data;

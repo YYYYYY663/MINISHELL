@@ -25,13 +25,16 @@
 
 t_status launch_parser(t_info *info);
 
-t_btree	*parse_tokens(t_info *info);
+// t_btree	*parse_tokens(t_info *info);
+
+t_ast	*ast_pipeline_new(t_list *list, t_info *info);
 
 /*
 ** デバッグ用: AST の中身 (t_ast_node_item) を再帰的に表示
 ** depth はインデント用
 */
-void	debug_print_ast(t_btree *root, int depth);
+
+void	debug_print_ast(t_ast *ast, int depth);
 
 
 #endif

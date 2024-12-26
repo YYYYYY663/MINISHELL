@@ -45,9 +45,9 @@ void	debug_print_ast(t_ast *ast, int depth)
 		return ;
 	}
 	// 種別表示
-	ft_dprintf(STDOUT_FILENO, "[%s]", e_type_to_str(ast->e_type));
+	ft_dprintf(STDOUT_FILENO, "[%s]", e_type_to_str(ast->ntype));
 	// NT_CMD の場合、argsを出力
-	if (ast->e_type == NT_CMD && ast->args)
+	if (ast->ntype == NT_CMD && ast->args)
 	{
 		ft_dprintf(STDOUT_FILENO, " args=[");
 		p = ast->args->cmd;
