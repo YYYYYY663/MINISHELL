@@ -13,9 +13,11 @@
 #ifndef FT_EXECUTOR_H
 # define FT_EXECUTOR_H
 
+#include "ft_system.h"
+
 // # include "ft_builtin.h"
 // # include "ft_redirect.h"
 t_status launch_executor(t_info *info);
 
-t_status	traverse_ast_nodes(t_btree *current_node, t_info *info);
+t_status	traverse_ast_nodes(t_ast *node, t_info *info);
 #endif

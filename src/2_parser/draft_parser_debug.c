@@ -19,8 +19,6 @@ const char	*e_type_to_str(int t)
 		return ("NT_CMD");
 	if (t == NT_PIPE)
 		return ("NT_PIPE");
-	if (t == NT_PRIORITY)
-		return ("NT_PRIORITY");
 	if (t == NT_AND)
 	    return ("NT_AND");
 	if (t == NT_EOF)

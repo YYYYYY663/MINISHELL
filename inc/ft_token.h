@@ -50,7 +50,6 @@ typedef enum e_ntype
 {
 	NT_CMD,      // words and redirects
 	NT_PIPE,     // |
-	NT_PRIORITY, // ()
 	NT_EOF,      // ; EOF
 	NT_AND,
 	NT_OR

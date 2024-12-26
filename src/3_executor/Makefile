@@ -1,11 +1,11 @@
 
 DEBUGFLAGS  := -DFUNC_OUT
-SRCS 		:= parser.c ast_new.c draft_parser_debug.c
+SRCS 		:= executor.c exec_traverse.c
 CFLAGS		:= -Wall -Wextra
 
 
 
-NAME		:= libpars.a
+NAME		:= libexec.a
 CC			:= cc
 LFLAGS		:= -lreadline
 RM			:= rm -rf
@@ -17,7 +17,7 @@ LIBSYS_DIR  := ../0_system
 LIBLEX_DIR  := ../1_lexer
 LIBPARS_DIR := ../2_parser
 
-
+LIBPARS     := $(LIBPARS_DIR)/libpars.a
 LIBLEX      := $(LIBLEX_DIR)/liblex.a
 LIBSYS      := $(LIBSYS_DIR)/libsys.a
 LIBFT		:= $(LIBFT_DIR)/libft.a
@@ -60,9 +60,9 @@ fclean: clean
 re:	fclean all
 
 test: $(NAME)
-	@$(CC) -Wall -Wextra  $(IDFLAGS) $(DEBUGFLAGS) $(NAME) $(LIBFT) $(LIBSYS) $(LIBLEX) __2main.c -o test2XXXX
-	@./test2XXXX
-	@rm -rf test2XXXX
+	@$(CC) -Wall -Wextra  $(IDFLAGS) $(DEBUGFLAGS) $(NAME) $(LIBFT) $(LIBSYS) $(LIBLEX) $(LIBPARS) __3main.c -o test3XXXX
+	@./test3XXXX
+	@rm -rf test3XXXX
 
 
 .PHONY: all clean fclean re initsub sub norm debug

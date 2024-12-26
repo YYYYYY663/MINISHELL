@@ -10,7 +10,7 @@
 #                                                                              #
 #******************************************************************************#
 
-DEBUGFLAGS  := -DFUNC_OUT
+DEBUGFLAGS  := #-DFUNC_OUT
 SRCS 		:= parser.c ast_new.c draft_parser_debug.c
 CFLAGS		:= -Wall -Wextra
 

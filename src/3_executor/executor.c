@@ -15,5 +15,6 @@
 
 t_status launch_executor(t_info *info)
 {
+    traverse_ast_nodes(info->ast, info);
     return E_NONE;
 }

@@ -12,25 +12,56 @@
 
 #include "ft_executor.h"
 #include "ft_system.h"
-
+#include "ft_token.h"
+#include "ft_parser.h"
 /*
  * CMDの処理はpreでもinでもどこでも大丈夫
  * signal handlingのためにすべてにifcheckをいれるべき
  */
-t_status	traverse_ast_nodes(t_btree *current_node, t_info *info)
+int g_signal = 0;
+
+
+t_status exec_pipe_node(t_ast *node, t_info *info)
 {
-	if (current_node == NULL)
-		return (0);
-	// プリフィックス処理
-	prefix_dispatcher(current_node, info); // pipeの準備
-	// 左部分木を処理
-	traverse_ast_nodes(current_node->left, info);
-	// インフィックス処理
-	if (infix_dispatcher(current_node, info))
-		return (info->status); //&&, || などの処理
-	// 右部分木を処理
-	traverse_ast_nodes(current_node->right, info);
-	// サフィックス処理
-	suffix_dispatcher(current_node, info); // pipeのクローズなど
-	return (info->status);
+	return E_NONE;
+}
+
+
+t_status	traverse_ast_nodes(t_ast *node, t_info *info)
+{
+	t_status status;
+	if (node == NULL)
+		return (E_NONE);
+	if (g_signal)
+		return ((t_status)g_signal);
+	#ifdef FUNC_OUT
+		printf("%s node: %s\n",__func__, e_type_to_str(node->ntype));
+	#endif
+	
+	// if (node->ntype == NT_CMD)pipeの中で処理する
+
+	if (node->ntype == NT_PIPE)
+		return exec_pipe_node(node, info);
+	
+	if (node->ntype == NT_AND)
+	{
+		status = traverse_ast_nodes(node->left, info);
+		if (!status)
+			return(traverse_ast_nodes(node->right, info));
+
+	}
+	if (node->ntype == NT_OR)
+	{
+		status = traverse_ast_nodes(node->left, info);
+		if (status)
+			return(traverse_ast_nodes(node->right, info));
+	}
+
+	if (node->ntype == NT_EOF)
+	{
+		status = traverse_ast_nodes(node->left, info);
+		status = traverse_ast_nodes(node->right, info);
+	}
+
+	return status;
 }
