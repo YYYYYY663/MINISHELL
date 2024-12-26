@@ -102,7 +102,7 @@ t_status exec_pipeline(t_ast *node, t_info *info)
 	if (node->left->ntype == NT_CMD)
 		return pipe_node(node, STDIN_FILENO, STDOUT_FILENO, info);
 	else
-		(traverse_ast_nodes(node->left, info));
+		return (traverse_ast_nodes(node->left, info));
 }
 
 

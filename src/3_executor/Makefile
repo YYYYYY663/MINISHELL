@@ -1,5 +1,6 @@
 
-DEBUGFLAGS  := -DFUNC_OUT
+DEBUGFLAGS  := -DTEST
+#-DFUNC_OUT
 SRCS 		:= executor.c exec_traverse.c
 CFLAGS		:= -Wall -Wextra
 
@@ -19,7 +20,7 @@ LIBPARS_DIR := ../2_parser
 
 LIBPARS     := $(LIBPARS_DIR)/libpars.a
 LIBLEX      := $(LIBLEX_DIR)/liblex.a
-LIBSYS      := $(LIBSYS_DIR)/libsys.a
+LIBSYS      := $(LIBSYS_DIR)/libsys.a	
 LIBFT		:= $(LIBFT_DIR)/libft.a
 IDFLAGS		:= -I$(INCS_DIR) -I$(LIBFT_DIR)
 
