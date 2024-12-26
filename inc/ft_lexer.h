@@ -28,6 +28,8 @@ t_status		launch_lexer(t_info *info);
 void			token_list_free(t_list **token_list);
 void			debug_print_token_list(t_list *list);
 
+const char	*type_to_str(t_token_type t);
+
 /* <---------------- 内部用プロトタイプ ----------------> */
 
 // lexer_main_loop.c

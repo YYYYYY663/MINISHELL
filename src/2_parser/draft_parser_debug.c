@@ -13,7 +13,7 @@
 #include "ft_parser.h"
 # include "ft_token.h"
 
-static const char	*e_type_to_str(int t)
+const char	*e_type_to_str(int t)
 {
 	if (t == NT_CMD)
 		return ("NT_CMD");

@@ -5,7 +5,8 @@ t_status launch_parser(t_info *info)
     #ifdef FUNC_OUT
 		printf("%s\n",__func__);
 	#endif
-    info->ast = ast_pipeline_new(info->token_list, info);
+
+    info->ast = expr(&info->token_list, info);
 
     return E_NONE;
 }

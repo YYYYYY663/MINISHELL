@@ -23,12 +23,15 @@
 **   戻り値: ASTのルートノード (t_btree*)。エラー時はNULL。
 */
 
+
+const char	*e_type_to_str(int t);
+
 t_status launch_parser(t_info *info);
 
 // t_btree	*parse_tokens(t_info *info);
 
-t_ast	*ast_pipeline_new(t_list *list, t_info *info);
-
+t_ast	*pipeline(t_list **list, t_info *info);
+t_ast	*expr(t_list **list, t_info *info);
 /*
 ** デバッグ用: AST の中身 (t_ast_node_item) を再帰的に表示
 ** depth はインデント用

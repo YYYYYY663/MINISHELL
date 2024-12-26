@@ -50,7 +50,7 @@ t_status	launch_lexer(t_info *info)
 	return (info->status);
 }
 
-static const char	*type_to_str(t_token_type t)
+const char	*type_to_str(t_token_type t)
 {
 	if (t == TT_WORD)
 		return ("TT_WORD");
