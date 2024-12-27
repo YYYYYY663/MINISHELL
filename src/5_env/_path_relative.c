@@ -13,8 +13,55 @@
 #include "ft_env.h"
 #include "ft_system.h"
 
-int	resolve_path_home(char path[], char *src, int mode, t_info *info)
+
+int	resolve_path_relative(char path[], char *src, int mode, t_info *info)
 {
-	ft_strlcpy(path, src, PATH_MAX);
+	ft_strlcpy(path, info->cwd, PATH_MAX);
+	printf("path:  %s  src:  %s\n",path,src);
+	if(ft_strncmp(src, ".", 2) == 0) 
+		return access(path, mode);
+	if (ft_strncmp(src, "./", 2) == 0)
+	{
+		puts("./\n");
+		ft_strlcat(path, src+1, PATH_MAX);
+		return (access(path, mode));
+	}
+	if (ft_strncmp(src, "..", 3) == 0)
+	{
+		puts("..\n");
+		char *slash = ft_strrchr(path,'/');
+		//voidであることはありえない
+		if (slash!=path)
+			*slash ='\0';
+		return (access(path, mode));
+	}
+	if (ft_strncmp(src, "../", 3) == 0)
+	{
+		puts("../\n");
+		char *slash = ft_strrchr(path,'/');
+		if (slash!=path)
+			*slash ='\0';
+		ft_strlcat(path, src+2, PATH_MAX);
+		return (access(path, mode));
+	}
+	//todo ../../../fileなどの対応!!!
+	puts("other");
 	return (access(path, mode));
 }
+
+
+
+//cc _path_relative.c -DRELATIVE_TEST -I../../inc -I ../../lib/libft  ../../lib/libft/libft.a && ./a.out
+#ifdef RELATIVE_TEST
+int main()
+{
+	char path[PATH_MAX];
+	t_info *info = malloc(sizeof(t_info));
+	getcwd(info->cwd, PATH_MAX);
+	//printf("cwd: %s\n",info->cwd);
+	resolve_path_relative(path, "..", F_OK, info);
+	perror(path);
+	resolve_path_relative(path, "./_env_utils.c", F_OK, info);
+	perror(path);
+}
+#endif

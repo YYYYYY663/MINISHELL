@@ -13,7 +13,6 @@
 #include "ft_env.h"
 
 // keyから値を取得、なかったら""
-
 char	*env_get(t_list *env, char *key)
 {
 	t_list	*lst;
@@ -22,8 +21,18 @@ char	*env_get(t_list *env, char *key)
 	// note leak!!!MAX_PATHとして持っても良い
 	if (!lst)
 		return (ft_strdup(""));
-	t_map *map = (t_map *)lst->data;
-	if (!map)
-		return (ft_strdup(""));
-	return (ft_strdup(map->val));
+	return (ft_substr_r(lst->data, '='));
 }
+// char	*env_get(t_list *env, char *key)
+// {
+// 	t_list	*lst;
+
+// 	lst = ft_list_find(env, key, __cmp);
+// 	// note leak!!!MAX_PATHとして持っても良い
+// 	if (!lst)
+// 		return (ft_strdup(""));
+// 	t_map *map = (t_map *)lst->data;
+// 	if (!map)
+// 		return (ft_strdup(""));
+// 	return (ft_strdup(map->val));
+// }

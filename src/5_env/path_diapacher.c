@@ -14,7 +14,7 @@
 
 int	path_dispacher(char path[], char *src, int mode, t_info *info)
 {
-	if (access(path, mode) == 0)
+	if (access(src, mode) == 0)
 	{
 		ft_strlcpy(path, src, PATH_MAX);
 		return (access(path, mode));
