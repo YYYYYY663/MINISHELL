@@ -13,6 +13,17 @@
 #include "ft_system.h"
 #include "xunistd.h"
 
+
+void xdup2(int fildes, int fildes2, t_info *info)
+{
+	if (dup2(fildes,fildes2) == -1)
+	{
+        perror("dup2");
+        system_exit(info, errno);
+    }
+	xclose(&fildes);
+}
+
 pid_t	xfork(t_info *info)
 {
 	pid_t	pid;

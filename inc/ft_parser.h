@@ -32,7 +32,11 @@ t_status launch_parser(t_info *info);
 
 t_ast	*pipeline(t_list **list, t_info *info);
 t_ast	*expr(t_list **list, t_info *info);
+
 t_args	*consume_args(t_list **lst, t_info *info);
+t_ast	*ast_node_new(int type, t_ast *left, t_ast *right, t_info *info);
+int 	consume(t_token_type type, t_list **lst);
+void     expect(t_token_type type, t_list **lst);
 /*
 ** デバッグ用: AST の中身 (t_ast_node_item) を再帰的に表示
 ** depth はインデント用

@@ -18,6 +18,7 @@
 # include <errno.h>
 #include <fcntl.h>
 
+void xdup2(int fildes, int fildes2, t_info *info);
 pid_t	xfork(t_info *info);
 void	xpipe(int pipfds[], t_info *info);
 void	xfree(void **ptr);

@@ -20,4 +20,9 @@
 t_status launch_executor(t_info *info);
 
 t_status	traverse_ast_nodes(t_ast *node, t_info *info);
+
+
+t_status pipe_node(t_ast *node, int in_fd, int out_fd, t_info *info);
+t_status cmd_node(t_ast *node, int in_fd, int out_fd, t_info *info);
+
 #endif

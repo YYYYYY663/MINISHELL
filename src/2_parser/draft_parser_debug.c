@@ -32,6 +32,7 @@ void	debug_print_ast(t_ast *ast, int depth)
 {
 	t_list			*p;
 	char			*word;
+	t_token *token;
 
 	if (!ast)
 		return ;
@@ -51,7 +52,8 @@ void	debug_print_ast(t_ast *ast, int depth)
 		p = ast->args->argv;
 		while (p)
 		{
-			word = (char *)p->data;
+			token = (t_token *)p->data;
+			word = token->value;
 			ft_dprintf(STDOUT_FILENO, "%s", word);
 			p = p->next;
 			if (p)

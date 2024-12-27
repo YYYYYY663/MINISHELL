@@ -1,6 +1,6 @@
 
 DEBUGFLAGS  := #-DFUNC_OUT
-SRCS 		:= executor.c exec_traverse.c
+SRCS 		:= executor.c ast_traverse.c _ast_node.c
 CFLAGS		:= -Wall -Wextra
 
 
