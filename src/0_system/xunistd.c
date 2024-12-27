@@ -49,7 +49,7 @@ int	xclose(int *fd)
 {
 	int	ret;
 
-	if (!fd || *fd == -1)
+	if (!fd || *fd < 3)
 	{
 		return (0);
 	}

@@ -58,9 +58,8 @@ typedef enum e_ntype
 
 typedef struct s_args
 {
-	t_list *cmd;
-	t_list *rd_i;
-	t_list *rd_o;
+	t_list *argv;
+	t_list *redr;
 	int fds[2];
 	pid_t pid;
 } t_args;

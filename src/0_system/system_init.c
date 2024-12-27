@@ -38,12 +38,10 @@ void	ast_clear(t_ast *node)
 	ast_clear(node->right);
 	if (node->args)
 	{
-		if (node->args->cmd)
-			ft_lstclear(&node->args->cmd, token_clear);
-		if (node->args->rd_i)
-			ft_lstclear(&node->args->rd_i,token_clear);
-		if (node->args->rd_o)
-			ft_lstclear(&node->args->rd_o, token_clear);
+		if (node->args->argv)
+			ft_lstclear(&node->args->argv, token_clear);
+		if (node->args->redr)
+			ft_lstclear(&node->args->redr,token_clear);
 		xclose(&node->args->fds[0]);
 		xclose(&node->args->fds[1]);
 	}

@@ -59,11 +59,9 @@ $(OUT_DIR)/%.o: $(ROOT_DIR)/%.c
 	$(CC) $(CFLAGS) $(DEBUGFLAGS) -MMD -MP $(IDFLAGS) -c $< -o $@
 
 clean:
-	$(MAKE) -C $(LIBFT_DIR) clean
 	$(RM) $(OUT_DIR)
 
 fclean: clean
-	$(MAKE) -C $(LIBFT_DIR) fclean
 	$(RM) $(NAME)
 
 re:	fclean all

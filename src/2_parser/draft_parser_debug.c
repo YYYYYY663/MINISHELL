@@ -48,7 +48,7 @@ void	debug_print_ast(t_ast *ast, int depth)
 	if (ast->ntype == NT_CMD && ast->args)
 	{
 		ft_dprintf(STDOUT_FILENO, " args=[");
-		p = ast->args->cmd;
+		p = ast->args->argv;
 		while (p)
 		{
 			word = (char *)p->data;
