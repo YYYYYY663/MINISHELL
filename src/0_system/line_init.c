@@ -49,6 +49,8 @@ void	ast_clear(t_ast *node)
 			ft_lstclear(&node->args->redr,token_clear);
 		xclose(&node->args->fds[0]);
 		xclose(&node->args->fds[1]);
+		if(node->args->pid!=-1)
+			waitpid(node->args->pid, NULL,0);
 	}
 	free(node);
 }

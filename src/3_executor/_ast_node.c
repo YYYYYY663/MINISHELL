@@ -1,6 +1,7 @@
 #include "ft_executor.h"
 #include "ft_system.h"
 #include "ft_token.h"
+#include <signal.h>
 #include "ft_parser.h"
 /*
  * CMDの処理はpreでもinでもどこでも大丈夫
@@ -35,6 +36,11 @@ pid_t	cmd_node(t_ast *node, int in_fd, int out_fd, t_info *info)
         perror("execve");
 		exit(1);
 	}
+    xclose(&in_fd);
+    xclose(&out_fd);
+    // node->args->fds[0] = in_fd;
+    // node->args->fds[1] = out_fd;
+    node->args->pid = pid;
 	return (pid);
 }
 
@@ -45,23 +51,25 @@ t_status pipe_node(t_ast *node, int in_fd, int out_fd, t_info *info)
 	#endif
 	int pipefds[2];
 	int status = 0;
+    pid_t pid;
 	if (node->right != NULL)
 	{
 		xpipe(pipefds, info);
-		// if (node->left->ntype != NT_CMD)
-		// 	traverse_ast_nodes(node,info);
 		cmd_node(node->left, in_fd, pipefds[1], info);
-		xclose(&pipefds[1]);
+		//xclose(&pipefds[1]);
 		pipe_node(node->right, pipefds[0], out_fd, info);
-		xclose(&pipefds[0]);
+		//xclose(&pipefds[0]);
 	}
 	else
 	{
 		//todo builtinの確認
-		// if (node->left->ntype != NT_CMD)
-		// 	traverse_ast_nodes(node,info);
-		waitpid(cmd_node(node->left, in_fd, out_fd, info), &status, 0);
-		// xclose(&in_fd);
+		pid = cmd_node(node->left, in_fd, out_fd, info);
+        if (pid==-1)
+            return E_COMMAND_NOT_FOUND;//fileかもしれない todo
+        // kill(pid,SIGTERM)
+		waitpid(pid, &status, 0);
+		//cmd_node(node->left, in_fd, out_fd, info);
+        printf("last command wait status: %d\n", status);
 	}
 	return ((t_status)status);
 }

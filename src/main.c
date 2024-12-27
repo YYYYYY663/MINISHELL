@@ -38,7 +38,7 @@ void	shell_loop(t_info *info)
 {
 	while (1)
 	{
-		printf(BG_CYAN);
+		printf(BG_GREEN);
 		printf(WHITE);
 		printf("%s", info->cwd);
 		printf(RESET);
