@@ -17,7 +17,7 @@
 t_status	__cd(const char *path, char **argv, t_info *info)
 {
 	t_status	status;
-	char		absolute_path[MAX_PATH];
+	char		absolute_path[PATH_MAX];
 
 	// todo path -> absolute pathはこの関数の中で行う方が良いか
 	// char cwd[MAX_WORD_LEN];
@@ -27,9 +27,9 @@ t_status	__cd(const char *path, char **argv, t_info *info)
 		// 余裕があればROOTに移動
 		return (E_NONE);
 	}
-	ft_strlcpy(absolute_path, argv[1], MAX_PATH);
+	ft_strlcpy(absolute_path, argv[1], PATH_MAX);
 	if (argv[1][0] != '/')
-		xabsolute_path(absolute_path, argv[1], info->env_map, F_OK);
+		path_dispacher(absolute_path, argv[1], F_OK, info);
 	status = chdir(absolute_path);
 	printf("absolute_path: %s\n", absolute_path);
 	if (errno)
@@ -38,6 +38,6 @@ t_status	__cd(const char *path, char **argv, t_info *info)
 		info->status = errno;
 		return (status);
 	}
-	ft_strlcpy(info->cwd, absolute_path, MAX_PATH);
+	ft_strlcpy(info->cwd, absolute_path, PATH_MAX);
 	return (E_NONE);
 }

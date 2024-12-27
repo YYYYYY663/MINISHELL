@@ -14,6 +14,8 @@
 #include "ft_system.h"
 
 // ビルトイン関数を実行する
+
+//todo char **argvではなくてlistにした方が良い？？redirectを戻すのもここでやっt方が良い?
 t_status	builtin_dispatcher(char *path, char **argv, t_info *info)
 {
 	static const char		*builtin_names[] = {"pwd", "cd", "echo", "export",

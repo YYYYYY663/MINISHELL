@@ -16,7 +16,13 @@ LIBFT_DIR	:= ../../lib/libft
 LIBSYS_DIR  := ../0_system
 LIBLEX_DIR  := ../1_lexer
 LIBPARS_DIR := ../2_parser
+LIBENV_DIR  := ../5_env
+LIBREDR_DIR := ../4_redirect
 
+
+
+LIBREDR     := $(LIBREDR_DIR)/libredr.a
+LIBENV      := $(LIBENV_DIR)/libenv.a
 LIBPARS     := $(LIBPARS_DIR)/libpars.a
 LIBLEX      := $(LIBLEX_DIR)/liblex.a
 LIBSYS      := $(LIBSYS_DIR)/libsys.a	
@@ -60,7 +66,7 @@ fclean: clean
 re:	fclean all
 
 test: $(NAME)
-	@$(CC) -Wall -Wextra  $(IDFLAGS) $(DEBUGFLAGS) $(NAME) $(LIBFT) $(LIBSYS) $(LIBLEX) $(LIBPARS) __3main.c -o test3XXXX
+	@$(CC) -Wall -Wextra  $(IDFLAGS) $(DEBUGFLAGS) $(NAME) $(LIBFT) $(LIBSYS) $(LIBLEX) $(LIBPARS) $(LIBENV) $(LIBREDR) __3main.c -o test3XXXX
 	@./test3XXXX
 	@rm -rf test3XXXX
 

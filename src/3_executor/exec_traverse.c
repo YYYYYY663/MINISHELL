@@ -28,6 +28,7 @@ pid_t	cmd_node(t_ast *node, int in_fd, int out_fd, t_info *info)
 	pid_t	pid;
 	char	path[PATH_MAX];
 
+	//ここの処理怪しい
 	if (node->ntype == NT_PIPE)
 		return(cmd_node(node->left, in_fd, out_fd, info));
 
@@ -104,6 +105,7 @@ t_status exec_pipeline(t_ast *node, t_info *info)
 	#ifdef FUNC_OUT
 		printf("%s\n",__func__);
 	#endif
+	//ここの処理怪しい
 	if (node->left->ntype == NT_CMD)
 		return pipe_node(node, STDIN_FILENO, STDOUT_FILENO, info);
 	else

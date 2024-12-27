@@ -18,7 +18,7 @@ t_status	__env(const char *path, char **argv, t_info *info)
 {
 	char	**envp;
 
-	envp = xlst_to_strs(info->env_map, info);
+	envp = ft_list_to_strs(info->env_map);
 	(void)path;
 	(void)argv;
 	ft_putstrs_fd(envp, "\n", STDOUT_FILENO);
