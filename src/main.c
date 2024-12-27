@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+#include "ft_color.h"
 extern void	init_signals(void);
 
 // void	shell_loop(t_info *info)
@@ -38,7 +38,11 @@ void	shell_loop(t_info *info)
 {
 	while (1)
 	{
-		printf("%s", PROMPT);
+		printf(BG_CYAN);
+		printf(WHITE);
+		printf("%s", info->cwd);
+		printf(RESET);
+		printf(" $ ");
 		fflush(stdout);
 		info->source_line = get_next_line(0);
 		launch_lexer(info);
