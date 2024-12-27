@@ -27,7 +27,5 @@ int main(int argc, char **argv, char **env)
     redirect_dipacher(args->redr,&in_fd, &out_fd, info);
 
     printf("in %d   out %d\n",in_fd,out_fd);
-    system_deinit(info);
-
-    return 0;
+    system_exit(info,0);
 }

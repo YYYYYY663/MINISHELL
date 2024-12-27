@@ -23,7 +23,7 @@ int main(int argc, char **argv, char **env)
 
     debug_print_ast(info->ast, 0);
 
-    system_deinit(info);
+    system_exit(info,0);
 
     return 0;
 }

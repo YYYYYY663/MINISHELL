@@ -12,7 +12,7 @@ int main(int argc, char **argv, char **env)
 
 
     debug_print_token_list(info->token_list);
-    system_deinit(info);
+    system_exit(info,0);
 
     return 0;
 }

@@ -1,0 +1,54 @@
+#include "ft_system.h"
+#include "ft_token.h"
+#include "xunistd.h"
+
+void line_init(t_info *info)
+{
+	if (!info)
+		exit(1);
+	free(info->source_line);
+	if (info->token_list != NULL)
+	{
+		//ft_lstclear(&info->token_list, &token_clear);でも動く。。。謎
+		ft_lstclear(&info->token_list, token_clear);
+	}
+	ast_clear(info->ast);
+	#ifdef CLEAR_OUT
+		printf("%s done\n",__func__);
+	#endif
+}
+
+
+void token_clear(void *ptr)
+{
+	#ifdef CLEAR_OUT
+		printf("%s\n",__func__);
+	#endif
+	t_token *token = (t_token *)ptr; 
+	if (token == NULL)
+        return ;
+	if (token->value)
+    	free(token->value);
+    free(token);
+}
+
+void	ast_clear(t_ast *node)
+{
+	#ifdef CLEAR_OUT
+		printf("%s\n",__func__);
+	#endif
+	if (node == NULL)
+		return ;
+	ast_clear(node->left);
+	ast_clear(node->right);
+	if (node->args)
+	{
+		if (node->args->argv)
+			ft_lstclear(&node->args->argv, token_clear);
+		if (node->args->redr)
+			ft_lstclear(&node->args->redr,token_clear);
+		xclose(&node->args->fds[0]);
+		xclose(&node->args->fds[1]);
+	}
+	free(node);
+}

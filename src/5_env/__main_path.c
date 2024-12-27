@@ -39,5 +39,5 @@ int	main(int argc, char **argv, char **envp)
     perror("ls");
 
     
-	system_exit(info, 0);
+	system_exit(info,0);
 }

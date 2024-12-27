@@ -48,6 +48,8 @@ void	shell_loop(t_info *info)
 		debug_print_ast(info->ast, 0);
 
 		launch_executor(info);
+
+		line_init(info);
 	}
 }
 
@@ -60,6 +62,5 @@ int	main(int argc, char **argv, char **envp)
 	info = system_init(envp);
 	shell_loop(info);
 
-    system_deinit(info);
-	return (0);
+    system_exit(info,0);
 }

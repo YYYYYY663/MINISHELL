@@ -54,8 +54,8 @@ typedef struct s_info
 void 		token_clear(void *ptr);
 void	ast_clear(t_ast *node);
 t_info			*system_init(char **envp);
-void			system_deinit(t_info *info);
 
+void line_init(t_info *info);
 void			system_exit(t_info *info, t_status status);
 
 /**** **** **** **** READLINE **** **** **** ****/

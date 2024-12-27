@@ -31,6 +31,6 @@ int	main(int argc, char const **argv, char **env)
 	builtin_dispatcher("pwd", av, info);
 	builtin_dispatcher("env", av, info);
 	// builtin_dispatcher("exit", NULL, info);
-	system_deinit(info);
+	system_exit(info,0);
 	return (0);
 }

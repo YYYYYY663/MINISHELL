@@ -28,9 +28,8 @@ int main(int argc, char **argv, char **env)
 
     launch_executor(info);
 
-    system_deinit(info);
+    system_exit(info,0);
 
-    return 0;
 }
 
 // "ls -l | cat | grep exec && echo second | cat"

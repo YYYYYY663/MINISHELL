@@ -12,13 +12,41 @@
 
 #include "ft_system.h"
 
+
+
 void	system_exit(t_info *info, t_status status)
 {
 	#ifdef FUNC_OUT
 		printf("%s\n",__func__);
 	#endif
 
-	system_deinit(info);
+	line_init(info);
+	ft_lstclear(&info->env_map, free);
+	free(info);
 	exit(status);
 }
 
+
+
+// void system_deinit(t_info *info)
+// {
+// 	#ifdef FUNC_OUT
+// 		printf("%s\n",__func__);
+// 	#endif
+// 	if (!info)
+// 		return;
+// 	free(info->source_line);
+// 	if (info->token_list != NULL)
+// 	{
+// 		//ft_lstclear(&info->token_list, &token_clear);でも動く。。。謎
+// 		ft_lstclear(&info->token_list, token_clear);
+// 	}
+// 	if (info->env_map != NULL)
+// 		ft_lstclear(&info->env_map, free);
+// 	ast_clear(info->ast);
+// 	#ifdef CLEAR_OUT
+// 		printf("%s done\n",__func__);
+// 	#endif
+// 	free(info);
+
+// }
