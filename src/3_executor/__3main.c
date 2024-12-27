@@ -28,7 +28,7 @@ int main(int argc, char **argv, char **env)
 
     launch_executor(info);
 
-    // system_deinit(info);
+    system_deinit(info);
 
     return 0;
 }

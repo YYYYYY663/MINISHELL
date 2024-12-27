@@ -24,12 +24,6 @@ t_status redirect_dipacher(t_list *list, int *in_fd, int *out_fd, t_info *info)
         if (token->type == TT_REDIR_IN)
         {
             xclose(in_fd);
-            // if (path_dispacher(path,token->value,R_OK,info))
-            // {
-            //     perror(token->value);
-            //     xclose(out_fd);
-            //     return (E_FILE); 
-            // }
             *in_fd = open(token->value,O_RDONLY);
             if (*in_fd == -1)
             {

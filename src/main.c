@@ -14,35 +14,52 @@
 
 extern void	init_signals(void);
 
+// void	shell_loop(t_info *info)
+// {
+// 	while (1)
+// 	{
+// 		info->source_line = read_line_until_balanced(PROMPT);
+// 		if (!info->source_line)
+// 		{
+// 			ft_dprintf(STDOUT_FILENO, "exit\n");
+// 			break ;
+// 		}
+// 		if (xlexer(info) == E_NONE)
+// 		{
+// 			debug_print_token_list(info->token_list);
+// 			token_list_free(&info->token_list);
+// 		}
+// 		free(info->source_line);
+// 		info->source_line = NULL;
+// 	}
+// }
+
 void	shell_loop(t_info *info)
 {
 	while (1)
 	{
-		info->source_line = read_line_until_balanced(PROMPT);
-		if (!info->source_line)
-		{
-			ft_dprintf(STDOUT_FILENO, "exit\n");
-			break ;
-		}
-		if (xlexer(info) == E_NONE)
-		{
-			debug_print_token_list(info->token_list);
-			token_list_free(&info->token_list);
-		}
-		free(info->source_line);
-		info->source_line = NULL;
+		printf("%s", PROMPT);
+		info->source_line = get_next_line(0);
+		launch_lexer(info);
+		//debug_print_token_list(info->token_list);
+		
+		launch_parser(info);
+
+		debug_print_ast(info->ast, 0);
+
+		launch_executor(info);
 	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_info	info;
+	t_info	*info;
 
 	(void)argc;
 	(void)argv;
-	(void)envp;
-	ft_memset(&info, 0, sizeof(t_info));
-	init_signals();
-	shell_loop(&info);
+	info = system_init(envp);
+	shell_loop(info);
+
+    system_deinit(info);
 	return (0);
 }
