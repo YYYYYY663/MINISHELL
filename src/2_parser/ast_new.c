@@ -94,7 +94,7 @@ t_ast *primary(t_list **list, t_info *info)
 		printf("%s node: %s\n",__func__,type_to_str(token->type));
 	#endif
 	t_ast *node;
-	if (consume(TT_LPAREN,list))
+	while (consume(TT_LPAREN,list))
 	{
 		node = expr(list,info);
 		expect(TT_RPAREN,list);
