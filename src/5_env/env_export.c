@@ -42,7 +42,7 @@
 // }
 
 
-t_status	env_export(t_list *env, char *ent)
+t_status	env_export(char *ent, t_info *info)
 {
 	char	key[PATH_MAX];
 	char	*ent_cpy;
@@ -56,7 +56,7 @@ t_status	env_export(t_list *env, char *ent)
 		return (free(ent_cpy), E_ENV_KEY);
 	deli = ft_strspn(ent, "=");
 	ft_strncpy(key, ent, deli);
-	lst = ft_list_find(env, key, __cmp);
+	lst = ft_list_find(info->env_map, key, __cmp);
 	if (lst) //すでに存在する場合上書き
 	{
 		free(lst->data);
@@ -66,6 +66,6 @@ t_status	env_export(t_list *env, char *ent)
 	lst = ft_lstnew(ent_cpy);
 	if (!lst)
 		return (free(ent_cpy), E_ALLOCATE);
-	ft_lstadd_back(&env, lst);
+	ft_lstadd_back(&info->env_map, lst);
 	return (E_NONE);
 }

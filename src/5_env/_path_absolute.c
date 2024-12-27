@@ -13,7 +13,7 @@
 #include "ft_env.h"
 #include "ft_system.h"
 
-int	resolve_path_absolute(char path[], char *src, int mode, t_info *info)
+int	_resolve_path_absolute(char path[], char *src, int mode, t_info *info)
 {
 	ft_strlcpy(path, src, PATH_MAX);
 	return (access(path, mode));

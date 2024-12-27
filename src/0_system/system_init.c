@@ -22,7 +22,8 @@ void token_clear(void *ptr)
 	t_token *token = (t_token *)ptr; 
 	if (token == NULL)
         return ;
-    free(token->value);
+	if (token->value)
+    	free(token->value);
     free(token);
 }
 
@@ -31,18 +32,21 @@ void	ast_clear(t_ast *node)
 	#ifdef CLEAR_OUT
 		printf("%s\n",__func__);
 	#endif
-	if (!node)
+	if (node == NULL)
 		return ;
 	ast_clear(node->left);
 	ast_clear(node->right);
-	if (node->args->cmd)
-		ft_lstclear(&node->args->cmd,token_clear);
-	if (node->args->rd_i)
-		ft_lstclear(&node->args->rd_i,token_clear);
-	if (node->args->rd_o)
-		ft_lstclear(&node->args->rd_o, token_clear);
-	xclose(&node->args->fds[0]);
-	xclose(&node->args->fds[1]);
+	if (node->args)
+	{
+		if (node->args->cmd)
+			ft_lstclear(&node->args->cmd, token_clear);
+		if (node->args->rd_i)
+			ft_lstclear(&node->args->rd_i,token_clear);
+		if (node->args->rd_o)
+			ft_lstclear(&node->args->rd_o, token_clear);
+		xclose(&node->args->fds[0]);
+		xclose(&node->args->fds[1]);
+	}
 	free(node);
 }
 
@@ -58,9 +62,9 @@ t_info *system_init(char **envp)
 		return (NULL);
 	(void)envp;
 	info->env_map = ft_list_from_strs(envp);
-	if(getcwd(info->cwd, PATH_MAX))
+	if(getcwd(info->cwd, PATH_MAX));
 		//todo 
-		;
+	
 	return (info);
 }
 
@@ -80,5 +84,9 @@ void system_deinit(t_info *info)
 	if (info->env_map != NULL)
 		ft_lstclear(&info->env_map, free);
 	ast_clear(info->ast);
+	#ifdef CLEAR_OUT
+		printf("%s done\n",__func__);
+	#endif
 	free(info);
+
 }

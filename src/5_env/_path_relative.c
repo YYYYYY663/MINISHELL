@@ -14,7 +14,7 @@
 #include "ft_system.h"
 
 
-int	resolve_path_relative(char path[], char *src, int mode, t_info *info)
+int	_resolve_path_relative(char path[], char *src, int mode, t_info *info)
 {
 	ft_strlcpy(path, info->cwd, PATH_MAX);
 	printf("path:  %s  src:  %s\n",path,src);
@@ -59,9 +59,9 @@ int main()
 	t_info *info = malloc(sizeof(t_info));
 	getcwd(info->cwd, PATH_MAX);
 	//printf("cwd: %s\n",info->cwd);
-	resolve_path_relative(path, "..", F_OK, info);
+	_resolve_path_relative(path, "..", F_OK, info);
 	perror(path);
-	resolve_path_relative(path, "./_env_utils.c", F_OK, info);
+	_resolve_path_relative(path, "./_env_utils.c", F_OK, info);
 	perror(path);
 }
 #endif

@@ -1,3 +1,9 @@
+DEBUGFLAGS  := -DFUNC_OUT -DCLEAR_OUT
+SRCS        := system_exit.c system_init.c xalloc.c xunistd.c
+
+
+
+
 NAME        := libsys.a
 CC          := cc
 CFLAGS      := -Wall -Wextra -Werror
@@ -5,12 +11,10 @@ INCS_DIR	:= ../../inc
 LIBFT_DIR	:= ../../lib/libft
 LIBFT		:= $(LIBFT_DIR)/libft.a
 IDFLAGS		:= -I$(INCS_DIR) -I$(LIBFT_DIR)
-DEBUGFLAGS  := -DFUNC_OUT
 
 RM          := rm -rf
 ROOT_DIR    := .
 OUT_DIR     := $(ROOT_DIR)/obj
-SRCS        := system_exit.c system_init.c xalloc.c xunistd.c
 OBJS        := $(addprefix $(OUT_DIR)/, $(SRCS:.c=.o))
 DEPS        := $(OBJS:.o=.d)
 

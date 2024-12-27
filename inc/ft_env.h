@@ -15,31 +15,41 @@
 
 # include "ft_system.h"
 
-typedef struct s_map
-{
-	char * key;
-	char * val;
-	int opt;
-} t_map;
+// typedef struct s_map
+// {
+// 	char * key;
+// 	char * val;
+// 	int opt;
+// } t_map;
 
 
 
 
 
-/**** ENV ****/
+/**** **** **** **** ENV SET **** **** **** ****/
 // keyから値を取得、なかったらNULL
-char		*env_get(t_list *env, char *key);
+char		*env_get(char *key,  t_info *info);
 // entityを追加
-t_status	env_export(t_list *env, char *ent);
+t_status	env_export(char *ent, t_info *info);
 // keyを削除
-t_status	env_unset(t_list *env, char *key);
+t_status	env_unset(char *key,  t_info *info);
 
-// todo accessは関数ポインタとして渡す、infoを渡す
-t_status	xabsolute_path(char *dstpath, char *srcpath, t_list *env_map,
-				int mode);
-
-/**** **** **** **** UTILS **** **** **** ****/
 int			_check_key(char *key);
 int			__cmp(void *data, void *key);
+
+
+
+/**** **** **** ****  VAR  **** **** **** ****/
+int	var_dispacher(t_list *lst, t_info *info);
+
+/**** **** **** **** PATH **** **** **** ****/
+// todo accessは関数ポインタとして渡す、infoを渡す
+int	path_dispacher(char path[], char *src, int mode, t_info *info);
+
+int	_resolve_path_absolute(char path[], char *src, int mode, t_info *info);
+int	_resolve_path_home(char path[], char *src, int mode, t_info *info);
+int	_resolve_path_relative(char path[], char *src, int mode, t_info *info);
+
+
 
 #endif

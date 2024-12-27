@@ -13,11 +13,11 @@
 #include "ft_env.h"
 
 // keyを削除
-t_status	env_unset(t_list *env, char *key)
+t_status	env_unset(char *key,  t_info *info)
 {
 	t_list	*lst;
 
-	ft_list_remove_if(&env, key, __cmp, free);
+	ft_list_remove_if(&info->env_map, key, __cmp, free);
 	return (E_NONE);
 }
 

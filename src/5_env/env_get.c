@@ -13,11 +13,11 @@
 #include "ft_env.h"
 
 // keyから値を取得、なかったら""
-char	*env_get(t_list *env, char *key)
+char	*env_get(char *key,  t_info *info)
 {
 	t_list	*lst;
 
-	lst = ft_list_find(env, key, __cmp);
+	lst = ft_list_find(info->env_map, key, __cmp);
 	// note leak!!!MAX_PATHとして持っても良い
 	if (!lst)
 		return (ft_strdup(""));
