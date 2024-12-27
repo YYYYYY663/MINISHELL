@@ -1,5 +1,5 @@
 
-DEBUGFLAGS  := -DFUNC_OUT
+DEBUGFLAGS  := #-DFUNC_OUT
 
 
 #変更を加えるかもしれないものと分ける

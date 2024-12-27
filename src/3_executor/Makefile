@@ -18,9 +18,10 @@ LIBLEX_DIR  := ../1_lexer
 LIBPARS_DIR := ../2_parser
 LIBENV_DIR  := ../5_env
 LIBREDR_DIR := ../4_redirect
+LIBBLT_DIR  := ../7_builtin
 
 
-
+LIBBLT      := $(LIBBLT_DIR)/libblt.a
 LIBREDR     := $(LIBREDR_DIR)/libredr.a
 LIBENV      := $(LIBENV_DIR)/libenv.a
 LIBPARS     := $(LIBPARS_DIR)/libpars.a
@@ -66,7 +67,7 @@ fclean: clean
 re:	fclean all
 
 test: $(NAME)
-	@$(CC) -Wall -Wextra  $(IDFLAGS) $(DEBUGFLAGS) $(NAME) $(LIBFT) $(LIBSYS) $(LIBLEX) $(LIBPARS) $(LIBENV) $(LIBREDR) __3main.c -o test3XXXX
+	@$(CC) -Wall -Wextra  $(IDFLAGS) $(DEBUGFLAGS) $(NAME) $(LIBFT) $(LIBSYS) $(LIBLEX) $(LIBPARS) $(LIBENV) $(LIBREDR) $(LIBBLT) __3main.c -o test3XXXX
 	@./test3XXXX
 	@rm -rf test3XXXX
 

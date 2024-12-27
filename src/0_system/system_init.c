@@ -62,7 +62,11 @@ t_info *system_init(char **envp)
 		return (NULL);
 	(void)envp;
 	info->env_map = ft_list_from_strs(envp);
-	if(getcwd(info->cwd, PATH_MAX));
+	if(getcwd(info->cwd, PATH_MAX) == NULL)
+	{
+		perror("pwd");
+		system_exit(info, 1);
+	}
 		//todo 
 	
 	return (info);

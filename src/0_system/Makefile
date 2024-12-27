@@ -1,4 +1,4 @@
-DEBUGFLAGS  := -DFUNC_OUT -DCLEAR_OUT
+DEBUGFLAGS  := #-DFUNC_OUT -DCLEAR_OUT
 SRCS        := system_exit.c system_init.c xalloc.c xunistd.c
 
 
