@@ -15,10 +15,15 @@ int	main(int argc, char **argv, char **envp)
     env_unset("HOME",info);
     printf("after unset: %s\n",env_get("HOME",info));
     env_export("NEW_KEY=gokigennikaga!!",info);
-     printf("export: %s\n",env_get("NEW_KEY",info));
-    
+    printf("export: %s\n",env_get("NEW_KEY",info));
 
 
+    env_export("KEY=",info);
+    env_export("NOEQUAL",info);
+
+    printf("export: %s\n",env_get("KEY",info));
+    printf("NOEQUAL: %s\n",env_get("NOEQUAL",info));
+    printf("NOTEXIST: %s\n",env_get("NOTEXIST",info));
 
 	system_exit(info, 0);
 }

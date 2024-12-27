@@ -15,7 +15,20 @@
 
 int	_resolve_path_absolute(char path[], char *src, int mode, t_info *info)
 {
-	ft_strlcpy(path, src, PATH_MAX);
+	char *path_candidate = env_get("PATH", info);
+	char **path_candidates = ft_split(path_candidate,':'); 
+	int index = 0;
+	while(path_candidates[index])
+	{
+		ft_strlcpy(path, path_candidates[index], PATH_MAX);
+		ft_strlcat(path, "/", PATH_MAX);
+		ft_strlcat(path, src, PATH_MAX);
+		if (access(path, mode) == 0)
+			break;
+		index++;
+	}
+	free(path_candidate);
+	ft_strs_clear(path_candidates);
 	return (access(path, mode));
 }
 

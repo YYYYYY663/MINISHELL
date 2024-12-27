@@ -1,6 +1,10 @@
 
 DEBUGFLAGS  := -DFUNC_OUT
-SRCS        := _env_utils.c env_export.c env_get.c env_unset.c
+SRCS        := _env_utils.c env_export.c env_get.c env_unset.c \
+			   path_diapacher.c _path_absolute.c _path_relative.c _path_home.c \
+			   var_dispacher.c
+
+
 CFLAGS      := -Wall -Wextra 
 
 

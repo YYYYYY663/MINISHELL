@@ -14,6 +14,7 @@
 
 int	path_dispacher(char path[], char *src, int mode, t_info *info)
 {
+	path[0] = '\0';
 	if (access(src, mode) == 0)
 	{
 		ft_strlcpy(path, src, PATH_MAX);
@@ -21,11 +22,11 @@ int	path_dispacher(char path[], char *src, int mode, t_info *info)
 	}
 	if (src[0] == '~')
 	{
-		return (resolve_path_home(path, src, mode, info));
+		return (_resolve_path_home(path, src, mode, info));
 	}
 	if (src[0] == '.')
 	{
-		return (resolve_path_relative(path, src, mode, info));
+		return (_resolve_path_relative(path, src, mode, info));
 	}
-	return (resolve_path_absolute(path, src, mode, info));
+	return (_resolve_path_absolute(path, src, mode, info));
 }

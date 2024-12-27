@@ -15,6 +15,10 @@
 
 int	_resolve_path_home(char path[], char *src, int mode, t_info *info)
 {
-	ft_strlcpy(path, src, PATH_MAX);
+	char *home = env_get("HOME", info);
+	ft_strlcpy(path, home, PATH_MAX);
+	ft_strlcpy(path, src+1, PATH_MAX);
+
+	free(home);
 	return (access(path, mode));
 }
