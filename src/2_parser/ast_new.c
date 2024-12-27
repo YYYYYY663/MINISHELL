@@ -49,7 +49,7 @@ t_args	*consume_args(t_list **lst, t_info *info)
 	#endif
 	while ((token->type & 0xF000) == CMD_ARG)
 	{
-        new_lst = ft_lstnew(token->value);
+        new_lst = ft_lstnew(token);
         if (token->type == TT_WORD)
 		    ft_lstadd_back(&args->argv, new_lst);
         if (token->type == TT_HEREDOC || token->type == TT_REDIR_IN)

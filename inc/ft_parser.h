@@ -32,6 +32,7 @@ t_status launch_parser(t_info *info);
 
 t_ast	*pipeline(t_list **list, t_info *info);
 t_ast	*expr(t_list **list, t_info *info);
+t_args	*consume_args(t_list **lst, t_info *info);
 /*
 ** デバッグ用: AST の中身 (t_ast_node_item) を再帰的に表示
 ** depth はインデント用

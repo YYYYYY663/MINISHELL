@@ -15,6 +15,7 @@
 int	path_dispacher(char path[], char *src, int mode, t_info *info)
 {
 	path[0] = '\0';
+	//src[0] == '/'ない方が良いけどcdするときに必要
 	if (src[0] == '/' && access(src, mode) == 0)
 	{
 		ft_strlcpy(path, src, PATH_MAX);

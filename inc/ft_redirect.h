@@ -15,6 +15,7 @@
 
 # include "ft_system.h"
 
+int heredoc(const char *delimiter, t_info *info);
 
 t_status redirect_dipacher(t_list *list, int *in_fd, int *out_fd, t_info *info);
 

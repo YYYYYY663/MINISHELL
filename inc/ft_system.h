@@ -37,6 +37,7 @@ typedef enum e_status
 	E_ENV_KEY = 1,
 	E_SYNTAX = 1,
 	E_PIPE = 1,
+	E_FILE,
 	E_COMMAND_NOT_FOUND = 127,
 	E_SIGINT = 130,
 	E_SIGQUIT = 131,
