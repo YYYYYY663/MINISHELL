@@ -19,7 +19,6 @@ char **convert_argv(t_list *lst)
         token = (t_token *)lst->data;
 
     }
-
     return cargv;
 }
 

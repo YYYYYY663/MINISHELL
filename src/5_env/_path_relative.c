@@ -44,6 +44,7 @@ int	_resolve_path_relative(char path[], char *src, int mode, t_info *info)
 		ft_strlcat(path, src+2, PATH_MAX);
 		return (access(path, mode));
 	}
+	
 	//todo ../../../fileなどの対応!!!
 	puts("other");
 	return (access(path, mode));

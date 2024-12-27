@@ -67,28 +67,28 @@ $(NAME): $(LIBFT) $(LIBSYS) $(LIBLEX) $(LIBPARS) $(LIBEXEC) $(LIBENV) $(LIBREDR)
 $(LIBFT): | $(LIBFT_DIR)/Makefile
 	$(MAKE) -C $(LIBFT_DIR)
 
-$(LIBSYS): | $(LIBSYS_DIR)/Makefile
+$(LIBSYS): $(LIBSYS_DIR)/Makefile
 	$(MAKE) -C $(LIBSYS_DIR)
 
-$(LIBLEX): | $(LIBLEX_DIR)/Makefile
+$(LIBLEX): $(LIBLEX_DIR)/Makefile
 	$(MAKE) -C $(LIBLEX_DIR)
 
-$(LIBPARS): | $(LIBPARS_DIR)/Makefile
+$(LIBPARS): $(LIBPARS_DIR)/Makefile
 	$(MAKE) -C $(LIBPARS_DIR)
 
-$(LIBEXEC): | $(LIBEXEC_DIR)/Makefile
+$(LIBEXEC): $(LIBEXEC_DIR)/Makefile
 	$(MAKE) -C $(LIBEXEC_DIR)
 
-$(LIBREDR): | $(LIBREDR_DIR)/Makefile
+$(LIBREDR): $(LIBREDR_DIR)/Makefile
 	$(MAKE) -C $(LIBREDR_DIR)
 
-$(LIBENV): | $(LIBENV_DIR)/Makefile
+$(LIBENV): $(LIBENV_DIR)/Makefile
 	$(MAKE) -C $(LIBENV_DIR)
 
 # $(LIBSIG): | $(LIBSIG_DIR)/Makefile
 # 	$(MAKE) -C $(LIBSIG_DIR)
 
-$(LIBBLT): | $(LIBBLT_DIR)/Makefile
+$(LIBBLT): $(LIBBLT_DIR)/Makefile
 	$(MAKE) -C $(LIBBLT_DIR)
 
 
@@ -109,7 +109,7 @@ clean:
 	$(RM) $(OUT_DIR)
 
 fclean: clean
-	$(MAKE) -C $(LIBFT_DIR) fclean
+# $(MAKE) -C $(LIBFT_DIR) fclean
 	$(MAKE) -C $(LIBSYS_DIR) fclean
 	$(MAKE) -C $(LIBFT_DIR) fclean
 	$(MAKE) -C $(LIBLEX_DIR) fclean

@@ -39,13 +39,14 @@ void	shell_loop(t_info *info)
 	while (1)
 	{
 		printf("%s", PROMPT);
+		fflush(stdout);
 		info->source_line = get_next_line(0);
 		launch_lexer(info);
 		//debug_print_token_list(info->token_list);
 		
 		launch_parser(info);
 
-		debug_print_ast(info->ast, 0);
+		//debug_print_ast(info->ast, 0);
 
 		launch_executor(info);
 
