@@ -14,6 +14,11 @@
 # define TOKEN_H
 
 #include "libft.h"
+#include <limits.h>
+
+# ifndef PATH_MAX
+#  define PATH_MAX 2048
+# endif
 
 #define CMD_ARG       0x1000 // Command arguments
 #define CONNECT       0x2000 // &&, ||, ;
@@ -58,6 +63,8 @@ typedef enum e_ntype
 
 typedef struct s_args
 {
+	char path[PATH_MAX];
+	char **cargv;
 	t_list *argv;
 	t_list *redr;
 	int fds[2];

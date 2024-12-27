@@ -15,7 +15,7 @@
 
 # include "libft.h"
 # include "ft_token.h"
-# include <limits.h>
+
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
@@ -25,9 +25,6 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-# ifndef PATH_MAX
-#  define PATH_MAX 2048
-# endif
 // # define MAX_FD 1024
 
 typedef enum e_status

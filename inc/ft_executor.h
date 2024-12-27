@@ -23,6 +23,11 @@ t_status	traverse_ast_nodes(t_ast *node, t_info *info);
 
 
 t_status pipe_node(t_ast *node, int in_fd, int out_fd, t_info *info);
-t_status cmd_node(t_ast *node, int in_fd, int out_fd, t_info *info);
+
+pid_t	cmd_node(t_ast *node, int in_fd, int out_fd, t_info *info);
+
+
+char **convert_argv(t_list *lst);
+int setup_args(t_args *args, int *in_fd, int *out_fd, t_info *info);
 
 #endif

@@ -6,7 +6,6 @@
  * CMDの処理はpreでもinでもどこでも大丈夫
  * signal handlingのためにすべてにifcheckをいれるべき
  */
-int g_signal = 0;
 
 pid_t	cmd_node(t_ast *node, int in_fd, int out_fd, t_info *info)
 {
@@ -14,21 +13,12 @@ pid_t	cmd_node(t_ast *node, int in_fd, int out_fd, t_info *info)
 		printf("%s node: %s\n",__func__, e_type_to_str(node->ntype));
 	#endif
 	pid_t	pid;
-	char	path[PATH_MAX];
-
 	//ここの処理怪しい
 	if (node->ntype == NT_PIPE)
 		return(cmd_node(node->left, in_fd, out_fd, info));
-
-	//cmd, rd_i, rd_oの変数展開
-	//redirectの解決
-	char 	**argv = ft_list_to_strs(node->args->argv);
-	#ifdef FUNC_OUT
-		ft_putstrs_endl_fd(argv,"\n",2);
-	#endif
 	
-	// if (in_fd == -1 || out_fd == -1)
-	// 	return (-1);
+	if (setup_args(node->args, &in_fd, &out_fd, info))
+        return -1;
 	
 	pid = xfork(info);
 	if (pid == 0)
@@ -36,25 +26,14 @@ pid_t	cmd_node(t_ast *node, int in_fd, int out_fd, t_info *info)
 		#ifdef FUNC_OUT
 			dprintf(2,"in: %d\tout: %d\n",in_fd,out_fd);
 		#endif
-		if (in_fd != STDIN_FILENO)
-		{
-			dup2(in_fd, STDIN_FILENO);
-			xclose(&in_fd);
-		}
-		if (out_fd!=STDOUT_FILENO)
-		{
-			dup2(out_fd, STDOUT_FILENO);
-			xclose(&out_fd);
-		}
+        xdup2(in_fd, STDIN_FILENO,info);
+		xdup2(out_fd, STDOUT_FILENO,info);
 		#ifdef FUNC_OUT
 			dprintf(2,"in: %d\tout: %d\n",in_fd,out_fd);
 		#endif
-		// if (fetch_absolutepath(path, *node->args, info->env_path, X_OK))
-		// 	process_exit(*node->args);
-		// execve(path, node->args, );
-		execvp(argv[0], argv);
+		execve(node->args->path, node->args->cargv, ft_list_to_strs(info->env_map));
+        perror("execve");
 		exit(1);
-		// process_exit(*node->args);
 	}
 	return (pid);
 }
