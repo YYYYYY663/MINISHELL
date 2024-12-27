@@ -28,6 +28,9 @@ pid_t	cmd_node(t_ast *node, int in_fd, int out_fd, t_info *info)
 	pid_t	pid;
 	char	path[PATH_MAX];
 
+	if (node->ntype == NT_PIPE)
+		return(cmd_node(node->left, in_fd, out_fd, info));
+
 	//cmd, rd_i, rd_oの変数展開
 	//redirectの解決
 	char 	**argv = ft_list_to_strs(node->args->cmd);
