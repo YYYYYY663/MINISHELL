@@ -19,9 +19,6 @@ t_status	__cd(const char *path, char **argv, t_info *info)
 	t_status	status;
 	char		absolute_path[PATH_MAX];
 
-	// todo path -> absolute pathはこの関数の中で行う方が良いか
-	// char cwd[MAX_WORD_LEN];
-	(void)argv;
 	if (argv[1] == NULL)
 		path_dispacher(absolute_path, "~", F_OK, info);
 	else if (strncmp(argv[1],"-",2) == 0)
@@ -36,13 +33,17 @@ t_status	__cd(const char *path, char **argv, t_info *info)
 		path_dispacher(absolute_path, oldpwd, F_OK, info);
 		free(oldpwd);
 	}
+	else if (argv[1][0] == '.')
+		path_dispacher(absolute_path, argv[1], F_OK, info);
 	else
 	{
-		path_dispacher(absolute_path, argv[1], F_OK, info);
+		strlcpy(absolute_path, info->cwd, PATH_MAX);
+		strlcat(absolute_path, "/", PATH_MAX);
+		strlcat(absolute_path, argv[1], PATH_MAX);
 	}
 	
 	//printf("absolute_path: %s\n", absolute_path);
-	if (chdir(absolute_path))
+	if (chdir(absolute_path) || access(absolute_path,F_OK))
 	{
 		printf("cd: %s: %s\n", argv[1], strerror(errno));
 		info->status = errno;

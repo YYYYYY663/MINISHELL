@@ -1,6 +1,7 @@
 #include "ft_builtin.h"
 #include "ft_env.h"
 #include "ft_system.h"
+#include "ft_parser.h"
 #include <unistd.h>
 
 // /******  348e5933-7df0-4264-be7e-837938e8b1b2  *******/
@@ -14,6 +15,10 @@ int	main(int argc, char const **argv, char **env)
 	static char	*av3[5] = {"export", "SAMPLE_KEY2=TSET", NULL};
 
 	info = system_init(env);
+	t_args	*args = ast_args_new(info);
+	t_token *token = args->argv->data;
+	token->value 
+
 	// builtin_dispatcher("echo", av, info);
 	// printf("SAMPLE_KEY %s\n", env_get(info->env_map, "SAMPLE_KEY"));
 	// printf("SAMPLE_KEY2 %s\n", env_get(info->env_map, "SAMPLE_KEY2"));

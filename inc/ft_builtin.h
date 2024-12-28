@@ -16,7 +16,7 @@
 # include "ft_env.h"
 # include "ft_system.h"
 
-t_status			builtin_dispatcher(char *path, char **argv, t_info *info);
+t_status	builtin_dispatcher(t_args *args, int *in_fd, int *out_fd, t_info *info);
 
 // wrapper関数の定義　関数ポインタ型の宣言
 typedef t_status	(*t_builtin_func)(const char *path, char **argv,

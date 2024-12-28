@@ -19,19 +19,6 @@ void line_init(t_info *info)
 }
 
 
-void token_clear(void *ptr)
-{
-	#ifdef CLEAR_OUT
-		printf("%s\n",__func__);
-	#endif
-	t_token *token = (t_token *)ptr; 
-	if (token == NULL)
-        return ;
-	if (token->value)
-    	free(token->value);
-    free(token);
-}
-
 void	ast_clear(t_ast *node)
 {
 	#ifdef CLEAR_OUT

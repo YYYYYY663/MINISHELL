@@ -86,4 +86,8 @@ typedef struct s_token
 	char			*value;
 }					t_token;
 
+
+char **convert_argv(t_list *lst);
+
+
 #endif

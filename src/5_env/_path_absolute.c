@@ -18,6 +18,7 @@ int	_resolve_path_absolute(char path[], char *src, int mode, t_info *info)
 	char *path_candidate = env_get("PATH", info);
 	char **path_candidates = ft_split(path_candidate,':'); 
 	int index = 0;
+	
 	while(path_candidates[index])
 	{
 		ft_strlcpy(path, path_candidates[index], PATH_MAX);

@@ -7,21 +7,6 @@
 
 
 
-char **convert_argv(t_list *lst)
-{
-    char **cargv = ft_calloc(ft_lstsize(lst)+1, sizeof(char *));
-    t_token *token = (t_token *)lst->data;
-    char **ptr = cargv;
-    while(lst != NULL)
-    {
-        *ptr++ = token->value;//ft_strdup(token->value);
-        lst = lst->next;
-        token = (t_token *)lst->data;
-
-    }
-    return cargv;
-}
-
 
 int setup_args(t_args *args, int *in_fd, int *out_fd, t_info *info)
 {
