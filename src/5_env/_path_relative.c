@@ -17,18 +17,18 @@
 int	_resolve_path_relative(char path[], char *src, int mode, t_info *info)
 {
 	ft_strlcpy(path, info->cwd, PATH_MAX);
-	printf("path:  %s  src:  %s\n",path,src);
+	//printf("path:  %s  src:  %s\n",path,src);
 	if(ft_strncmp(src, ".", 2) == 0) 
 		return access(path, mode);
 	if (ft_strncmp(src, "./", 2) == 0)
 	{
-		puts("./\n");
+		// puts("./\n");
 		ft_strlcat(path, src+1, PATH_MAX);
 		return (access(path, mode));
 	}
 	if (ft_strncmp(src, "..", 3) == 0)
 	{
-		puts("..\n");
+		// puts("..\n");
 		char *slash = ft_strrchr(path,'/');
 		//voidであることはありえない
 		if (slash!=path)
@@ -37,7 +37,7 @@ int	_resolve_path_relative(char path[], char *src, int mode, t_info *info)
 	}
 	if (ft_strncmp(src, "../", 3) == 0)
 	{
-		puts("../\n");
+		// puts("../\n");
 		char *slash = ft_strrchr(path,'/');
 		if (slash!=path)
 			*slash ='\0';
@@ -46,7 +46,7 @@ int	_resolve_path_relative(char path[], char *src, int mode, t_info *info)
 	}
 	
 	//todo ../../../fileなどの対応!!!
-	puts("other");
+	//puts("other");
 	return (access(path, mode));
 }
 
