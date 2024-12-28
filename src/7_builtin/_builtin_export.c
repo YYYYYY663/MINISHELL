@@ -19,8 +19,9 @@ void _display_sorted_env_line(const char *entity)
 	{
 		ft_putstr_fd("=\"",STDOUT_FILENO);
         ft_putstr_fd(value,STDOUT_FILENO);
-        ft_putendl_fd("\"",STDOUT_FILENO);
+		ft_putstr_fd("\"",STDOUT_FILENO);
 	}
+	printf("\n");
 	free(value);
 	free(key);
 }
@@ -40,7 +41,7 @@ void _display_sorted_env(t_info *info)
         {
             if (ft_strcmp(envp[i], envp[j]) > 0)
             {
-                ft_swap(&envp[i], &envp[j]);
+                ft_swap(envp[i], envp[j]);
             }
             j++;
         }
