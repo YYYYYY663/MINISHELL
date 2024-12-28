@@ -38,11 +38,8 @@ void	shell_loop(t_info *info)
 {
 	while (1)
 	{
-		printf(BG_GREEN);
-		printf(WHITE);
-		printf("%s", info->cwd);
-		printf(RESET);
-		printf(" $ ");
+		printf(BG_GREEN WHITE "%s", info->cwd);
+		printf(RESET " $ ");
 		fflush(stdout);
 		info->source_line = get_next_line(0);
 		launch_lexer(info);
