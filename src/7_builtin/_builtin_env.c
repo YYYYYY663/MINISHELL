@@ -22,6 +22,7 @@ t_status	__env(const char *path, char **argv, t_info *info)
 	(void)path;
 	(void)argv;
 	ft_putstrs_fd(envp, "\n", STDOUT_FILENO);
+	ft_putendl_fd("", STDIN_FILENO);
 	ft_strs_clear(envp);
 	return (E_NONE);
 }

@@ -1,5 +1,5 @@
 
-DEBUGFLAGS  := -DFUNC_OUT
+DEBUGFLAGS  := #-DFUNC_OUT
 SRCS        :=  _builtin_env.c _builtin_unset.c _builtin_exit.c builtin_dispatcher.c _builtin_cd.c  \
                 _builtin_export.c _builtin_echo.c _builtin_pwd.c
 
@@ -54,11 +54,9 @@ $(OUT_DIR)/%.o: $(ROOT_DIR)/%.c
 	$(CC) $(CFLAGS) $(DEBUGFLAGS) -MMD -MP $(IDFLAGS) -c $< -o $@
 
 clean:
-	$(MAKE) -C $(LIBFT_DIR) clean
 	$(RM) $(OUT_DIR)
 
 fclean: clean
-	$(MAKE) -C $(LIBFT_DIR) fclean
 	$(RM) $(NAME)
 
 re: fclean all

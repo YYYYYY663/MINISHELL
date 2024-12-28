@@ -10,7 +10,7 @@ t_status	__unset(const char *path, char **argv, t_info *info)
 	i = 0;
 	while (argv[i])
 	{
-		env_unset(info->env_map, argv[i++]);
+		env_unset(argv[i++], info);
 	}
 	return (E_NONE);
 }

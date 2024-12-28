@@ -6,13 +6,15 @@ t_status	__export(const char *path, char **argv, t_info *info)
 {
 	int	i;
 
-	// printf("%s\n",env_get(info->env_map,"TEST"));
-	// printf("%s\n",env_get(info->env_map,"PWDDDDDDD"));
-	// env_export(info->env_map, argv[1]);
+	#ifdef FUNC_OUT
+	    printf("%s\n",__func__);
+		ft_putstrs_endl_fd(argv,"  ",1);
+    #endif
 	i = 1;
 	while (argv[i])
 	{
-		env_export(info->env_map, argv[i++]);
+	
+		env_export(argv[i++],info);
 	}
 	return (E_NONE);
 }
