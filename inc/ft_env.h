@@ -31,6 +31,7 @@
 char		*env_get(char *key,  t_info *info);
 // entityを追加
 t_status	env_export(char *ent, t_info *info);
+t_status env_export_item(char *key, char *value, t_info *info);
 // keyを削除
 t_status	env_unset(char *key,  t_info *info);
 

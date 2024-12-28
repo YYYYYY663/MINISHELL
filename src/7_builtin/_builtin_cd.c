@@ -23,21 +23,35 @@ t_status	__cd(const char *path, char **argv, t_info *info)
 	// char cwd[MAX_WORD_LEN];
 	(void)argv;
 	if (argv[1] == NULL)
+		path_dispacher(absolute_path, "~", F_OK, info);
+	else if (strncmp(argv[1],"-",2) == 0)
 	{
-		// 余裕があればROOTに移動
-		return (E_NONE);
+		char *oldpwd = env_get("OLDPWD",info);
+		if (oldpwd[0] == '\0')
+		{
+            printf("cd: OLDPWD not set\n");
+			free(oldpwd);
+            return (1);
+        }
+		path_dispacher(absolute_path, oldpwd, F_OK, info);
+		free(oldpwd);
 	}
-	ft_strlcpy(absolute_path, argv[1], PATH_MAX);
-	if (argv[1][0] != '/')
+	else
+	{
 		path_dispacher(absolute_path, argv[1], F_OK, info);
-	status = chdir(absolute_path);
-	printf("absolute_path: %s\n", absolute_path);
-	if (errno)
+	}
+	
+	//printf("absolute_path: %s\n", absolute_path);
+	if (chdir(absolute_path))
 	{
 		printf("cd: %s: %s\n", argv[1], strerror(errno));
 		info->status = errno;
 		return (status);
 	}
+	//printf("prev %s\n", info->cwd);
+	env_export_item("OLDPWD", info->cwd, info);
+	//printf("OLDPWD %s\n",env_get("OLDPWD", info));
 	ft_strlcpy(info->cwd, absolute_path, PATH_MAX);
+	env_export_item("PWD", info->cwd, info);
 	return (E_NONE);
 }
