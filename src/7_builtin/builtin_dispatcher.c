@@ -23,6 +23,10 @@ int setup_builtin_args(t_args *args, int *in_fd, int *out_fd, t_info *info)
     {
         return 1;
     }
+	info->stdin_backup = dup(STDIN_FILENO);
+	info->stdout_backup = dup(STDOUT_FILENO);
+	xdup2(*in_fd, STDIN_FILENO,info);
+	xdup2(*out_fd, STDOUT_FILENO,info);
 	args->cargv = convert_argv(args->argv);
 	return 0;
 }
@@ -47,8 +51,8 @@ t_status	builtin_dispatcher(t_args *args, int *in_fd, int *out_fd, t_info *info)
 			if (setup_builtin_args(args, in_fd, out_fd, info))
 				return E_FILE;
 			info->status = builtin_funcs[i](token->value, args->cargv, info);
-			xdup2(STDIN_FILENO, *in_fd, info);
-			xdup2(STDOUT_FILENO, *out_fd,info);
+			xdup2(info->stdin_backup,STDIN_FILENO, info);
+			xdup2(info->stdout_backup,STDOUT_FILENO,info);
 			return info->status;
 		}
 		i++;

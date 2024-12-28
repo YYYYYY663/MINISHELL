@@ -47,6 +47,8 @@ typedef struct s_info
 	t_list		*token_list;
 	t_ast 		*ast;
 	t_list		*env_map;
+	int         stdin_backup;
+	int         stdout_backup;
 	char		cwd[PATH_MAX];
 	t_status	status;
 }				t_info;

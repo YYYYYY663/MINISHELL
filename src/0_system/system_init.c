@@ -25,14 +25,15 @@ t_info *system_init(char **envp)
 	info = ft_calloc(sizeof(t_info), 1);
 	if (!info)
 		return (NULL);
-	(void)envp;
+	
 	info->env_map = ft_list_from_strs(envp);
 	if(getcwd(info->cwd, PATH_MAX) == NULL)
 	{
 		perror("pwd");
 		system_exit(info, 1);
 	}
-		//todo 
+	info->stdin_backup = dup(STDIN_FILENO);
+	info->stdout_backup = dup(STDOUT_FILENO);
 	
 	return (info);
 }

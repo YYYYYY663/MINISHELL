@@ -2,6 +2,55 @@
 #include "ft_env.h"
 #include "ft_system.h"
 
+
+
+
+void _display_sorted_env_line(const char *entity)
+{
+	char    *key;
+    char    *value;
+
+	key = ft_substr_l(entity,'=');
+	value = ft_substr_r(entity,'=');
+
+    ft_putstr_fd("declare -x " ,STDOUT_FILENO);
+	ft_putstr_fd(key,STDOUT_FILENO);
+	if (value[0])
+	{
+		ft_putstr_fd("=\"",STDOUT_FILENO);
+        ft_putstr_fd(value,STDOUT_FILENO);
+        ft_putendl_fd("\"",STDOUT_FILENO);
+	}
+	free(value);
+	free(key);
+}
+
+
+
+void _display_sorted_env(t_info *info)
+{
+	char **envp = ft_list_to_strs(info->env_map);
+	int i;
+	int j;
+	i = 0;
+	while (envp[i] && envp[i+1])
+	{
+		j = i + 1;
+        while (envp[j])
+        {
+            if (ft_strcmp(envp[i], envp[j]) > 0)
+            {
+                ft_swap(&envp[i], &envp[j]);
+            }
+            j++;
+        }
+         _display_sorted_env_line(envp[i++]);
+	}
+}
+
+
+
+
 t_status	__export(const char *path, char **argv, t_info *info)
 {
 	int	i;
@@ -11,6 +60,10 @@ t_status	__export(const char *path, char **argv, t_info *info)
 		ft_putstrs_endl_fd(argv,"  ",1);
     #endif
 	i = 1;
+	if (!argv[1])
+	{
+		_display_sorted_env(info);
+	}
 	while (argv[i])
 	{
 	
