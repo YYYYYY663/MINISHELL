@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_system.h"
-
+#include "xunistd.h"
 
 
 void	system_exit(t_info *info, t_status status)
@@ -21,6 +21,9 @@ void	system_exit(t_info *info, t_status status)
 	#endif
 
 	line_init(info);
+	int i = 0;
+	while (i < 128)
+		free(info->env_spc[i++]);
 	ft_lstclear(&info->env_map, free);
 	free(info);
 	exit(status);

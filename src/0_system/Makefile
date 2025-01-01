@@ -1,6 +1,5 @@
 DEBUGFLAGS  := #-DFUNC_OUT -DCLEAR_OUT
-SRCS        := system_exit.c system_init.c xalloc.c xunistd.c line_init.c token_utils.c
-
+SRCS        := system_exit.c system_init.c xalloc.c xunistd.c ast_utils.c token_utils.c
 
 
 

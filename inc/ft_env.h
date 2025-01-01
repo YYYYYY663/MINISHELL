@@ -15,15 +15,6 @@
 
 # include "ft_system.h"
 
-// typedef struct s_map
-// {
-// 	char * key;
-// 	char * val;
-// 	int opt;
-// } t_map;
-
-
-
 
 
 /**** **** **** **** ENV SET **** **** **** ****/

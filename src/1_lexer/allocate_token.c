@@ -65,24 +65,3 @@ int	add_token(t_info *info, t_token *tok)
 	return (1);
 }
 
-void	token_list_free(t_list **token_list)
-{
-	t_list	*cur;
-	t_list	*nx;
-	t_token	*tok;
-
-	cur = *token_list;
-	while (cur)
-	{
-		nx = cur->next;
-		tok = (t_token *)cur->data;
-		if (tok)
-		{
-			free(tok->value);
-			free(tok);
-		}
-		free(cur);
-		cur = nx;
-	}
-	*token_list = NULL;
-}

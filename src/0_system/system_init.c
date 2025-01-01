@@ -34,8 +34,24 @@ t_info *system_init(char **envp)
 	}
 	info->stdin_backup = dup(STDIN_FILENO);
 	info->stdout_backup = dup(STDOUT_FILENO);
+	info->env_spc['?'] = ft_itoa(0);
 	
 	return (info);
 }
 
+void line_init(t_info *info)
+{
+	if (!info)
+		exit(1);
+	free(info->source_line);
+	if (info->token_list != NULL)
+	{
+		//ft_lstclear(&info->token_list, &token_clear);でも動く。。。謎
+		ft_lstclear(&info->token_list, token_clear);
+	}
+	ast_clear(info->ast);
+	info->env_spc['?'] = ft_itoa(info->status);
+	info->status = 0;
+	
+}
 

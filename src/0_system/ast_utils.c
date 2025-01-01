@@ -2,21 +2,7 @@
 #include "ft_token.h"
 #include "xunistd.h"
 
-void line_init(t_info *info)
-{
-	if (!info)
-		exit(1);
-	free(info->source_line);
-	if (info->token_list != NULL)
-	{
-		//ft_lstclear(&info->token_list, &token_clear);でも動く。。。謎
-		ft_lstclear(&info->token_list, token_clear);
-	}
-	ast_clear(info->ast);
-	#ifdef CLEAR_OUT
-		printf("%s done\n",__func__);
-	#endif
-}
+
 
 
 void	ast_clear(t_ast *node)
