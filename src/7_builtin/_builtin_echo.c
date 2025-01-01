@@ -20,21 +20,26 @@ int _validate_option(char *arg);
 
 t_status	__echo(const char *path, char **argv, t_info *info)
 {
-	int	is_option_n;
-
+	int	is_option_n = 0;
+	int is_first = 1;
 
 	(void)path;
 
 
-	if (argv[1] == NULL)
+	while (*++argv)
 	{
-		ft_putendl_fd("", STDOUT_FILENO);
-        return (E_NONE);
+		if (_validate_option(*argv))
+        {
+            is_option_n = 1;
+            continue;
+        }
+		if (!is_first)
+			ft_putchar_fd(' ', STDOUT_FILENO);
+		is_first = 0;
+        ft_putstr_fd(*argv, STDOUT_FILENO);
 	}
-	is_option_n = _validate_option(argv[1]);
-	ft_putstrs_fd(&argv[1 + is_option_n], " ", STDOUT_FILENO);
 	if (!is_option_n)
-	    ft_putendl_fd("", STDOUT_FILENO);
+	    ft_putchar_fd('\n', STDOUT_FILENO);
 	return (E_NONE);
 }
 
