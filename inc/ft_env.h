@@ -41,7 +41,7 @@ int			__cmp(void *data, void *key);
 
 
 /**** **** **** ****  VAR  **** **** **** ****/
-int	var_dispacher(t_list *lst, t_info *info);
+int	var_dispacher(t_list **lst, t_info *info);
 
 /**** **** **** **** PATH **** **** **** ****/
 // todo accessは関数ポインタとして渡す、infoを渡す

@@ -17,7 +17,7 @@
 
 */
 
-int	var_dispacher(t_list *lst, t_info *info)
+int	var_dispacher(t_list **lst, t_info *info)
 {
 
 

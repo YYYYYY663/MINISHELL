@@ -27,28 +27,23 @@
 #define SINGLE_QUOTE  0x010 // Single quote
 #define DOUBLE_QUOTE  0x020 // Double quote
 
-/*
-* USAGE
-* 0x300 | SINGLE_QUOTE 'HI WHATS UP!'
-* []
-*/
 
-typedef enum e_token_type
-{
-    TT_WORD = 0x1101,        // Text
-    TT_PIPE = 0x302,        // |
-    TT_REDIR_IN = 0x1201,    // <
-    TT_APPEND = 0x1202,      // >>
-    TT_REDIR_OUT = 0x1203,   // >
-    TT_HEREDOC = 0x1204,     // <<
-    TT_LPAREN = 0x501,      // (
-    TT_RPAREN = 0x502,      // )
-    TT_AND_AND = 0x2001,     // &&
-    TT_OR_OR = 0x2002,       // ||
-    TT_SEMICOLON = 0x2003,   // ;
-    TT_EOF = 0x2004,         // End of file
-    TT_ERROR = 0x002        // Error
-} t_token_type;
+typedef int t_token_type;
+
+#define    TT_WORD  0x1101        // Text
+#define    TT_PIPE  0x302        // |
+#define    TT_REDIR_IN  0x1201    // <
+#define    TT_APPEND  0x1202      // >>
+#define    TT_REDIR_OUT  0x1203   // >
+#define    TT_HEREDOC  0x1204     // <<
+#define    TT_LPAREN  0x501      // (
+#define    TT_RPAREN  0x502      // )
+#define    TT_AND_AND  0x2001     // &&
+#define    TT_OR_OR  0x2002       // ||
+#define    TT_SEMICOLON  0x2003   // ;
+#define    TT_EOF  0x2004         // End of file
+#define    TT_ERROR  0x002        // Error
+
 
 
 typedef enum e_ntype
