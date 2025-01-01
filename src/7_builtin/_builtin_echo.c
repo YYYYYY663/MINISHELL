@@ -24,8 +24,6 @@ t_status	__echo(const char *path, char **argv, t_info *info)
 	int is_first = 1;
 
 	(void)path;
-
-
 	while (*++argv)
 	{
 		if (_validate_option(*argv))

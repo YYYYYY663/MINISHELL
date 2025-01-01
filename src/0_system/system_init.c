@@ -32,8 +32,8 @@ t_info *system_init(char **envp)
 		perror("pwd");
 		system_exit(info, 1);
 	}
-	info->stdin_backup = dup(STDIN_FILENO);
-	info->stdout_backup = dup(STDOUT_FILENO);
+	// info->stdin_backup = dup(STDIN_FILENO);
+	// info->stdout_backup = dup(STDOUT_FILENO);
 	info->env_spc['?'] = ft_itoa(0);
 	
 	return (info);
