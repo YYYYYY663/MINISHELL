@@ -14,17 +14,40 @@
 #include "ft_env.h"
 #include "ft_system.h"
 
+
+
+int _validate_option(char *arg);
+
 t_status	__echo(const char *path, char **argv, t_info *info)
 {
-	int	i;
 	int	is_option_n;
 
+
 	(void)path;
-	// todo　echoが失敗する場合を調べる
-	// argv[0]="echo", argv[1]="arg1", argv[2]="arg2", ...
-	// 基本的には改行付きで残りを出力。-nオプションなどは後で実装可能。
-	i = 1;
-	ft_putstrs_endl_fd(&argv[1], " ", STDOUT_FILENO);
-	//builtinでargvをfreeしなくても良いdeinitでフリーするため
+
+
+	if (argv[1] == NULL)
+	{
+		ft_putendl_fd("", STDOUT_FILENO);
+        return (E_NONE);
+	}
+	is_option_n = _validate_option(argv[1]);
+	ft_putstrs_fd(&argv[1 + is_option_n], " ", STDOUT_FILENO);
+	if (!is_option_n)
+	    ft_putendl_fd("", STDOUT_FILENO);
 	return (E_NONE);
+}
+
+
+int _validate_option(char *arg)
+{
+	if (arg[0]!= '-' || arg[1] == '\0')
+        return (0);
+    while (arg[1])
+    {
+        if (arg[1]!= 'n')
+            return (0);
+        arg++;
+    }
+    return (1);
 }
