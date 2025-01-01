@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_dispacher.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 17:12:59 by ymizukam          #+#    #+#             */
-/*   Updated: 2024/12/22 17:17:57 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/01 14:18:45 by teando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,31 @@
 
 int	var_dispacher(t_list **lst, t_info *info)
 {
+	t_list	*head;
+	t_token	*token;
 
-
-    return 0;
+	head = *lst;
+	token = (t_token *)head->data;
+	while (head->next)
+	{
+		if (ft_strchr(token->value, '*'))
+		{
+			expand_astarisk(head, info);
+			// DOUBLE QUOTE noexpand
+		}
+		if (ft_strchr(token->value, '$'))
+		{
+			expand_dollar(head, info);
+			// SINGLE QUOTE no expand
+			// DOUBLE QUOTE no word split
+		}
+		// head may change
+		token = (t_token *)head->data;
+		if (ft_strchr(token->value, '$') == NULL)
+		{
+			head = head->next;
+			token = (t_token *)head->data;
+		}
+	}
+	return (0);
 }
