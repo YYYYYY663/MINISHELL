@@ -28,12 +28,12 @@ int	var_dispacher(t_list **lst, t_info *info)
 	{
 		if (ft_strchr(token->value, '*'))
 		{
-			expand_astarisk(head, info);
+			//expand_astarisk(&head, info);
 			// DOUBLE QUOTE noexpand
 		}
 		if (ft_strchr(token->value, '$'))
 		{
-			expand_dollar(head, info);
+			//expand_dollar(&head, info);
 			// SINGLE QUOTE no expand
 			// DOUBLE QUOTE no word split
 		}

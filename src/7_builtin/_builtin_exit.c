@@ -14,6 +14,10 @@
 #include "ft_env.h"
 #include "ft_system.h"
 
+
+int is_number(char * str);
+
+
 t_status	__exit(const char *path, char **argv, t_info *info)
 {
 	/*
@@ -25,7 +29,44 @@ t_status	__exit(const char *path, char **argv, t_info *info)
 	exit
 	bash: exit: too many arguments
 	*/
+
+    int exit_status = 0;
+
 	printf("exit\n");
-	system_exit(info,info->status);
+	if (argv[1] != NULL)
+	{
+		//todo xperror早めに作る
+		
+		if (!is_number(argv[1]))
+		{
+            ft_putstr_fd("numeric argument required\n", STDERR_FILENO);
+			system_exit(info,255);
+		}
+		else if (argv[2])
+		{
+		  	ft_putstr_fd("too many arguments\n", STDERR_FILENO);
+			system_exit(info,255);
+		}
+        exit_status = ft_atoi(argv[1]);
+	}
+
+
+	
+	system_exit(info,exit_status);
 	return 1;
+}
+
+
+int is_number(char * str)
+{
+	int i = 0;
+    if (str[0] == '-')
+        i++;
+    while (str[i])
+    {
+        if (!ft_isdigit(str[i]))
+            return 0;
+        i++;
+    }
+    return 1;
 }

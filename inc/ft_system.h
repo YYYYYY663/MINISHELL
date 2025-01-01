@@ -35,6 +35,7 @@ typedef enum e_status
 	E_SYNTAX = 1,
 	E_PIPE = 1,
 	E_FILE,
+	E_ARGUMENT,
 	E_NOT_BUITIN_CMD = -2,
 	E_COMMAND_NOT_FOUND = 127,
 	E_SIGINT = 130,

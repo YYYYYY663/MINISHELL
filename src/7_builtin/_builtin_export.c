@@ -31,13 +31,14 @@ void _display_sorted_env_line(const char *entity)
 void _display_sorted_env(t_info *info)
 {
 	char **envp = ft_list_to_strs(info->env_map);
+	int len = ft_list_size(info->env_map);
 	int i;
 	int j;
 	i = 0;
-	while (envp[i] && envp[i+1])
+	while (i < len -1)
 	{
 		j = i + 1;
-        while (envp[j])
+        while (j < len)
         {
             if (ft_strcmp(envp[i], envp[j]) > 0)
             {
@@ -47,6 +48,7 @@ void _display_sorted_env(t_info *info)
         }
          _display_sorted_env_line(envp[i++]);
 	}
+	_display_sorted_env_line(envp[i++]);
 }
 
 
