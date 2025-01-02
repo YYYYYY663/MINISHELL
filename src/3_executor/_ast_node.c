@@ -57,27 +57,18 @@ t_status pipe_node(t_ast *node, int in_fd, int out_fd, t_info *info)
 	{
 		xpipe(pipefds, info);
 		cmd_node(node->left, in_fd, pipefds[1], info);
-		//xclose(&pipefds[1]);
 		return(pipe_node(node->right, pipefds[0], out_fd, info));
-		//xclose(&pipefds[0]);
 	}
 	else
 	{
-		//pipelineの最後
-		//todo builtinの確認
 		status = builtin_dispatcher(node->left->args, &in_fd, &out_fd,info);
 		if (status != E_NOT_BUITIN_CMD)
 			return status;
 
 		pid = cmd_node(node->left, in_fd, out_fd, info);
-		#ifdef FUNC_OUT
-			printf("last node of pipeline\n %d    %d   \n",in_fd,out_fd);
-		#endif
         if (pid==-1)
-            return E_COMMAND_NOT_FOUND;//fileかもしれない todo
-        // kill(pid,SIGTERM)
+            return E_COMMAND_NOT_FOUND;
 		waitpid(pid, &status, 0);
-		//cmd_node(node->left, in_fd, out_fd, info);
 	}
 	return ((t_status)status);
 }

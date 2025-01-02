@@ -14,6 +14,7 @@ int setup_args(t_args *args, int *in_fd, int *out_fd, t_info *info)
     //redirectの用意
     if (redirect_dipacher(args->redr, in_fd, out_fd, info))
     {
+        info->status = 1;
         return 1;
     }
     //pathの取得
@@ -24,7 +25,8 @@ int setup_args(t_args *args, int *in_fd, int *out_fd, t_info *info)
     }
     if (path_dispacher(args->path,token->value, X_OK, info))
     {
-        perror(token->value);
+        ft_dprintf(2, "minishell: %s: command not found", token->value);
+        info->status = 127;
         return 1;
     }
     args->cargv = convert_argv(args->argv);

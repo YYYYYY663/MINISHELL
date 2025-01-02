@@ -45,8 +45,8 @@ void    kill_pipeline(t_ast *node, t_info *info)
     if (node->ntype == NT_CMD)
 	{
 
-		//waitpid(node->args->pid,NULL,SIGTERM); 
-		kill(node->args->pid,SIGTERM);
+		waitpid(node->args->pid,NULL,SIGTERM); 
+		//kill(node->args->pid,SIGTERM);
 		//perror(node->args->cargv[0]);
 	}
 	kill_pipeline(node->right,info);
@@ -64,6 +64,9 @@ t_status	traverse_ast_nodes(t_ast *node, t_info *info)
 	{
 		exec_pipeline(node, info);
 		kill_pipeline(node->left, info);
+		printf("status %d\n", info->status);
+		free(info->env_spc['?']);
+		info->env_spc['?'] = ft_itoa(info->status);
 		return E_NONE;
 	}
 	
