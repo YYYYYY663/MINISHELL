@@ -20,6 +20,22 @@ int	_check_key(char *key)
 	空白や特殊記号（例: !, @, #, - など）は使用できない(chatGPT)
 	*/
 	// todo TEST=など
+	ft_dprintf(2,"%s\n",key);
+	printf("%s\n",key);
+	if (!ft_isalpha(key[0]) && key[0] != '_')
+	{
+		ft_dprintf(STDERR_FILENO, "minishell: export: `%s\': not a valid identifier\n", key);
+		return 1;
+	}
+	int i = 0;
+	while(key[++i])
+	{
+		if (!ft_isalnum(key[i]) && key[i]!= '_')
+		{
+			ft_dprintf(STDERR_FILENO, "minishell: export: `%s\': not a valid identifier\n", key);
+            return 1;
+		}
+	}
 	return (0);
 }
 int	__cmp(void *data, void *key)

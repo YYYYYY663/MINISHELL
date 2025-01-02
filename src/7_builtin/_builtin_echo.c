@@ -16,7 +16,7 @@
 
 
 
-int _validate_option(char *arg);
+static int _validate_option(char *arg);
 
 t_status	__echo(const char *path, char **argv, t_info *info)
 {
@@ -42,7 +42,7 @@ t_status	__echo(const char *path, char **argv, t_info *info)
 }
 
 
-int _validate_option(char *arg)
+static int _validate_option(char *arg)
 {
 	if (arg[0]!= '-' || arg[1] == '\0')
         return (0);

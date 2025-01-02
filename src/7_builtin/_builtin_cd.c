@@ -47,7 +47,6 @@ t_status	__cd(const char *path, char **argv, t_info *info)
 
 static int _cd_home(char path[],char *arg, t_info *info)
 {
-	printf("%s\n", __func__);
 	char *home = env_get("HOME",info);
 	if (home[0] == '\0')
 	{
@@ -67,7 +66,6 @@ static int _cd_oldpwd(char path[],char *arg, t_info *info)
 {
 
 	(void)arg;
-	printf("%s\n", __func__);
 	char *oldpwd = env_get("OLDPWD",info);
 	if (oldpwd[0] == '\0')
 	{

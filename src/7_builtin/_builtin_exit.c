@@ -15,7 +15,7 @@
 #include "ft_system.h"
 
 
-int is_number(char * str);
+static int _is_number(char * str);
 
 
 t_status	__exit(const char *path, char **argv, t_info *info)
@@ -37,7 +37,7 @@ t_status	__exit(const char *path, char **argv, t_info *info)
 	{
 		//todo xperror早めに作る
 		
-		if (!is_number(argv[1]))
+		if (!_is_number(argv[1]))
 		{
             ft_putstr_fd("numeric argument required\n", STDERR_FILENO);
 			system_exit(info,255);
@@ -57,7 +57,7 @@ t_status	__exit(const char *path, char **argv, t_info *info)
 }
 
 
-int is_number(char * str)
+static int _is_number(char * str)
 {
 	int i = 0;
     if (str[0] == '-')

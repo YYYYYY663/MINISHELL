@@ -23,12 +23,14 @@ t_status	env_export(char *ent, t_info *info)
 	ent_cpy = ft_strdup(ent);
 	if (ent_cpy == NULL)
 		return (E_ALLOCATE);
-	if (_check_key(key))
-		return (free(ent_cpy), E_ENV_KEY);
 	delimiter = ft_strcspn(ent, "=");
 	//printf("delimiter: %d\n", delimiter);
 	ft_strlcpy(key, ent, delimiter+1);
-	//printf("key: %s\n", key);
+	if (_check_key(key))
+		return (free(ent_cpy), E_ENV_KEY);
+
+
+
 	lst = ft_list_find(info->env_map, key, __cmp);
 	if (lst) //すでに存在する場合上書き
 	{

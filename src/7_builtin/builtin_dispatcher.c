@@ -15,7 +15,6 @@
 #include "xunistd.h"
 #include "ft_redirect.h"
 
-// ビルトイン関数を実行する
 
 int setup_builtin_args(t_args *args, int *in_fd, int *out_fd, t_info *info)
 {

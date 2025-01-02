@@ -3,32 +3,33 @@
 #include "ft_system.h"
 
 
+static void _display_sorted_env_line(const char *entity);
+static void _display_sorted_env(t_info *info);
 
-
-void _display_sorted_env_line(const char *entity)
+t_status	__export(const char *path, char **argv, t_info *info)
 {
-	char    *key;
-    char    *value;
+	int	i;
 
-	key = ft_substr_l(entity,'=');
-	value = ft_substr_r(entity,'=');
-
-    ft_putstr_fd("declare -x " ,STDOUT_FILENO);
-	ft_putstr_fd(key,STDOUT_FILENO);
-	if (value[0])
+	#ifdef FUNC_OUT
+	    printf("%s\n",__func__);
+		ft_putstrs_endl_fd(argv,"  ",1);
+    #endif
+	i = 1;
+	if (!argv[1])
 	{
-		ft_putstr_fd("=\"",STDOUT_FILENO);
-        ft_putstr_fd(value,STDOUT_FILENO);
-		ft_putstr_fd("\"",STDOUT_FILENO);
+		_display_sorted_env(info);
 	}
-	printf("\n");
-	free(value);
-	free(key);
+	while (argv[i])
+	{
+	
+		env_export(argv[i++],info);
+	}
+	return (E_NONE);
 }
 
 
 
-void _display_sorted_env(t_info *info)
+static void _display_sorted_env(t_info *info)
 {
 	char **envp = ft_list_to_strs(info->env_map);
 	int len = ft_list_size(info->env_map);
@@ -51,26 +52,27 @@ void _display_sorted_env(t_info *info)
 	_display_sorted_env_line(envp[i++]);
 }
 
-
-
-
-t_status	__export(const char *path, char **argv, t_info *info)
+static void _display_sorted_env_line(const char *entity)
 {
-	int	i;
+	char    *key;
+    char    *value;
 
-	#ifdef FUNC_OUT
-	    printf("%s\n",__func__);
-		ft_putstrs_endl_fd(argv,"  ",1);
-    #endif
-	i = 1;
-	if (!argv[1])
+	key = ft_substr_l(entity,'=');
+	value = ft_substr_r(entity,'=');
+
+    ft_putstr_fd("declare -x " ,STDOUT_FILENO);
+	ft_putstr_fd(key,STDOUT_FILENO);
+	if (value[0])
 	{
-		_display_sorted_env(info);
+		ft_putstr_fd("=\"",STDOUT_FILENO);
+        ft_putstr_fd(value,STDOUT_FILENO);
+		ft_putstr_fd("\"",STDOUT_FILENO);
 	}
-	while (argv[i])
-	{
-	
-		env_export(argv[i++],info);
-	}
-	return (E_NONE);
+	printf("\n");
+	free(value);
+	free(key);
 }
+
+
+
+
