@@ -64,7 +64,9 @@ t_status	traverse_ast_nodes(t_ast *node, t_info *info)
 	{
 		exec_pipeline(node, info);
 		kill_pipeline(node->left, info);
+		#ifdef DEBUG
 		printf("status %d\n", info->status);
+		#endif
 		free(info->env_spc['?']);
 		info->env_spc['?'] = ft_itoa(info->status);
 		return E_NONE;
