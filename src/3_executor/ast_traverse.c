@@ -26,7 +26,6 @@ t_status exec_pipeline(t_ast *node, t_info *info)
 	#ifdef FUNC_OUT
 		printf("%s\n",__func__);
 	#endif
-	//ここの処理怪しい
 	if (node->left->ntype == NT_CMD)
 		return pipe_node(node, STDIN_FILENO, STDOUT_FILENO, info);
 	else
@@ -34,41 +33,57 @@ t_status exec_pipeline(t_ast *node, t_info *info)
 }
 
 
+void    kill_pipeline(t_ast *node, t_info *info)
+{
+	#ifdef FUNC_OUT
+        printf("%s\n",__func__);
+    #endif
+
+	(void)info;
+	if (node == NULL)
+		return ;
+    if (node->ntype == NT_CMD)
+	{
+
+		//waitpid(node->args->pid,NULL,SIGTERM); 
+		kill(node->args->pid,SIGTERM);
+		//perror(node->args->cargv[0]);
+	}
+	kill_pipeline(node->right,info);
+	kill_pipeline(node->left,info);
+}
+
+
 t_status	traverse_ast_nodes(t_ast *node, t_info *info)
 {
-	t_status status;
 	if (node == NULL)
 		return (E_NONE);
 	if (g_signal)
 		return ((t_status)g_signal);
-	#ifdef FUNC_OUT
-		printf("%s node: %s\n",__func__, e_type_to_str(node->ntype));
-	#endif
-	
-	// if (node->ntype == NT_CMD)pipeの中で処理する
-
 	if (node->ntype == NT_PIPE)
-		return exec_pipeline(node, info);
+	{
+		exec_pipeline(node, info);
+		kill_pipeline(node->left, info);
+		return E_NONE;
+	}
 	
 	if (node->ntype == NT_AND)
 	{
-		status = traverse_ast_nodes(node->left, info);
-		if (!status)
-			return(traverse_ast_nodes(node->right, info));
-
+		traverse_ast_nodes(node->left, info);
+		if (!info->status)
+			return traverse_ast_nodes(node->right, info);
 	}
-	if (node->ntype == NT_OR)
+	else if (node->ntype == NT_OR)
 	{
-		status = traverse_ast_nodes(node->left, info);
-		if (status)
-			return(traverse_ast_nodes(node->right, info));
-	}
+		traverse_ast_nodes(node->left, info);
 
-	if (node->ntype == NT_EOF)
+		if (info->status)
+			return traverse_ast_nodes(node->right, info);
+	}
+	else if (node->ntype == NT_EOF)
 	{
-		status = traverse_ast_nodes(node->left, info);
-		status = traverse_ast_nodes(node->right, info);
+		traverse_ast_nodes(node->left, info);
+		traverse_ast_nodes(node->right, info);
 	}
-
-	return status;
+	return E_NONE;
 }
