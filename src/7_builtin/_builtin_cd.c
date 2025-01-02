@@ -37,9 +37,9 @@ t_status	__cd(const char *path, char **argv, t_info *info)
 		path_dispacher(absolute_path, argv[1], F_OK, info);
 	else
 	{
-		strlcpy(absolute_path, info->cwd, PATH_MAX);
-		strlcat(absolute_path, "/", PATH_MAX);
-		strlcat(absolute_path, argv[1], PATH_MAX);
+		ft_strlcpy(absolute_path, info->cwd, PATH_MAX);
+		ft_strlcat(absolute_path, "/", PATH_MAX);
+		ft_strlcat(absolute_path, argv[1], PATH_MAX);
 	}
 	
 	//printf("absolute_path: %s\n", absolute_path);
@@ -49,9 +49,8 @@ t_status	__cd(const char *path, char **argv, t_info *info)
 		info->status = errno;
 		return (status);
 	}
-	//printf("prev %s\n", info->cwd);
+	
 	env_export_item("OLDPWD", info->cwd, info);
-	//printf("OLDPWD %s\n",env_get("OLDPWD", info));
 	ft_strlcpy(info->cwd, absolute_path, PATH_MAX);
 	env_export_item("PWD", info->cwd, info);
 	return (E_NONE);
