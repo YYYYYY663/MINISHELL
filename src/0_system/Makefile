@@ -47,10 +47,12 @@ fclean: clean
 
 re: fclean all
 
-test: $(NAME)
-	@$(CC) -Wall -Wextra  $(IDFLAGS) $(DEBUGFLAGS) $(NAME) $(LIBFT) __0main.c -o test0XXXX
+test:
+	@$(CC) -Wall -Wextra $(IDFLAGS) $(DEBUGFLAGS) -L. -lsys -L$(LIBFT_DIR) -lft __0main.c -o test0XXXX
 	@./test0XXXX
 	@rm test0XXXX
+
+
 
 
 -include $(DEPS)

@@ -6,14 +6,14 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 17:22:55 by ymizukam          #+#    #+#             */
-/*   Updated: 2024/12/22 17:24:06 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/04 21:28:01 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "system.h"
+// #include "libft.h"
+// #include "system.h"
 
-void	xperror(const char *msg)
-{
-	ft_dprintf(STDERR_FILENO, )
-}
+// void	xperror(const char *msg)
+// {
+// 	ft_dprintf(STDERR_FILENO, )
+// }
