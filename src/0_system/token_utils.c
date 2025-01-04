@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:15:51 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/04 23:15:50 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 00:27:43 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,6 @@ void	token_clear(void *ptr)
 {
 	t_token	*token;
 
-#ifdef CLEAR_OUT
-	printf("%s\n", __func__);
-#endif
 	token = (t_token *)ptr;
 	if (token == NULL)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 16:33:27 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 00:02:44 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 00:06:39 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@ t_info	*system_init(char **envp)
 {
 	t_info	*info;
 
-#ifdef FUNC_OUT
-	printf("%s\n", __func__);
-#endif
 	info = ft_calloc(sizeof(t_info), 1);
 	if (!info)
 		return (NULL);

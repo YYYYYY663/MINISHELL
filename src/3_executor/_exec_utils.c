@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:17:47 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/04 22:17:50 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 00:28:56 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	setup_args(t_args *args, int *in_fd, int *out_fd, t_info *info)
 	}
 	if (path_dispacher(args->path, token->value, X_OK, info))
 	{
-		ft_dprintf(2, "minishell: %s: command not found", token->value);
+		ft_dprintf(2, "minishell: %s: command not found\n", token->value);
 		info->status = 127;
 		return (1);
 	}

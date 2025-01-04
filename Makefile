@@ -6,7 +6,7 @@
 #    By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/15 18:05:31 by teando            #+#    #+#              #
-#    Updated: 2025/01/04 22:24:04 by ymizukam         ###   ########.fr        #
+#    Updated: 2025/01/05 00:16:15 by ymizukam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ SRCS 		:= \
             allocate_token.c lexer_handler.c lexer_main_loop.c tokenizer.c validate_syntax.c \
         ) \
         $(addprefix 2_parser/, \
-            parser.c ast_new.c draft_parser_debug.c _ast_utils.c \
+            parser.c ast_new.c draft_parser_debug.c \
         ) \
         $(addprefix 3_executor/, \
             executor.c ast_traverse.c _ast_node.c _exec_utils.c \

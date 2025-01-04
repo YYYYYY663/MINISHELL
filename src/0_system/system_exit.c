@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 21:27:54 by teando            #+#    #+#             */
-/*   Updated: 2025/01/04 23:50:07 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 00:06:27 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@ void	system_exit(t_info *info, t_status status)
 {
 	int	i;
 
-#ifdef FUNC_OUT
-	printf("%s\n", __func__);
-#endif
 	line_init(info);
 	i = 0;
 	while (i < 128)

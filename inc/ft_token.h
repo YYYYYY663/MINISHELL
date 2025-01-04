@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 18:20:59 by teando            #+#    #+#             */
-/*   Updated: 2025/01/04 23:10:49 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 00:14:50 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,12 @@ typedef struct s_token
 }					t_token;
 
 char				**convert_argv(t_list *lst);
+
+t_args				*ast_args_new(void);
+t_ast				*ast_node_new(int type, t_ast *left, t_ast *right);
+int					consume(t_token_type type, t_list **lst);
+void				expect(t_token_type type, t_list **lst);
+
+t_args				*consume_args(t_list **lst);
 
 #endif

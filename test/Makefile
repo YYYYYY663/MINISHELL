@@ -44,5 +44,9 @@ lexer:
 	$(VALGRIND) ./lexer.out
 	rm -f lexer.out
 
+parser:
+	$(CC) $(IFLAGS) $(CFLAGS) $(DFLAGS) $(LFLAGS) $(SYSTEM) $(LEXER) $(PARSER) 2_test/main.c libft.a -o parser.out
+	$(VALGRIND) ./parser.out
+	rm -f parser.out
 	
 
