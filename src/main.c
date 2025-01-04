@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:45:19 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 01:49:55 by teando           ###   ########.fr       */
+/*   Updated: 2025/01/04 22:24:38 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "ft_color.h"
+#include "minishell.h"
+
 extern void	init_signals(void);
 
 // void	shell_loop(t_info *info)
@@ -41,16 +42,15 @@ void	shell_loop(t_info *info)
 		printf(BG_GREEN WHITE "%s", info->cwd);
 		printf(RESET " $ ");
 		fflush(stdout);
+		// ft_dprintf(1, BG_GREEN WHITE);
+		// info->source_line = read_line_until_balanced(info->cwd);
+		// ft_dprintf(1, RESET " $ ");
 		info->source_line = get_next_line(0);
 		launch_lexer(info);
-		//debug_print_token_list(info->token_list);
-		
+		// debug_print_token_list(info->token_list);
 		launch_parser(info);
-
-		//debug_print_ast(info->ast, 0);
-
+		// debug_print_ast(info->ast, 0);
 		launch_executor(info);
-
 		line_init(info);
 	}
 }
@@ -63,6 +63,5 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	info = system_init(envp);
 	shell_loop(info);
-
-    system_exit(info,0);
+	system_exit(info, 0);
 }
