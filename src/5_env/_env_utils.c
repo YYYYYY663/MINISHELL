@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 19:48:26 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/04 22:07:13 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 00:04:42 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ int	_check_key(char *key)
 {
 	int	i;
 
-	ft_dprintf(2, "%s\n", key);
-	printf("%s\n", key);
 	if (!ft_isalpha(key[0]) && key[0] != '_')
 	{
 		ft_dprintf(STDERR_FILENO,

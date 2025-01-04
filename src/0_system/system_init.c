@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 16:33:27 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/04 23:13:41 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 00:02:44 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,14 @@ void	line_init(t_info *info)
 {
 	if (!info)
 		exit(1);
-	free(info->source_line);
+	xfree((void **)&info->source_line);
 	if (info->token_list != NULL)
 	{
 		ft_lstclear(&info->token_list, token_clear);
 	}
 	ast_clear(info->ast);
-	xfree((void **)&info->env_spc['?']);
+	info->ast = NULL;
+	free(info->env_spc['?']);
 	info->env_spc['?'] = ft_itoa(info->status);
 	info->status = 0;
 }

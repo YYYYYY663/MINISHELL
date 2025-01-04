@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 16:28:15 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/04 23:13:18 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 00:01:41 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,6 @@ t_status	exec_pipeline(t_ast *node, t_info *info)
 
 void	kill_pipeline(t_ast *node, t_info *info)
 {
-#ifdef FUNC_OUT
-	printf("%s\n", __func__);
-#endif
 	(void)info;
 	if (node == NULL)
 		return ;
@@ -59,10 +56,10 @@ t_status	traverse_ast_nodes(t_ast *node, t_info *info)
 	{
 		exec_pipeline(node, info);
 		kill_pipeline(node->left, info);
-#ifdef DEBUG
+#ifndef DEBUGOFF
 		printf("status %d\n", info->status);
 #endif
-		xfree((void **)info->env_spc['?']);
+		free(info->env_spc['?']);
 		info->env_spc['?'] = ft_itoa(info->status);
 		return (E_NONE);
 	}
