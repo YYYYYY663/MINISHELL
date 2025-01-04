@@ -72,7 +72,7 @@ redirect:
 	rm -f redirect.out
 
 exec:
-	$(COMPILE) $(SYSTEM) $(LEXER) $(PARSER) $(ENV) $(EXECUTOR) $(REDIRECT) $(BUILTIN) 3_test/main.c libft.a -o exec.out
+	$(COMPILE) $(SYSTEM) $(LEXER) $(PARSER) $(ENV) $(EXECUTOR) $(REDIRECT) $(BUILTIN) 3_test/main.c libft.a $(LFLAGS) -o exec.out
 	$(VALGRIND) ./exec.out
 	rm -f exec.out
 

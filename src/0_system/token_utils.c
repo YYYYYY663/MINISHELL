@@ -1,46 +1,53 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:15:51 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 04:27:14 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 05:21:05 by teando           ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "ft_system.h"
 #include "ft_token.h"
 #include "xunistd.h"
 
-char	**convert_argv(t_list *lst)
+char **convert_argv(t_list *lst)
 {
-	char	**cargv;
-	t_token	*token;
-	char	**ptr;
+	char **cargv;
+	t_token *token;
+	size_t i;
 
-	cargv = ft_calloc(ft_lstsize(lst) + 1, sizeof(char *));
-	if (cargv == NULL)
+	if (!lst || !lst->data)
 		return (NULL);
-	token = (t_token *)lst->data;
-	ptr = cargv;
-	while (lst != NULL)
+	cargv = ft_calloc(ft_lstsize(lst) + 1, sizeof(char *));
+	if (!cargv)
+		return (NULL);
+	i = 0;
+	while (lst)
 	{
-		*ptr++ = ft_strdup(token->value);
+		token = lst->data;
+		if (!token || !token->value)
+			return (ft_strs_clear(cargv), NULL);
+		cargv[i] = ft_strdup(token->value);
+		if (!cargv[i])
+			return (ft_strs_clear(cargv), NULL);
+		i++;
 		lst = lst->next;
-		token = (t_token *)lst->data;
 	}
+	cargv[i] = NULL;
 	return (cargv);
 }
 
-void	token_clear(void *ptr)
+void token_clear(void *ptr)
 {
-	t_token	*token;
+	t_token *token;
 
 	token = (t_token *)ptr;
 	if (token == NULL)
-		return ;
+		return;
 	if (token->value)
 		free(token->value);
 	free(token);
