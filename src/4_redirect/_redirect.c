@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc.c                                          :+:      :+:    :+:   */
+/*   _redirect.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/04 22:17:00 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/04 22:17:08 by ymizukam         ###   ########.fr       */
+/*   Created: 2025/01/05 03:30:18 by ymizukam          #+#    #+#             */
+/*   Updated: 2025/01/05 03:31:53 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_redirect.h"
 #include "xunistd.h"
 
-// ctrol Dでも終了
-// ctrol C
-int	heredoc(const char *delimiter, t_info *info)
+void	redirect_out(t_token_type type, char *file, int *out)
 {
-	int		pipefds[2];
-	char	*line;
-
-	xpipe(pipefds, info);
-	while (1)
+	xclose(out);
+	if (type == TT_REDIR_OUT)
 	{
-		printf(">");
-		fflush(stdout);
-		line = get_next_line(STDIN_FILENO);
-		if (ft_strncmp(line, delimiter, ft_strlen(line) - 1) == 0)
-		{
-			free(line);
-			break ;
-		}
-		write(pipefds[1], line, ft_strlen(line));
-		free(line);
+		*out = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	}
-	xclose(&pipefds[1]);
-	return (pipefds[0]);
+	if (type == TT_APPEND)
+	{
+		*out = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	}
+}
+
+void	redirect_in(t_token_type type, char *file, int *in)
+{
+	xclose(in);
+	if (type == TT_REDIR_IN)
+	{
+		*in = open(file, O_RDONLY);
+	}
 }

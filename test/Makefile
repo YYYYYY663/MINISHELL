@@ -64,3 +64,8 @@ var:
 	$(VALGRIND) ./var.out
 	rm -f var.out
 
+redirect:
+	$(CC) $(IFLAGS) $(CFLAGS) $(DFLAGS) $(LFLAGS) $(SYSTEM) $(LEXER) $(REDIRECT) 4_test/main.c libft.a -o redirect.out
+	$(VALGRIND) ./redirect.out
+	rm -f redirect.out
+

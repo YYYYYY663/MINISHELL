@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:17:59 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 00:28:10 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 03:39:42 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "ft_system.h"
 #include "ft_token.h"
 #include <signal.h>
+
 /*
  * CMDの処理はpreでもinでもどこでも大丈夫
  * signal handlingのためにすべてにifcheckをいれるべき
@@ -25,9 +26,6 @@ pid_t	cmd_node(t_ast *node, int in_fd, int out_fd, t_info *info)
 {
 	pid_t	pid;
 
-#ifdef FUNC_OUT
-	printf("%s node: %s\n", __func__, e_type_to_str(node->ntype));
-#endif
 	//ここの処理怪しい
 	if (node->ntype == NT_PIPE)
 		return (cmd_node(node->left, in_fd, out_fd, info));
@@ -36,14 +34,8 @@ pid_t	cmd_node(t_ast *node, int in_fd, int out_fd, t_info *info)
 	pid = xfork(info);
 	if (pid == 0)
 	{
-#ifdef FUNC_OUT
-		dprintf(2, "in: %d\tout: %d\n", in_fd, out_fd);
-#endif
 		xdup2(in_fd, STDIN_FILENO, info);
 		xdup2(out_fd, STDOUT_FILENO, info);
-#ifdef FUNC_OUT
-		dprintf(2, "in: %d\tout: %d\n", in_fd, out_fd);
-#endif
 		execve(node->args->path, node->args->cargv,
 			ft_list_to_strs(info->env_map));
 		perror("execve");
@@ -63,9 +55,6 @@ t_status	pipe_node(t_ast *node, int in_fd, int out_fd, t_info *info)
 	int		status;
 	pid_t	pid;
 
-#ifdef FUNC_OUT
-	printf("%s\n", __func__);
-#endif
 	status = 0;
 	if (node->right != NULL)
 	{

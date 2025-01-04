@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   allocate_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:17:08 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 20:28:41 by teando           ###   ########.fr       */
+/*   Updated: 2025/01/05 03:37:25 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,3 @@ int	add_token(t_info *info, t_token *tok)
 	}
 	return (1);
 }
-

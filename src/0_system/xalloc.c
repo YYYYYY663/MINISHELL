@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 21:27:29 by teando            #+#    #+#             */
-/*   Updated: 2025/01/04 22:45:19 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 03:36:30 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@ void	*xmalloc(size_t size, t_info *info)
 {
 	char	*memory;
 
-#ifdef FUNC_OUT_ALLOCATE
-	printf("%s\n", __func__);
-#endif
 	memory = malloc(size);
 	if (!memory)
 	{
@@ -32,9 +29,6 @@ t_list	*xlstnew(char *data, t_info *info)
 {
 	t_list	*list;
 
-#ifdef FUNC_OUT_ALLOCATE
-	printf("%s\n", __func__);
-#endif
 	list = ft_lstnew((void *)data);
 	if (!list)
 		system_exit(info, E_ALLOCATE);

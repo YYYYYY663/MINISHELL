@@ -6,7 +6,7 @@
 #    By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/15 18:05:31 by teando            #+#    #+#              #
-#    Updated: 2025/01/05 02:49:47 by ymizukam         ###   ########.fr        #
+#    Updated: 2025/01/05 03:34:32 by ymizukam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ SRCS 		:= \
             executor.c ast_traverse.c _ast_node.c _ast_pipeline.c _exec_utils.c \
         ) \
         $(addprefix 4_redirect/, \
-            redirect_dispacher.c heredoc.c \
+            redirect_dispacher.c _heredoc.c _redirect.c\
         ) \
         $(addprefix 5_env/, \
             _env_utils.c env_export.c env_get.c env_unset.c \

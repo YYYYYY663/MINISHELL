@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:16:47 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/04 22:16:54 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 03:34:02 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,55 +15,25 @@
 #include "ft_redirect.h"
 #include "xunistd.h"
 
-t_status	redirect_dipacher(t_list *list, int *in_fd, int *out_fd,
-		t_info *info)
+t_status	redirect_dipacher(t_list *list, int *in, int *out, t_info *info)
 {
 	t_token	*token;
 
-	// char path[PATH_MAX];
 	while (list != NULL)
 	{
 		token = list->data;
-#ifdef FUNC_OUT
-		printf("%s %s\n", type_to_str(token->type), token->value);
-#endif
 		if (token->type == TT_HEREDOC)
-		{
-			xclose(in_fd);
-			*in_fd = heredoc(token->value, info);
-		}
+			heredoc(token->value, in, info);
 		if (token->type == TT_REDIR_IN)
+			redirect_in(token->type, token->value, in);
+		if (token->type == TT_REDIR_OUT || token->type == TT_APPEND)
+			redirect_out(token->type, token->value, out);
+		if (*in == -1 || *out == -1)
 		{
-			xclose(in_fd);
-			*in_fd = open(token->value, O_RDONLY);
-			if (*in_fd == -1)
-			{
-				perror(token->value);
-				xclose(out_fd);
-				return (E_FILE);
-			}
-		}
-		if (token->type == TT_REDIR_OUT)
-		{
-			xclose(out_fd);
-			*out_fd = open(token->value, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-			if (*out_fd == -1)
-			{
-				perror(token->value);
-				xclose(in_fd);
-				return (E_FILE);
-			}
-		}
-		if (token->type == TT_APPEND)
-		{
-			xclose(out_fd);
-			*out_fd = open(token->value, O_WRONLY | O_CREAT | O_APPEND, 0666);
-			if (*out_fd == -1)
-			{
-				perror(token->value);
-				xclose(in_fd);
-				return (E_FILE);
-			}
+			ft_dprintf(2, "minishell: %s: %s\n", token->value, strerror(errno));
+			xclose(out);
+			xclose(in);
+			return (E_FILE);
 		}
 		list = list->next;
 	}
