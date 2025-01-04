@@ -14,7 +14,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	info = system_init(env);
 	// ft_putstrs_endl_fd(ft_list_to_strs(info->env_map), "\n",1);
-	info->source_line = ft_strdup("ls -l |");
+	info->source_line = ft_strdup("ls -l | cat | grep a && (ls)");
 	launch_lexer(info);
 	debug_print_token_list(info->token_list);
 	launch_parser(info);

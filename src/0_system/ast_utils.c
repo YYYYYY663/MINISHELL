@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:16:26 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 04:22:28 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 04:36:51 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	ast_clear(t_ast *node)
 	{
 		printf("args clear\n");
 		if (node->args->argv)
-			ft_lstclear(&node->args->argv, NULL);
+			ft_lstclear(&node->args->argv, token_clear);
 		if (node->args->redr)
-			ft_lstclear(&node->args->redr, NULL);
+			ft_lstclear(&node->args->redr, token_clear);
 		if (node->args->cargv)
 			ft_strs_clear(node->args->cargv);
 		xclose(&node->args->fds[0]);
@@ -43,6 +43,7 @@ t_args	*consume_args(t_list **lst)
 	t_args	*args;
 	t_list	*new_lst;
 	t_token	*token;
+	t_token	*cpy;
 
 	args = ast_args_new();
 	if (!args)
@@ -50,11 +51,16 @@ t_args	*consume_args(t_list **lst)
 	token = (t_token *)(*lst)->data;
 	while ((token->type & 0xF000) == CMD_ARG)
 	{
-		new_lst = ft_lstnew(token);
-		if (!new_lst)
-		{
-			return (free(args), NULL);
-		}
+		cpy = malloc(sizeof(t_token));
+		// if (!cpy)
+		// 	return (free(args), NULL);
+		cpy->type = token->type;
+		cpy->value = ft_strdup(token->value);
+		new_lst = ft_lstnew(cpy);
+		// if (!new_lst)
+		// {
+		// 	return (free(args), NULL);
+		// }
 		if (token->type == TT_WORD)
 			ft_lstadd_back(&args->argv, new_lst);
 		if (token->type == TT_HEREDOC || token->type == TT_REDIR_IN)
