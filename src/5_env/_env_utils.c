@@ -6,38 +6,43 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 19:48:26 by ymizukam          #+#    #+#             */
-/*   Updated: 2024/12/20 05:13:37 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/04 22:07:13 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_env.h"
 
+/*
+アルファベット（a-z, A-Z）またはアンダースコア（_）で始まる必要がある。
+2文字目以降は、アルファベット、数字（0-9）、またはアンダースコアが使える。
+空白や特殊記号（例: !, @, #, - など）は使用できない(chatGPT)
+*/
+// todo TEST=など
 int	_check_key(char *key)
 {
-	/*
-	アルファベット（a-z, A-Z）またはアンダースコア（_）で始まる必要がある。
-	2文字目以降は、アルファベット、数字（0-9）、またはアンダースコアが使える。
-	空白や特殊記号（例: !, @, #, - など）は使用できない(chatGPT)
-	*/
-	// todo TEST=など
-	ft_dprintf(2,"%s\n",key);
-	printf("%s\n",key);
+	int	i;
+
+	ft_dprintf(2, "%s\n", key);
+	printf("%s\n", key);
 	if (!ft_isalpha(key[0]) && key[0] != '_')
 	{
-		ft_dprintf(STDERR_FILENO, "minishell: export: `%s\': not a valid identifier\n", key);
-		return 1;
+		ft_dprintf(STDERR_FILENO,
+			"minishell: export: `%s\': not a valid identifier\n", key);
+		return (1);
 	}
-	int i = 0;
-	while(key[++i])
+	i = 0;
+	while (key[++i])
 	{
-		if (!ft_isalnum(key[i]) && key[i]!= '_')
+		if (!ft_isalnum(key[i]) && key[i] != '_')
 		{
-			ft_dprintf(STDERR_FILENO, "minishell: export: `%s\': not a valid identifier\n", key);
-            return 1;
+			ft_dprintf(STDERR_FILENO,
+				"minishell: export: `%s\': not a valid identifier\n", key);
+			return (1);
 		}
 	}
 	return (0);
 }
+
 int	__cmp(void *data, void *key)
 {
 	char	uniq_key[PATH_MAX];

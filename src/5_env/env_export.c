@@ -6,12 +6,11 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 19:48:52 by ymizukam          #+#    #+#             */
-/*   Updated: 2024/12/20 05:21:22 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/04 22:07:53 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_env.h"
-
 
 t_status	env_export(char *ent, t_info *info)
 {
@@ -24,15 +23,11 @@ t_status	env_export(char *ent, t_info *info)
 	if (ent_cpy == NULL)
 		return (E_ALLOCATE);
 	delimiter = ft_strcspn(ent, "=");
-	//printf("delimiter: %d\n", delimiter);
-	ft_strlcpy(key, ent, delimiter+1);
+	ft_strlcpy(key, ent, delimiter + 1);
 	if (_check_key(key))
 		return (free(ent_cpy), E_ENV_KEY);
-
-
-
 	lst = ft_list_find(info->env_map, key, __cmp);
-	if (lst) //すでに存在する場合上書き
+	if (lst)
 	{
 		free(lst->data);
 		lst->data = ent_cpy;
@@ -45,19 +40,15 @@ t_status	env_export(char *ent, t_info *info)
 	return (E_NONE);
 }
 
-t_status env_export_item(char *key, char *value, t_info *info)
+t_status	env_export_item(char *key, char *value, t_info *info)
 {
-	char    ent[PATH_MAX];
+	char	ent[PATH_MAX];
+
 	ft_strlcpy(ent, key, PATH_MAX);
-	ft_strlcat(ent, "=",PATH_MAX);
-    ft_strlcat(ent, value, PATH_MAX);
-    return (env_export(ent, info));
+	ft_strlcat(ent, "=", PATH_MAX);
+	ft_strlcat(ent, value, PATH_MAX);
+	return (env_export(ent, info));
 }
-
-
-
-
-
 
 // void map_append(t_info *info, char *key, char *val)
 // {

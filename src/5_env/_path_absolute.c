@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 22:06:10 by ymizukam          #+#    #+#             */
-/*   Updated: 2024/12/22 17:06:17 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/04 22:06:59 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,20 @@
 
 int	_resolve_path_absolute(char path[], char *src, int mode, t_info *info)
 {
-	char *path_candidate = env_get("PATH", info);
-	char **path_candidates = ft_split(path_candidate,':'); 
-	int index = 0;
-	
-	while(path_candidates[index])
+	char	*path_candidate;
+	char	**path_candidates;
+	int		index;
+
+	path_candidate = env_get("PATH", info);
+	path_candidates = ft_split(path_candidate, ':');
+	index = 0;
+	while (path_candidates[index])
 	{
 		ft_strlcpy(path, path_candidates[index], PATH_MAX);
 		ft_strlcat(path, "/", PATH_MAX);
 		ft_strlcat(path, src, PATH_MAX);
 		if (access(path, mode) == 0)
-			break;
+			break ;
 		index++;
 	}
 	free(path_candidate);

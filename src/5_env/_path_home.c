@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 17:07:04 by ymizukam          #+#    #+#             */
-/*   Updated: 2024/12/22 17:07:51 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/04 22:11:28 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 
 int	_resolve_path_home(char path[], char *src, int mode, t_info *info)
 {
-	char *home = env_get("HOME", info);
-	ft_strlcpy(path, home, PATH_MAX);
-	ft_strlcat(path, src+1, PATH_MAX);
+	char	*home;
 
+	home = env_get("HOME", info);
+	ft_strlcpy(path, home, PATH_MAX);
+	ft_strlcat(path, src + 1, PATH_MAX);
 	free(home);
 	return (access(path, mode));
 }

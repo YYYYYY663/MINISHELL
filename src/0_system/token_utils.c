@@ -1,31 +1,47 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/04 22:15:51 by ymizukam          #+#    #+#             */
+/*   Updated: 2025/01/04 22:15:51 by ymizukam         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_system.h"
 #include "ft_token.h"
 
-char **convert_argv(t_list *lst)
+char	**convert_argv(t_list *lst)
 {
-    char **cargv = ft_calloc(ft_lstsize(lst)+1, sizeof(char *));
-    t_token *token = (t_token *)lst->data;
-    char **ptr = cargv;
-    while(lst != NULL)
-    {
-        *ptr++ = token->value;//ft_strdup(token->value);
-        lst = lst->next;
-        token = (t_token *)lst->data;
+	char	**cargv;
+	t_token	*token;
+	char	**ptr;
 
-    }
-    return cargv;
+	cargv = ft_calloc(ft_lstsize(lst) + 1, sizeof(char *));
+	token = (t_token *)lst->data;
+	ptr = cargv;
+	while (lst != NULL)
+	{
+		*ptr++ = token->value; // ft_strdup(token->value);
+		lst = lst->next;
+		token = (t_token *)lst->data;
+	}
+	return (cargv);
 }
 
-
-void token_clear(void *ptr)
+void	token_clear(void *ptr)
 {
-	#ifdef CLEAR_OUT
-		printf("%s\n",__func__);
-	#endif
-	t_token *token = (t_token *)ptr; 
+	t_token	*token;
+
+#ifdef CLEAR_OUT
+	printf("%s\n", __func__);
+#endif
+	token = (t_token *)ptr;
 	if (token == NULL)
-        return ;
+		return ;
 	if (token->value)
-    	free(token->value);
-    free(token);
+		free(token->value);
+	free(token);
 }

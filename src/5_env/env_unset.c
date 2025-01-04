@@ -6,17 +6,15 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 19:48:35 by ymizukam          #+#    #+#             */
-/*   Updated: 2024/12/20 05:14:50 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/04 22:08:06 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_env.h"
 
 // keyを削除
-t_status	env_unset(char *key,  t_info *info)
+t_status	env_unset(char *key, t_info *info)
 {
-	t_list	*lst;
-
 	ft_list_remove_if(&info->env_map, key, __cmp, free);
 	return (E_NONE);
 }
