@@ -1,5 +1,5 @@
 CFLAGS		:= -Wall -Wextra
-VALGRIND    := valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes
+VALGRIND    := valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -q
 
 OBJDIR       := ../obj/src
 
@@ -48,5 +48,19 @@ parser:
 	$(CC) $(IFLAGS) $(CFLAGS) $(DFLAGS) $(LFLAGS) $(SYSTEM) $(LEXER) $(PARSER) 2_test/main.c libft.a -o parser.out
 	$(VALGRIND) ./parser.out
 	rm -f parser.out
-	
+
+env:
+	$(CC) $(IFLAGS) $(CFLAGS) $(DFLAGS) $(LFLAGS) $(SYSTEM) $(ENV) 5_test/__main_env.c libft.a -o env.out
+	$(VALGRIND) ./env.out
+	rm -f env.out
+
+path:
+	$(CC) $(IFLAGS) $(CFLAGS) $(DFLAGS) $(LFLAGS) $(SYSTEM) $(ENV) 5_test/__main_path.c libft.a -o path.out
+	$(VALGRIND) ./path.out
+	rm -f path.out
+
+var:
+	$(CC) $(IFLAGS) $(CFLAGS) $(DFLAGS) $(LFLAGS) $(SYSTEM) $(ENV) 5_test/__main_var.c libft.a -o var.out
+	$(VALGRIND) ./var.out
+	rm -f var.out
 
