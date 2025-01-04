@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:15:51 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 00:27:43 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 02:43:01 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	**convert_argv(t_list *lst)
 	char	**ptr;
 
 	cargv = ft_calloc(ft_lstsize(lst) + 1, sizeof(char *));
+	if (cargv == NULL)
+		return (NULL);
 	token = (t_token *)lst->data;
 	ptr = cargv;
 	while (lst != NULL)

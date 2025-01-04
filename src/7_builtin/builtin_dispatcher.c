@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:00:28 by teando            #+#    #+#             */
-/*   Updated: 2025/01/04 22:14:45 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 02:42:32 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_status	builtin_dispatcher(t_args *args, int *in_fd, int *out_fd,
 		{
 			if (setup_builtin_args(args, in_fd, out_fd, info))
 				return (E_FILE);
-			info->status = builtin_funcs[i](token->value, args->cargv, info);
+			info->status = builtin_funcs[i](args->cargv, info);
 			xdup2(info->stdin_backup, STDIN_FILENO, info);
 			xdup2(info->stdout_backup, STDOUT_FILENO, info);
 			return (info->status);

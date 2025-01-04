@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtin.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:01:24 by teando            #+#    #+#             */
-/*   Updated: 2024/12/17 22:40:29 by teando           ###   ########.fr       */
+/*   Updated: 2025/01/05 02:41:40 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,21 @@
 # include "ft_env.h"
 # include "ft_system.h"
 
-t_status	builtin_dispatcher(t_args *args, int *in_fd, int *out_fd, t_info *info);
+t_status			builtin_dispatcher(t_args *args, int *in_fd, int *out_fd,
+						t_info *info);
 
 // wrapper関数の定義　関数ポインタ型の宣言
-typedef t_status	(*t_builtin_func)(const char *path, char **argv,
-		t_info *info);
+typedef t_status	(*t_builtin_func)(char **argv, t_info *info);
 
 // static char **builtin_path = {"echo","cd","pwd","export","unset","env","exit"};
 
-
 /**** **** **** ** CALLBACK ** **** **** ****/
-t_status			__pwd(const char *path, char **argv, t_info *info);
-t_status			__cd(const char *path, char **argv, t_info *info);
-t_status			__echo(const char *path, char **argv, t_info *info);
-t_status			__export(const char *path, char **argv, t_info *info);
-t_status			__unset(const char *path, char **argv, t_info *info);
-t_status			__exit(const char *path, char **argv, t_info *info);
-t_status			__env(const char *path, char **argv, t_info *info);
+t_status			__pwd(char **argv, t_info *info);
+t_status			__cd(char **argv, t_info *info);
+t_status			__echo(char **argv, t_info *info);
+t_status			__export(char **argv, t_info *info);
+t_status			__unset(char **argv, t_info *info);
+t_status			__exit(char **argv, t_info *info);
+t_status			__env(char **argv, t_info *info);
+
 #endif

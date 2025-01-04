@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 15:45:58 by teando            #+#    #+#             */
-/*   Updated: 2025/01/05 01:36:10 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 02:40:35 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,12 @@
 	exit
 	bash: exit: too many arguments
 */
-t_status	__exit(const char *path, char **argv, t_info *info)
+t_status	__exit(char **argv, t_info *info)
 {
 	long	exit_status;
 	char	*endptr;
 
 	exit_status = 0;
-	(void)path;
 	printf("exit\n");
 	if (argv[1] != NULL)
 	{

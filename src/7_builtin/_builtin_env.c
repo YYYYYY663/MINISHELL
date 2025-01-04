@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 15:47:05 by teando            #+#    #+#             */
-/*   Updated: 2025/01/04 22:12:24 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 02:40:26 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 #include "ft_env.h"
 #include "ft_system.h"
 
-t_status	__env(const char *path, char **argv, t_info *info)
+t_status	__env(char **argv, t_info *info)
 {
 	char	**envp;
 
 	envp = ft_list_to_strs(info->env_map);
-	(void)path;
 	(void)argv;
 	ft_putstrs_fd(envp, "\n", STDOUT_FILENO);
 	ft_putendl_fd("", STDIN_FILENO);

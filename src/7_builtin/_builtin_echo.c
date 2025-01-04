@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 15:48:32 by teando            #+#    #+#             */
-/*   Updated: 2025/01/04 22:44:38 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 02:40:18 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,13 @@
 
 static int	_validate_option(char *arg);
 
-t_status	__echo(const char *path, char **argv, t_info *info)
+t_status	__echo(char **argv, t_info *info)
 {
 	int	is_option_n;
 	int	is_first;
 
 	is_option_n = 0;
 	is_first = 1;
-	(void)path;
 	(void)info;
 	while (*++argv)
 	{

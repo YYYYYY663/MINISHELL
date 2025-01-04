@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:06:41 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 01:54:17 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 02:42:06 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,10 @@
 static void	_display_sorted_env_line(const char *entity);
 static void	_display_sorted_env(t_info *info);
 
-t_status	__export(const char *path, char **argv, t_info *info)
+t_status	__export(char **argv, t_info *info)
 {
 	int	i;
 
-	(void)path;
 	i = 1;
 	if (!argv[1])
 	{

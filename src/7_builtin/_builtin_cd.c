@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:08:25 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/04 22:12:16 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 02:54:11 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@
 
 static int	_cd_home(char path[], char *arg, t_info *info);
 static int	_cd_oldpwd(char path[], char *arg, t_info *info);
+static int	_cd_cwd(char path[], char *arg, t_info *info);
 
-t_status	__cd(const char *path, char **argv, t_info *info)
+t_status	__cd(char **argv, t_info *info)
 {
 	char	absolute_path[PATH_MAX];
 
-	(void)path;
 	if (argv[1] == NULL || argv[1][0] == '~')
 	{
 		if (_cd_home(absolute_path, argv[1], info))
@@ -39,11 +39,7 @@ t_status	__cd(const char *path, char **argv, t_info *info)
 	else if (argv[1][0] == '.' || argv[1][0] == '/')
 		path_dispacher(absolute_path, argv[1], F_OK, info);
 	else
-	{
-		ft_strlcpy(absolute_path, info->cwd, PATH_MAX);
-		ft_strlcat(absolute_path, "/", PATH_MAX);
-		ft_strlcat(absolute_path, argv[1], PATH_MAX);
-	}
+		_cd_cwd(absolute_path, argv[1], info);
 	if (chdir(absolute_path) || access(absolute_path, F_OK))
 		return (ft_dprintf(2, "cd: %s: %s\n", argv[1], strerror(errno)), 1);
 	env_export_item("OLDPWD", info->cwd, info);
@@ -85,5 +81,13 @@ static int	_cd_oldpwd(char path[], char *arg, t_info *info)
 	}
 	path_dispacher(path, oldpwd, F_OK, info);
 	free(oldpwd);
+	return (0);
+}
+
+static int	_cd_cwd(char path[], char *arg, t_info *info)
+{
+	ft_strlcpy(path, info->cwd, PATH_MAX);
+	ft_strlcat(path, "/", PATH_MAX);
+	ft_strlcat(path, arg, PATH_MAX);
 	return (0);
 }
