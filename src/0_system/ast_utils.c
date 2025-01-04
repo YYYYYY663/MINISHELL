@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:16:26 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 00:23:13 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 02:10:53 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ t_ast	*ast_node_new(int type, t_ast *left, t_ast *right)
 	t_ast	*node;
 
 	node = ft_calloc(1, sizeof(t_ast));
+	if (!node)
+		return (NULL);
 	node->ntype = type;
 	node->left = left;
 	node->right = right;

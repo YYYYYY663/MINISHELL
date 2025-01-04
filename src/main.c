@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:45:19 by teando            #+#    #+#             */
-/*   Updated: 2025/01/05 01:05:14 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 02:11:43 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	shell_loop(t_info *info)
 {
 	while (1)
 	{
+		ft_dprintf(2, BG_GREEN WHITE "%s" RESET, info->cwd);
 		info->source_line = read_line_until_balanced(PROMPT);
 		launch_lexer(info);
 		// debug_print_token_list(info->token_list);

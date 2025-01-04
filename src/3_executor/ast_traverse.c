@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 16:28:15 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 00:01:41 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 02:11:12 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@ int			g_signal = 0;
 
 t_status	exec_pipeline(t_ast *node, t_info *info)
 {
-#ifdef FUNC_OUT
-	printf("%s\n", __func__);
-#endif
 	if (node->left->ntype == NT_CMD)
 		return (pipe_node(node, STDIN_FILENO, STDOUT_FILENO, info));
 	else

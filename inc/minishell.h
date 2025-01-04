@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 18:41:18 by teando            #+#    #+#             */
-/*   Updated: 2024/12/22 17:28:50 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 02:05:14 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include "ft_system.h"
 # include "ft_token.h"
 
-# define PROMPT "minishell> "
+# define PROMPT " $ "
 
 /* <----------- 0_core: exec_builtin -----------> */
 // int		is_builtin(char *cmd);
