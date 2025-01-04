@@ -6,21 +6,20 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 16:36:47 by ymizukam          #+#    #+#             */
-/*   Updated: 2024/12/22 16:37:48 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/04 22:58:10 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_system.h"
 #include "xunistd.h"
 
-
-void xdup2(int fildes, int fildes2, t_info *info)
+void	xdup2(int fildes, int fildes2, t_info *info)
 {
-	if (dup2(fildes,fildes2) == -1)
+	if (dup2(fildes, fildes2) == -1)
 	{
-        perror("dup2");
-        system_exit(info, errno);
-    }
+		perror("dup2");
+		system_exit(info, errno);
+	}
 	xclose(&fildes);
 }
 

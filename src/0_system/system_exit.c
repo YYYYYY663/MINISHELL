@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   system_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 21:27:54 by teando            #+#    #+#             */
-/*   Updated: 2024/12/17 23:05:08 by teando           ###   ########.fr       */
+/*   Updated: 2025/01/04 22:59:00 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_system.h"
 #include "xunistd.h"
 
-
 void	system_exit(t_info *info, t_status status)
 {
-	#ifdef FUNC_OUT
-		printf("%s\n",__func__);
-	#endif
+	int	i;
 
+#ifdef FUNC_OUT
+	printf("%s\n", __func__);
+#endif
 	line_init(info);
-	int i = 0;
+	i = 0;
 	while (i < 128)
 		free(info->env_spc[i++]);
 	ft_lstclear(&info->env_map, free);
@@ -29,15 +29,13 @@ void	system_exit(t_info *info, t_status status)
 	exit(status);
 }
 
-
-
 // void system_deinit(t_info *info)
 // {
 // 	#ifdef FUNC_OUT
 // 		printf("%s\n",__func__);
 // 	#endif
 // 	if (!info)
-// 		return;
+// 		return ;
 // 	free(info->source_line);
 // 	if (info->token_list != NULL)
 // 	{

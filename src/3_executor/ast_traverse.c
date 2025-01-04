@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 16:28:15 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/04 22:17:32 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/04 23:13:18 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_status	traverse_ast_nodes(t_ast *node, t_info *info)
 #ifdef DEBUG
 		printf("status %d\n", info->status);
 #endif
-		free(info->env_spc['?']);
+		xfree((void **)info->env_spc['?']);
 		info->env_spc['?'] = ft_itoa(info->status);
 		return (E_NONE);
 	}

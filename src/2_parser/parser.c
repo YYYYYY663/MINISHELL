@@ -1,18 +1,16 @@
 #include "ft_parser.h"
 
-t_status launch_parser(t_info *info)
+t_status	launch_parser(t_info *info)
 {
-    #ifdef FUNC_OUT
-		printf("%s\n",__func__);
-	#endif
-
-    info->ast = expr(&info->token_list, info);
-    #ifdef FUNC_OUT
-		printf("%s done\n",__func__);
-	#endif
-    return E_NONE;
+#ifdef FUNC_OUT
+	printf("%s\n", __func__);
+#endif
+	info->ast = expr(&info->token_list, info);
+#ifdef FUNC_OUT
+	printf("%s done\n", __func__);
+#endif
+	return (E_NONE);
 }
-
 
 // t_ast	*ast_node_new(int type, t_list *args, t_info *info)
 // {
@@ -24,7 +22,6 @@ t_status launch_parser(t_info *info)
 // 	return (new_node);
 // }
 
-
 // t_list *consume(int type, t_list **lst)
 // {
 //     t_list *ret = *lst;
@@ -33,7 +30,7 @@ t_status launch_parser(t_info *info)
 //     {
 //         token = (t_token *)(*lst)->data;
 //         if (token->type >> CMD_ARG ^ 1)
-//             break;
+//             break ;
 //         //コピーしたっ方が良さそう?
 //         ft_lstadd_back(&ret, *lst);
 //         *lst = (*lst)->next;
@@ -45,12 +42,11 @@ t_status launch_parser(t_info *info)
 // {
 //     t_token *token = (t_token *)(*lst)->data;
 //     if (token->type != type)
-//         return *lst;
+//         return (*lst);
 //     *lst = (*lst)->next;
 //     return (NULL);
 
 // }
-
 
 // t_status  aligne_token(t_info *info)
 // {
@@ -63,12 +59,14 @@ t_status launch_parser(t_info *info)
 //         token = (t_token *)lst->data;
 //         //CMDの引数になりそうな場合consumeでCMD_ARGで無くなるまで進める
 //         if (token->type & CMD_ARG)
-//             ast->right = ast_node_new(token->type, consume(CMD_ARG, &lst), info);
+//             ast->right = ast_node_new(token->type, consume(CMD_ARG, &lst),
+//	info);
 //         else
-//             ast->right = ast_node_new(token->type, expect(token->type, &lst), info);
-        
+//             ast->right = ast_node_new(token->type, expect(token->type, &lst),
+//	info);
+
 //         if (token->type == TT_EOF)
-//             break;
+//             break ;
 //         cur = cur->right;
 //     }
 // }

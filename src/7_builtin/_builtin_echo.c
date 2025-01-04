@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 15:48:32 by teando            #+#    #+#             */
-/*   Updated: 2025/01/04 22:12:21 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/04 22:44:38 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_status	__echo(const char *path, char **argv, t_info *info)
 	is_option_n = 0;
 	is_first = 1;
 	(void)path;
+	(void)info;
 	while (*++argv)
 	{
 		if (_validate_option(*argv))

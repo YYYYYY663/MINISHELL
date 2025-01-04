@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 18:20:59 by teando            #+#    #+#             */
-/*   Updated: 2025/01/04 21:03:23 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/04 23:10:49 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct s_ast
 	struct s_ast	*left;
 	struct s_ast	*right;
 	t_ntype			ntype;
-	t_args *args; // CMDの時のみ使用 WORDとREDIRの線形リスト
+	t_args			*args;
 }					t_ast;
 
 typedef struct s_token

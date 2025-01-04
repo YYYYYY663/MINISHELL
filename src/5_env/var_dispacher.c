@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_dispacher.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 17:12:59 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/01 14:18:45 by teando           ###   ########.fr       */
+/*   Updated: 2025/01/04 22:44:25 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,17 @@ int	var_dispacher(t_list **lst, t_info *info)
 
 	head = *lst;
 	token = (t_token *)head->data;
+	(void)info;
 	while (head->next)
 	{
 		if (ft_strchr(token->value, '*'))
 		{
-			//expand_astarisk(&head, info);
+			// expand_astarisk(&head, info);
 			// DOUBLE QUOTE noexpand
 		}
 		if (ft_strchr(token->value, '$'))
 		{
-			//expand_dollar(&head, info);
+			// expand_dollar(&head, info);
 			// SINGLE QUOTE no expand
 			// DOUBLE QUOTE no word split
 		}

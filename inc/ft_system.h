@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_system.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:53:59 by teando            #+#    #+#             */
-/*   Updated: 2024/12/24 19:31:12 by teando           ###   ########.fr       */
+/*   Updated: 2025/01/04 22:56:08 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_SYSTEM_H
 # define FT_SYSTEM_H
 
-# include "libft.h"
 # include "ft_token.h"
-
+# include "libft.h"
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
@@ -46,21 +45,20 @@ typedef struct s_info
 {
 	char		*source_line;
 	t_list		*token_list;
-	t_ast 		*ast;
+	t_ast		*ast;
 	t_list		*env_map;
-	char *env_spc[128];
-	int         stdin_backup;
-	int         stdout_backup;
+	char		*env_spc[128];
+	int			stdin_backup;
+	int			stdout_backup;
 	char		cwd[PATH_MAX];
 	t_status	status;
 }				t_info;
 
-
-void 		token_clear(void *ptr);
-void	ast_clear(t_ast *node);
+void			token_clear(void *ptr);
+void			ast_clear(t_ast *node);
 t_info			*system_init(char **envp);
 
-void line_init(t_info *info);
+void			line_init(t_info *info);
 void			system_exit(t_info *info, t_status status);
 
 /**** **** **** **** READLINE **** **** **** ****/

@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:16:26 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/04 22:16:27 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/04 22:47:36 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	ast_clear(t_ast *node)
 			ft_lstclear(&node->args->argv, token_clear);
 		if (node->args->redr)
 			ft_lstclear(&node->args->redr, token_clear);
+		if (node->args->cargv)
+			ft_strs_clear(node->args->cargv);
 		xclose(&node->args->fds[0]);
 		xclose(&node->args->fds[1]);
 		if (node->args->pid != -1)

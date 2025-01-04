@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_debug.c                                     :+:      :+:    :+:   */
+/*   draft_parser_debug.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 21:52:24 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 21:59:18 by teando           ###   ########.fr       */
+/*   Updated: 2025/01/04 22:25:21 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_parser.h"
-# include "ft_token.h"
+#include "ft_token.h"
 
 const char	*e_type_to_str(int t)
 {
@@ -20,7 +20,7 @@ const char	*e_type_to_str(int t)
 	if (t == NT_PIPE)
 		return ("NT_PIPE");
 	if (t == NT_AND)
-	    return ("NT_AND");
+		return ("NT_AND");
 	if (t == NT_EOF)
 		return ("NT_EOF");
 	if (t == NT_OR)
@@ -30,9 +30,9 @@ const char	*e_type_to_str(int t)
 
 void	debug_print_ast(t_ast *ast, int depth)
 {
-	t_list			*p;
-	char			*word;
-	t_token *token;
+	t_list	*p;
+	char	*word;
+	t_token	*token;
 
 	if (!ast)
 		return ;

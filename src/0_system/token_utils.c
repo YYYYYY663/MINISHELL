@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:15:51 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/04 22:15:51 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/04 23:15:50 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	**convert_argv(t_list *lst)
 	ptr = cargv;
 	while (lst != NULL)
 	{
-		*ptr++ = token->value; // ft_strdup(token->value);
+		*ptr++ = ft_strdup(token->value);
 		lst = lst->next;
 		token = (t_token *)lst->data;
 	}
