@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:06:41 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/04 22:12:45 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 01:54:17 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,6 @@ t_status	__export(const char *path, char **argv, t_info *info)
 {
 	int	i;
 
-#ifdef FUNC_OUT
-	printf("%s\n", __func__);
-	ft_putstrs_endl_fd(argv, "  ", 1);
-#endif
 	(void)path;
 	i = 1;
 	if (!argv[1])
@@ -36,6 +32,15 @@ t_status	__export(const char *path, char **argv, t_info *info)
 		env_export(argv[i++], info);
 	}
 	return (E_NONE);
+}
+
+static void	_swap(char **a, char **b)
+{
+	char	*tmp;
+
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
 }
 
 static void	_display_sorted_env(t_info *info)
@@ -55,13 +60,13 @@ static void	_display_sorted_env(t_info *info)
 		{
 			if (ft_strcmp(envp[i], envp[j]) > 0)
 			{
-				ft_swap(envp[i], envp[j]);
+				_swap(&envp[i], &envp[j]);
 			}
 			j++;
 		}
 		_display_sorted_env_line(envp[i++]);
 	}
-	_display_sorted_env_line(envp[i++]);
+	_display_sorted_env_line(envp[i]);
 }
 
 static void	_display_sorted_env_line(const char *entity)
