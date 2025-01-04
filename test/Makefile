@@ -1,5 +1,5 @@
 CFLAGS		:= -Wall -Wextra
-VALGRIND    := valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -q
+VALGRIND    := valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes
 
 OBJDIR       := ../obj/src
 

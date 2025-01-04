@@ -6,12 +6,13 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:15:51 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 02:43:01 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 04:17:08 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_system.h"
 #include "ft_token.h"
+#include "xunistd.h"
 
 char	**convert_argv(t_list *lst)
 {
@@ -43,4 +44,5 @@ void	token_clear(void *ptr)
 	if (token->value)
 		free(token->value);
 	free(token);
+	ptr = NULL;
 }
