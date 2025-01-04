@@ -60,7 +60,7 @@ path:
 	rm -f path.out
 
 var:
-	$(CC) $(IFLAGS) $(CFLAGS) $(DFLAGS) $(LFLAGS) $(SYSTEM) $(ENV) 5_test/__main_var.c libft.a -o var.out
+	$(CC) $(IFLAGS) $(CFLAGS) $(DFLAGS) $(LFLAGS) $(SYSTEM) $(LEXER) $(ENV) 5_test/__main_var.c libft.a -o var.out
 	$(VALGRIND) ./var.out
 	rm -f var.out
 
