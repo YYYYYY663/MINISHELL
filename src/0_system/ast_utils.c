@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:16:26 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 21:59:18 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/06 06:39:17 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ t_args	*consume_args(t_list **lst)
 		new_lst = ft_lstnew(cpy);
 		if (token->type == TT_WORD)
 			ft_lstadd_back(&args->argv, new_lst);
-		if (token->type == TT_HEREDOC || token->type == TT_REDIR_IN)
-			ft_lstadd_back(&args->redr, new_lst);
-		if (token->type == TT_APPEND || token->type == TT_REDIR_OUT)
+		if ((token->type & 0xF00) == REDIRECT)
 			ft_lstadd_back(&args->redr, new_lst);
 		(*lst) = (*lst)->next;
 		token = (t_token *)(*lst)->data;
