@@ -6,12 +6,12 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 18:20:59 by teando            #+#    #+#             */
-/*   Updated: 2025/01/05 03:36:01 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 21:57:14 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKEN_H
-# define TOKEN_H
+#ifndef FT_TOKEN_H
+# define FT_TOKEN_H
 
 # include "libft.h"
 # include <limits.h>
@@ -20,34 +20,34 @@
 #  define PATH_MAX 2048
 # endif
 
-# define CMD_ARG 0x1000     // Command arguments
-# define CONNECT 0x2000     // &&, ||, ;
-# define WORD 0x100         // General words
-# define REDIRECT 0x200     // Redirection
-# define SINGLE_QUOTE 0x010 // Single quote
-# define DOUBLE_QUOTE 0x020 // Double quote
+# define CMD_ARG 0x1000
+# define CONNECT 0x2000
+# define WORD 0x100
+# define REDIRECT 0x200
+# define SINGLE_QUOTE 0x010
+# define DOUBLE_QUOTE 0x020
 
 typedef int			t_token_type;
 
-# define TT_WORD 0x1101 // Text
-# define TT_PIPE 0x302 // |
-# define TT_REDIR_IN 0x1201 // <
-# define TT_APPEND 0x1202 // >>
-# define TT_REDIR_OUT 0x1203 // >
-# define TT_HEREDOC 0x1204 // <<
-# define TT_LPAREN 0x501 // (
-# define TT_RPAREN 0x502 // )
-# define TT_AND_AND 0x2001 // &&
-# define TT_OR_OR 0x2002 // ||
-# define TT_SEMICOLON 0x2003 // ;
-# define TT_EOF 0x2004 // End of file
-# define TT_ERROR 0x002 // Error
+# define TT_WORD 0x1101
+# define TT_PIPE 0x302
+# define TT_REDIR_IN 0x1201
+# define TT_APPEND 0x1202
+# define TT_REDIR_OUT 0x1203
+# define TT_HEREDOC 0x1204
+# define TT_LPAREN 0x501
+# define TT_RPAREN 0x502
+# define TT_AND_AND 0x2001
+# define TT_OR_OR 0x2002
+# define TT_SEMICOLON 0x2003
+# define TT_EOF 0x2004
+# define TT_ERROR 0x002
 
 typedef enum e_ntype
 {
-	NT_CMD,  // words and redirects
-	NT_PIPE, // |
-	NT_EOF,  // ; EOF
+	NT_CMD,
+	NT_PIPE,
+	NT_EOF,
 	NT_AND,
 	NT_OR
 }					t_ntype;

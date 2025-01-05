@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:16:26 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 04:52:19 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 21:59:18 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,15 @@ t_args	*consume_args(t_list **lst)
 	while ((token->type & 0xF000) == CMD_ARG)
 	{
 		cpy = malloc(sizeof(t_token));
-		// if (!cpy)
-		// 	return (free(args), NULL);
 		cpy->type = token->type;
 		cpy->value = ft_strdup(token->value);
 		new_lst = ft_lstnew(cpy);
-		// if (!new_lst)
-		// {
-		// 	return (free(args), NULL);
-		// }
 		if (token->type == TT_WORD)
 			ft_lstadd_back(&args->argv, new_lst);
 		if (token->type == TT_HEREDOC || token->type == TT_REDIR_IN)
 			ft_lstadd_back(&args->redr, new_lst);
 		if (token->type == TT_APPEND || token->type == TT_REDIR_OUT)
 			ft_lstadd_back(&args->redr, new_lst);
-		//(*lst)->data = NULL;
 		(*lst) = (*lst)->next;
 		token = (t_token *)(*lst)->data;
 	}
@@ -111,6 +104,7 @@ int	consume(t_token_type type, t_list **lst)
 	*lst = (*lst)->next;
 	return (1);
 }
+
 // 次のトークンが期待している記号のときには、トークンを1つ読み進める。
 // それ以外の場合にはエラーを報告する。
 void	expect(t_token_type type, t_list **lst)
@@ -120,8 +114,7 @@ void	expect(t_token_type type, t_list **lst)
 	token = (t_token *)(*lst)->data;
 	if (type != token->type)
 	{
-		// printf("expected %d", type);
-		// system_exit()
+		return ;
 	}
 	*lst = (*lst)->next;
 }

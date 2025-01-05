@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_syntax.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 14:02:42 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 20:33:43 by teando           ###   ########.fr       */
+/*   Updated: 2025/01/05 21:53:50 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,6 @@
 */
 int	is_operator_token(t_token_type ttype)
 {
-	#ifdef FUNC_OUT
-		printf("%s\n",__func__);
-	#endif
 	if (ttype == TT_PIPE || ttype == TT_AND_AND || ttype == TT_OR_OR
 		|| ttype == TT_SEMICOLON || ttype == TT_LPAREN || ttype == TT_RPAREN)
 		return (1);

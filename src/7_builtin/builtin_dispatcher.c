@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:00:28 by teando            #+#    #+#             */
-/*   Updated: 2025/01/05 02:42:32 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 22:12:02 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ t_status	builtin_dispatcher(t_args *args, int *in_fd, int *out_fd,
 	size_t					i;
 	t_token					*token;
 
+	if (!args || !args->argv)
+		return (E_NOT_BUITIN_CMD);
 	token = (t_token *)args->argv->data;
 	i = 0;
 	if (*in_fd != 0 || *out_fd != 1 || token->value == NULL)

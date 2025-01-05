@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:17:59 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 03:39:42 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 21:54:16 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,10 @@
 #include "ft_token.h"
 #include <signal.h>
 
-/*
- * CMDの処理はpreでもinでもどこでも大丈夫
- * signal handlingのためにすべてにifcheckをいれるべき
- */
-
 pid_t	cmd_node(t_ast *node, int in_fd, int out_fd, t_info *info)
 {
 	pid_t	pid;
 
-	//ここの処理怪しい
 	if (node->ntype == NT_PIPE)
 		return (cmd_node(node->left, in_fd, out_fd, info));
 	if (setup_args(node->args, &in_fd, &out_fd, info))
@@ -41,10 +35,8 @@ pid_t	cmd_node(t_ast *node, int in_fd, int out_fd, t_info *info)
 		perror("execve");
 		exit(1);
 	}
-	xclose(&in_fd);
-	xclose(&out_fd);
-	// node->args->fds[0] = in_fd;
-	// node->args->fds[1] = out_fd;
+	xclose(&node->args->fds[0]);
+	xclose(&node->args->fds[1]);
 	node->args->pid = pid;
 	return (pid);
 }
@@ -71,6 +63,7 @@ t_status	pipe_node(t_ast *node, int in_fd, int out_fd, t_info *info)
 		if (pid == -1)
 			return (E_COMMAND_NOT_FOUND);
 		waitpid(pid, &status, 0);
+		node->left->args->pid = -1;
 	}
 	return ((t_status)status);
 }

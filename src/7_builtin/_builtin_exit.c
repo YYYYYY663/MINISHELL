@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 15:45:58 by teando            #+#    #+#             */
-/*   Updated: 2025/01/05 02:40:35 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 21:52:49 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,13 @@
 #include "ft_env.h"
 #include "ft_system.h"
 
-/*
-	1,引数が数字ではない
-	exit
-	bash: exit: 2a: numeric argument required
-	2,引数が多い
-	bash-3.2$ exit 22 2a
-	exit
-	bash: exit: too many arguments
-*/
 t_status	__exit(char **argv, t_info *info)
 {
 	long	exit_status;
 	char	*endptr;
 
 	exit_status = 0;
-	printf("exit\n");
+	ft_dprintf(1, "exit\n");
 	if (argv[1] != NULL)
 	{
 		exit_status = ft_strtol(argv[1], &endptr, 10);

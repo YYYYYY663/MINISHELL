@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lexer.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 16:44:20 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 20:26:33 by teando           ###   ########.fr       */
+/*   Updated: 2025/01/05 21:59:57 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ typedef struct s_lexer
 
 /* <---------------- 外部インターフェース ----------------> */
 t_status		launch_lexer(t_info *info);
-void			token_list_free(t_list **token_list);
+
 void			debug_print_token_list(t_list *list);
 
-const char	*type_to_str(t_token_type t);
+const char		*type_to_str(t_token_type t);
 
 /* <---------------- 内部用プロトタイプ ----------------> */
 
@@ -44,7 +44,6 @@ t_token_type	get_one_char_op(char c);
 // allocate_token.c
 t_token			*create_token(t_token_type type, char *value, t_info *info);
 int				add_token(t_info *info, t_token *tok);
-void			token_list_free(t_list **token_list);
 
 // validate_syntax.c
 int				validate_syntax(t_info *info);

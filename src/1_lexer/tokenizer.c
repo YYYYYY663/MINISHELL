@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:10:42 by teando            #+#    #+#             */
-/*   Updated: 2024/12/23 20:26:26 by teando           ###   ########.fr       */
+/*   Updated: 2025/01/05 21:57:57 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,6 @@
  */
 t_status	launch_lexer(t_info *info)
 {
-	#ifdef FUNC_OUT
-		printf("%s\n",__func__);
-	#endif
-
 	info->token_list = NULL;
 	info->status = E_NONE;
 	if (!info->source_line)

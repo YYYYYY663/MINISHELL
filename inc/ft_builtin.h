@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:01:24 by teando            #+#    #+#             */
-/*   Updated: 2025/01/05 02:41:40 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 21:57:27 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ t_status			builtin_dispatcher(t_args *args, int *in_fd, int *out_fd,
 
 // wrapper関数の定義　関数ポインタ型の宣言
 typedef t_status	(*t_builtin_func)(char **argv, t_info *info);
-
-// static char **builtin_path = {"echo","cd","pwd","export","unset","env","exit"};
 
 /**** **** **** ** CALLBACK ** **** **** ****/
 t_status			__pwd(char **argv, t_info *info);

@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 02:46:04 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 02:46:29 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 21:54:20 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,17 @@ void	kill_pipeline(t_ast *node, t_info *info)
 	(void)info;
 	if (node == NULL)
 		return ;
+	kill_pipeline(node->right, info);
 	if (node->ntype == NT_CMD)
 	{
-		waitpid(node->args->pid, NULL, SIGTERM);
-		// kill(node->args->pid,SIGTERM);
-		// perror(node->args->cargv[0]);
+		xclose(&node->args->fds[0]);
+		xclose(&node->args->fds[1]);
+		if (node->args->pid != -1)
+			waitpid(node->args->pid, NULL, 0);
+		node->args->pid = -1;
 	}
-	kill_pipeline(node->right, info);
 	kill_pipeline(node->left, info);
 }
+
+// if (node->args->pid != -1)
+// 	kill(node->args->pid, SIGTERM);

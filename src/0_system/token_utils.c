@@ -1,24 +1,24 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:15:51 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 05:21:05 by teando           ###   ########.fr       */
+/*   Updated: 2025/01/05 21:58:02 by ymizukam         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "ft_system.h"
 #include "ft_token.h"
 #include "xunistd.h"
 
-char **convert_argv(t_list *lst)
+char	**convert_argv(t_list *lst)
 {
-	char **cargv;
-	t_token *token;
-	size_t i;
+	char	**cargv;
+	t_token	*token;
+	size_t	i;
 
 	if (!lst || !lst->data)
 		return (NULL);
@@ -41,13 +41,13 @@ char **convert_argv(t_list *lst)
 	return (cargv);
 }
 
-void token_clear(void *ptr)
+void	token_clear(void *ptr)
 {
-	t_token *token;
+	t_token	*token;
 
 	token = (t_token *)ptr;
 	if (token == NULL)
-		return;
+		return ;
 	if (token->value)
 		free(token->value);
 	free(token);

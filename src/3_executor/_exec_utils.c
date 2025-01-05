@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:17:47 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 02:44:45 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 21:54:32 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,15 @@ int	setup_args(t_args *args, int *in_fd, int *out_fd, t_info *info)
 {
 	t_token	*token;
 
-	//まずはredrとargvの変数展開
-	// redirectの用意
 	if (redirect_dipacher(args->redr, in_fd, out_fd, info))
 	{
 		info->status = 1;
 		return (1);
 	}
-	// pathの取得
 	token = (t_token *)args->argv->data;
 	if (token->value == NULL)
 	{
-		return (1); // redirectしかない場合
+		return (1);
 	}
 	if (path_dispacher(args->path, token->value, X_OK, info))
 	{
@@ -41,5 +38,7 @@ int	setup_args(t_args *args, int *in_fd, int *out_fd, t_info *info)
 		return (1);
 	}
 	args->cargv = convert_argv(args->argv);
+	args->fds[0] = *in_fd;
+	args->fds[1] = *out_fd;
 	return (0);
 }

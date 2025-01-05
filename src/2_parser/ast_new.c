@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 20:12:26 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 05:45:43 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/05 21:54:01 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ t_ast	*primary(t_list **list, t_info *info)
 {
 	t_ast	*node;
 
-	printf("%s  %s\n", __func__, type_to_str(((t_token *)(*list)->data)->type));
 	while (consume(TT_LPAREN, list))
 	{
 		node = expr(list, info);
@@ -35,7 +34,6 @@ t_ast	*pipeline(t_list **list, t_info *info)
 	t_ast	*pipe_node;
 	t_ast	*current_node;
 
-	printf("%s  %s\n", __func__, type_to_str(((t_token *)(*list)->data)->type));
 	pipe_node = ast_node_new(NT_PIPE, primary(list, info), NULL);
 	current_node = pipe_node;
 	while (consume(TT_PIPE, list))
