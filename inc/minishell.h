@@ -1,29 +1,29 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 18:41:18 by teando            #+#    #+#             */
-/*   Updated: 2025/01/05 02:05:14 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/06 14:55:01 by teando           ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef MINISHELL_H
-# define MINISHELL_H
+#define MINISHELL_H
 
-# include "ft_builtin.h"
-# include "ft_env.h"
-# include "ft_executor.h"
-# include "ft_lexer.h"
-# include "ft_parser.h"
-# include "ft_redirect.h"
-# include "ft_signals.h"
-# include "ft_system.h"
-# include "ft_token.h"
+#include "ft_builtin.h"
+#include "ft_env.h"
+#include "ft_executor.h"
+#include "ft_lexer.h"
+#include "ft_parser.h"
+#include "ft_redirect.h"
+#include "ft_signals.h"
+#include "ft_system.h"
+#include "ft_token.h"
 
-# define PROMPT " $ "
+#define PROMPT "$ "
 
 /* <----------- 0_core: exec_builtin -----------> */
 // int		is_builtin(char *cmd);

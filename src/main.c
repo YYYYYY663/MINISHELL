@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:45:19 by teando            #+#    #+#             */
-/*   Updated: 2025/01/06 14:22:32 by teando           ###   ########.fr       */
+/*   Updated: 2025/01/06 15:00:36 by teando           ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -19,25 +19,31 @@ void shell_loop(t_info *info)
 {
 	while (1)
 	{
-		/* シグナル状態をチェック */
+		ft_dprintf(2, BG_GREEN WHITE "%s" RESET "\n", info->cwd);
+		info->source_line = read_line_until_balanced(PROMPT);
+
+		if (info->source_line == NULL)
+		{
+			if (g_signal_status == SIGINT)
+			{
+				g_signal_status = 0;
+				continue;
+			}
+			break; /* 本当のEOF (Ctrl-D) の場合 */
+		}
+
 		if (g_signal_status == SIGINT)
 		{
-			/* SIGINT を受け取った場合の処理
-			 * ハンドラ側で最小限の表示は行うので、
-			 * ここではフラグのクリアのみ */
 			g_signal_status = 0;
+			free(info->source_line);
+			info->source_line = NULL;
 			continue;
 		}
 		else if (g_signal_status == SIGQUIT)
 		{
-			/* SIGQUIT は無視する (bash互換) */
-			g_signal_status = 0;
+			g_signal_status = 0; /* SIGQUITは無視 (bash互換) */
 		}
 
-		ft_dprintf(2, BG_GREEN WHITE "%s" RESET "\n", info->cwd);
-		info->source_line = read_line_until_balanced(PROMPT);
-		if (info->source_line == NULL) /* Ctrl-D の場合 */
-			break;
 		launch_lexer(info);
 		launch_parser(info);
 		launch_executor(info);
@@ -72,6 +78,7 @@ int main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	info = system_init(envp);
+	init_signals();
 	shell_loop(info);
 	system_exit(info, 0);
 }

@@ -6,7 +6,7 @@
 #    By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/15 18:05:31 by teando            #+#    #+#              #
-#    Updated: 2025/01/05 05:10:09 by teando           ###   ########.fr        #
+#    Updated: 2025/01/06 14:58:14 by teando           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -46,6 +46,7 @@ SRCS 		:= \
             var_dispacher.c \
         ) \
         $(addprefix 6_signals/, \
+			signal_handler.c \
         ) \
         $(addprefix 7_builtin/, \
             _builtin_env.c _builtin_unset.c _builtin_exit.c builtin_dispatcher.c _builtin_cd.c \
