@@ -1,26 +1,43 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:45:19 by teando            #+#    #+#             */
-/*   Updated: 2025/01/05 23:44:06 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/06 14:22:32 by teando           ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "ft_color.h"
 #include "minishell.h"
 
-extern void	init_signals(void);
+extern volatile sig_atomic_t g_signal_status;
 
-void	shell_loop(t_info *info)
+void shell_loop(t_info *info)
 {
 	while (1)
 	{
+		/* シグナル状態をチェック */
+		if (g_signal_status == SIGINT)
+		{
+			/* SIGINT を受け取った場合の処理
+			 * ハンドラ側で最小限の表示は行うので、
+			 * ここではフラグのクリアのみ */
+			g_signal_status = 0;
+			continue;
+		}
+		else if (g_signal_status == SIGQUIT)
+		{
+			/* SIGQUIT は無視する (bash互換) */
+			g_signal_status = 0;
+		}
+
 		ft_dprintf(2, BG_GREEN WHITE "%s" RESET "\n", info->cwd);
 		info->source_line = read_line_until_balanced(PROMPT);
+		if (info->source_line == NULL) /* Ctrl-D の場合 */
+			break;
 		launch_lexer(info);
 		launch_parser(info);
 		launch_executor(info);
@@ -48,9 +65,9 @@ void	shell_loop(t_info *info)
 // 	}
 // }
 
-int	main(int argc, char **argv, char **envp)
+int main(int argc, char **argv, char **envp)
 {
-	t_info	*info;
+	t_info *info;
 
 	(void)argc;
 	(void)argv;
