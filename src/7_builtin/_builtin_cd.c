@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   _builtin_cd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:08:25 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/12 20:17:16 by teando           ###   ########.fr       */
+/*   Updated: 2025/01/12 21:55:43 by ymizukam         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "ft_builtin.h"
 #include "ft_env.h"
@@ -18,9 +18,9 @@
 #include <string.h>
 #include <unistd.h>
 
-static int _cd_home(char path[], char *arg, t_info *info);
-static int _cd_oldpwd(char path[], char *arg, t_info *info);
-static int _cd_cwd(char path[], char *arg, t_info *info);
+static int	_cd_home(char path[], char *arg, t_info *info);
+static int	_cd_oldpwd(char path[], char *arg, t_info *info);
+static int	_cd_cwd(char path[], char *arg, t_info *info);
 
 /**
  * @brief カレントディレクトリを変更する（cdコマンド）
@@ -41,9 +41,9 @@ static int _cd_cwd(char path[], char *arg, t_info *info);
  *    - E_TOO_MANY_ARGS：引数が多すぎる
  *    - E_CHDIR：ディレクトリ変更失敗
  */
-t_status __cd(char **argv, t_info *info)
+t_status	__cd(char **argv, t_info *info)
 {
-	char absolute_path[PATH_MAX];
+	char	absolute_path[PATH_MAX];
 
 	if (argv[1] == NULL || argv[1][0] == '~')
 	{
@@ -82,9 +82,9 @@ t_status __cd(char **argv, t_info *info)
  *    - 0：正常終了
  *    - 1：エラー
  */
-static int _cd_home(char path[], char *arg, t_info *info)
+static int	_cd_home(char path[], char *arg, t_info *info)
 {
-	char *home;
+	char	*home;
 
 	home = env_get("HOME", info);
 	if (home[0] == '\0')
@@ -116,15 +116,15 @@ static int _cd_home(char path[], char *arg, t_info *info)
  *    - 0：正常終了
  *    - 1：エラー
  */
-static int _cd_oldpwd(char path[], char *arg, t_info *info)
+static int	_cd_oldpwd(char path[], char *arg, t_info *info)
 {
-	char *oldpwd;
+	char	*oldpwd;
 
 	(void)arg;
 	oldpwd = env_get("OLDPWD", info);
 	if (oldpwd[0] == '\0')
 	{
-		printf("cd: OLDPWD not set\n");
+		ft_dprintf(2, "cd: OLDPWD not set\n");
 		free(oldpwd);
 		return (1);
 	}
@@ -146,7 +146,7 @@ static int _cd_oldpwd(char path[], char *arg, t_info *info)
  * @return int
  *    - 0：正常終了
  */
-static int _cd_cwd(char path[], char *arg, t_info *info)
+static int	_cd_cwd(char path[], char *arg, t_info *info)
 {
 	ft_strlcpy(path, info->cwd, PATH_MAX);
 	ft_strlcat(path, "/", PATH_MAX);

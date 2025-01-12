@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:17:59 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 21:54:16 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/12 21:52:38 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@
 
 /**
  * @brief コマンドノードを実行する
- * 
+ *
  * この関数は以下の処理を行います：
  * 1. パイプノードの場合は左側のノードを再帰的に処理
  * 2. リダイレクトとコマンドパスの設定
  * 3. 子プロセスを作成してコマンドを実行
  * 4. 親プロセスでファイルディスクリプタを閉じてPIDを保存
- * 
+ *
  * @param node 実行するASTノード
  * @param in_fd 標準入力のファイルディスクリプタ
  * @param out_fd 標準出力のファイルディスクリプタ
@@ -47,7 +47,8 @@ pid_t	cmd_node(t_ast *node, int in_fd, int out_fd, t_info *info)
 		xdup2(out_fd, STDOUT_FILENO, info);
 		execve(node->args->path, node->args->cargv,
 			ft_list_to_strs(info->env_map));
-		perror("execve");
+		ft_dprintf(2, "minishell: %s: %s\n", node->args->cargv[0],
+			strerror(errno));
 		exit(1);
 	}
 	xclose(&node->args->fds[0]);
@@ -58,7 +59,7 @@ pid_t	cmd_node(t_ast *node, int in_fd, int out_fd, t_info *info)
 
 /**
  * @brief パイプノードを実行する
- * 
+ *
  * この関数は以下の処理を行います：
  * 1. 右側のノードが存在する場合：
  *    - パイプを作成
@@ -68,7 +69,7 @@ pid_t	cmd_node(t_ast *node, int in_fd, int out_fd, t_info *info)
  *    - ビルトインコマンドの実行を試みる
  *    - 通常のコマンドとして実行
  *    - 子プロセスの終了を待機
- * 
+ *
  * @param node 実行するASTノード
  * @param in_fd 標準入力のファイルディスクリプタ
  * @param out_fd 標準出力のファイルディスクリプタ

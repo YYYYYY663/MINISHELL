@@ -14,13 +14,13 @@ DFLAGS      := -DFUNC_OUT
 
 
 
-SYSTEM      := ../src/0_system/*.c
+SYSTEM      := ../src/0_system/*.c ../src/6_signals/*.c
 LEXER       := ../src/1_lexer/*.c
 PARSER      := ../src/2_parser/*.c
 EXECUTOR    := ../src/3_executor/*.c
 REDIRECT    := ../src/4_redirect/*.c
 ENV         := ../src/5_env/*.c
-SIGNAL     	:= ../src/6_signal/*.c
+# SIGNAL     	:= ../src/6_signal/*.c
 BUILTIN     := ../src/7_builtin/*.c
 
 

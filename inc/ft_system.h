@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:53:59 by teando            #+#    #+#             */
-/*   Updated: 2025/01/05 04:16:59 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/12 21:20:17 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
+extern volatile sig_atomic_t	g_signal_status;
 // # define MAX_FD 1024
 
 typedef enum e_status
@@ -39,29 +40,29 @@ typedef enum e_status
 	E_COMMAND_NOT_FOUND = 127,
 	E_SIGINT = 130,
 	E_SIGQUIT = 131,
-}				t_status;
+}								t_status;
 
 typedef struct s_info
 {
-	char		*source_line;
-	t_list		*token_list;
-	t_ast		*ast;
-	t_list		*env_map;
-	char		*env_spc[128];
-	int			stdin_backup;
-	int			stdout_backup;
-	char		cwd[PATH_MAX];
-	t_status	status;
-}				t_info;
+	char						*source_line;
+	t_list						*token_list;
+	t_ast						*ast;
+	t_list						*env_map;
+	char						*env_spc[128];
+	int							stdin_backup;
+	int							stdout_backup;
+	char						cwd[PATH_MAX];
+	t_status					status;
+}								t_info;
 
-void			token_clear(void *ptr);
-void			ast_clear(t_ast *node);
-t_info			*system_init(char **envp);
+void							token_clear(void *ptr);
+void							ast_clear(t_ast *node);
+t_info							*system_init(char **envp);
 
-void			line_init(t_info *info);
-void			system_exit(t_info *info, t_status status);
+void							line_init(t_info *info);
+void							system_exit(t_info *info, t_status status);
 
 /**** **** **** **** READLINE **** **** **** ****/
-char			*read_line_until_balanced(const char *prompt);
+char							*read_line_until_balanced(const char *prompt);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signals.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 19:29:46 by teando            #+#    #+#             */
-/*   Updated: 2024/12/17 19:30:16 by teando           ###   ########.fr       */
+/*   Updated: 2025/01/12 21:39:40 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,10 @@
 ** 0 = シグナル未受信
 ** SIGINT, SIGQUIT などのシグナル番号が入る
 */
-extern volatile sig_atomic_t g_signal_status;
 
 /*
 ** シグナル初期化関数
 */
-void	init_signals(void);
+int	init_signals(void);
 
 #endif

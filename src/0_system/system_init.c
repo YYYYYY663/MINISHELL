@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   system_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 16:33:27 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/12 20:45:35 by teando           ###   ########.fr       */
+/*   Updated: 2025/01/12 21:33:17 by ymizukam         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "ft_system.h"
 #include "ft_token.h"
@@ -59,7 +59,6 @@ t_info	*system_init(char **envp)
  */
 void	line_init(t_info *info)
 {
-	g_signal_status = 0;
 	if (!info)
 		exit(1);
 	xfree((void **)&info->source_line);
@@ -70,6 +69,12 @@ void	line_init(t_info *info)
 	ast_clear(info->ast);
 	info->ast = NULL;
 	free(info->env_spc['?']);
+	if (g_signal_status == SIGINT || g_signal_status == SIGQUIT)
+		info->status = g_signal_status + 128;
+#ifndef DEBUGOFF
+	printf("status %d\n", info->status);
+#endif
 	info->env_spc['?'] = ft_itoa(info->status);
+	g_signal_status = 0;
 	info->status = 0;
 }

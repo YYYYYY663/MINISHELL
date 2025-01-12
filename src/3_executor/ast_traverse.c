@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ast_traverse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 16:28:15 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/12 20:43:00 by teando           ###   ########.fr       */
+/*   Updated: 2025/01/12 21:32:08 by ymizukam         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "ft_executor.h"
 #include "ft_parser.h"
@@ -16,7 +16,7 @@
 #include "ft_token.h"
 
 // int			g_signal = 0;
-extern int	g_signal_status;
+extern volatile sig_atomic_t	g_signal_status;
 /**
  * @brief 論理演算子ノード（&&, ||, ;）を実行する
  *
@@ -79,9 +79,6 @@ t_status	traverse_ast_nodes(t_ast *node, t_info *info)
 	{
 		exec_pipeline(node, info);
 		kill_pipeline(node, info);
-#ifndef DEBUGOFF
-		printf("status %d\n", info->status);
-#endif
 		free(info->env_spc['?']);
 		info->env_spc['?'] = ft_itoa(info->status);
 		return (E_NONE);

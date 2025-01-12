@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 14:02:42 by teando            #+#    #+#             */
-/*   Updated: 2025/01/05 21:53:50 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/12 21:12:50 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,14 @@ static int	check_error_token(t_token *curr, t_info *info)
 
 static int	check_redirect_token(t_token *curr, t_info *info)
 {
-	if ((curr->type == TT_REDIR_IN || curr->type == TT_APPEND
-			|| curr->type == TT_REDIR_OUT || curr->type == TT_HEREDOC)
-		&& (!curr->value || curr->value[0] == '\0'))
+	if (curr->type == TT_REDIR_IN || curr->type == TT_APPEND
+		|| curr->type == TT_REDIR_OUT || curr->type == TT_HEREDOC)
 	{
-		info->status = E_SYNTAX;
-		return (0);
+		if (!curr->value || curr->value[0] == '\0')
+		{
+			info->status = E_SYNTAX;
+			return (0);
+		}
 	}
 	return (1);
 }
