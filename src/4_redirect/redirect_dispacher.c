@@ -14,6 +14,7 @@
 #include "ft_lexer.h"
 #include "ft_redirect.h"
 #include "xunistd.h"
+#include <string.h>
 
 /**
  * @brief リダイレクトトークンを処理して適切なリダイレクトを設定する

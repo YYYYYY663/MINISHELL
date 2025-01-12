@@ -1,22 +1,26 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   _builtin_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:06:41 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 02:42:06 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/12 20:17:19 by teando           ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "ft_builtin.h"
 #include "ft_env.h"
 #include "ft_system.h"
 
+static void _swap(char **a, char **b);
+static void _display_sorted_env(t_info *info);
+static void _display_sorted_env_line(const char *entity);
+
 /**
  * @brief 環境変数を設定または表示する（exportコマンド）
- * 
+ *
  * この関数は以下の処理を行います：
  * 1. 引数がない場合：
  *    - 全ての環境変数をソートして表示
@@ -24,17 +28,17 @@
  *    - 各引数を"KEY=VALUE"形式として解析
  *    - キーの妥当性をチェック
  *    - 環境変数を設定
- * 
+ *
  * @param args コマンド引数の配列（args[0]はコマンド名）
  * @param info シェル情報構造体
- * @return t_status 
+ * @return t_status
  *    - E_NONE：正常終了
  *    - E_ENV_KEY：無効なキー名
  *    - E_ALLOCATE：メモリ割り当て失敗
  */
-t_status	__export(char **argv, t_info *info)
+t_status __export(char **argv, t_info *info)
 {
-	int	i;
+	int i;
 
 	i = 1;
 	if (!argv[1])
@@ -48,9 +52,9 @@ t_status	__export(char **argv, t_info *info)
 	return (E_NONE);
 }
 
-static void	_swap(char **a, char **b)
+static void _swap(char **a, char **b)
 {
-	char	*tmp;
+	char *tmp;
 
 	tmp = *a;
 	*a = *b;
@@ -59,24 +63,24 @@ static void	_swap(char **a, char **b)
 
 /**
  * @brief 環境変数をソートして表示する
- * 
+ *
  * この関数は以下の処理を行います：
  * 1. 環境変数リストを配列に変換
  * 2. 配列をソート
  * 3. 各環境変数を"declare -x KEY=VALUE"形式で表示
  * 4. メモリを解放
- * 
+ *
  * @param info シェル情報構造体
- * @return t_status 
+ * @return t_status
  *    - E_NONE：正常終了
  *    - E_ALLOCATE：メモリ割り当て失敗
  */
-static void	_display_sorted_env(t_info *info)
+static void _display_sorted_env(t_info *info)
 {
-	char	**envp;
-	int		len;
-	int		i;
-	int		j;
+	char **envp;
+	int len;
+	int i;
+	int j;
 
 	envp = ft_list_to_strs(info->env_map);
 	len = ft_list_size(info->env_map);
@@ -97,10 +101,10 @@ static void	_display_sorted_env(t_info *info)
 	_display_sorted_env_line(envp[i]);
 }
 
-static void	_display_sorted_env_line(const char *entity)
+static void _display_sorted_env_line(const char *entity)
 {
-	char	*key;
-	char	*value;
+	char *key;
+	char *value;
 
 	key = ft_substr_l(entity, '=');
 	value = ft_substr_r(entity, '=');
