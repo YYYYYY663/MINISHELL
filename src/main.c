@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:45:19 by teando            #+#    #+#             */
-/*   Updated: 2025/01/12 22:07:36 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/12 22:57:16 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	shell_loop(t_info *info)
 		info->source_line = read_line_until_balanced(PROMPT);
 		if (g_signal_status == SIGINT)
 		{
-			g_signal_status = 0;
 			dprintf(2, "Ctrl C while prompt\n");
 			continue ;
 		}
