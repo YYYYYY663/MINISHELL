@@ -6,14 +6,14 @@
 #    By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/15 18:05:31 by teando            #+#    #+#              #
-#    Updated: 2025/01/06 14:58:14 by teando           ###   ########.fr        #
+#    Updated: 2025/01/12 20:15:10 by teando           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 
 NAME		:= minishell
 CC			:= cc
-CFLAGS		:= #-Wall -Wextra -Werror
+CFLAGS		:= -Wall -Wextra -Werror
 LFLAGS		:= -lreadline
 RM			:= rm -rf
 ROOT_DIR	:= .
@@ -62,7 +62,7 @@ DEPS		:= $(OBJS:.o=.d)
 ifeq ($(DEBUG), 1)
 	CFLAGS	+= -g -fsanitize=address
 else
-	CFLAGS	+= -O2
+	CFLAGS	+= 
 endif
 
 all: $(NAME)
