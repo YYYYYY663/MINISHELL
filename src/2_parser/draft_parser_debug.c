@@ -13,6 +13,19 @@
 #include "ft_parser.h"
 #include "ft_token.h"
 
+/**
+ * @brief ノードタイプを文字列に変換する
+ * 
+ * この関数は以下のノードタイプを文字列に変換します：
+ * - NT_CMD  → "NT_CMD" （コマンドノード）
+ * - NT_PIPE → "NT_PIPE"（パイプノード）
+ * - NT_AND  → "NT_AND" （AND論理演算子ノード）
+ * - NT_EOF  → "NT_EOF" （セミコロンノード）
+ * - NT_OR   → "NT_OR"  （OR論理演算子ノード）
+ * 
+ * @param t ノードタイプ
+ * @return const char* 対応する文字列、未知の型の場合は"UNKNOWN"
+ */
 const char	*e_type_to_str(int t)
 {
 	if (t == NT_CMD)
@@ -28,6 +41,23 @@ const char	*e_type_to_str(int t)
 	return ("UNKNOWN");
 }
 
+/**
+ * @brief ASTをデバッグ用に再帰的に表示する
+ * 
+ * この関数は以下の処理を行います：
+ * 1. インデントを深さに応じて出力
+ * 2. ノードの種類を表示
+ * 3. コマンドノードの場合は引数リストを表示
+ * 4. 左右の子ノードを再帰的に表示（深さを増やして）
+ * 
+ * 出力形式：
+ * [ノードタイプ] args=[引数1, 引数2, ...]
+ *   [子ノード1]
+ *   [子ノード2]
+ * 
+ * @param ast 表示するASTノード
+ * @param depth 現在の深さ（インデント用）
+ */
 void	debug_print_ast(t_ast *ast, int depth)
 {
 	t_list	*p;
@@ -43,9 +73,7 @@ void	debug_print_ast(t_ast *ast, int depth)
 		ft_dprintf(STDOUT_FILENO, "(null)\n");
 		return ;
 	}
-	// 種別表示
 	ft_dprintf(STDOUT_FILENO, "[%s]", e_type_to_str(ast->ntype));
-	// NT_CMD の場合、argsを出力
 	if (ast->ntype == NT_CMD && ast->args)
 	{
 		ft_dprintf(STDOUT_FILENO, " args=[");
@@ -59,20 +87,9 @@ void	debug_print_ast(t_ast *ast, int depth)
 			if (p)
 				ft_dprintf(STDOUT_FILENO, ", ");
 		}
-		// ft_dprintf(STDOUT_FILENO, "%s", " :in: ");
-		// p = ast->args->rd_i;
-		// while (p)
-		// {
-		// 	word = (char *)p->data;
-		// 	ft_dprintf(STDOUT_FILENO, "%s", word);
-		// 	p = p->next;
-		// 	if (p)
-		// 		ft_dprintf(STDOUT_FILENO, ", ");
-		// }
 		ft_dprintf(STDOUT_FILENO, "]");
 	}
 	ft_dprintf(STDOUT_FILENO, "\n");
-	// 再帰
 	debug_print_ast(ast->left, depth + 1);
 	debug_print_ast(ast->right, depth + 1);
 }

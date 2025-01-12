@@ -13,6 +13,17 @@
 #include "ft_executor.h"
 #include "ft_system.h"
 
+/**
+ * @brief 実行エンジンのメインエントリポイント
+ * 
+ * この関数は以下の処理を行います：
+ * 1. パーサーによって生成されたASTを受け取る
+ * 2. ASTのルートノードから再帰的にノードを走査
+ * 3. 各ノードに対して適切な実行処理を行う
+ * 
+ * @param info シェル情報構造体（ASTと実行結果を含む）
+ * @return t_status 実行結果のステータスコード
+ */
 t_status	launch_executor(t_info *info)
 {
 	return (traverse_ast_nodes(info->ast, info));

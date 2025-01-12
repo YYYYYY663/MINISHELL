@@ -17,6 +17,21 @@
 #include "ft_token.h"
 #include <signal.h>
 
+/**
+ * @brief コマンドノードを実行する
+ * 
+ * この関数は以下の処理を行います：
+ * 1. パイプノードの場合は左側のノードを再帰的に処理
+ * 2. リダイレクトとコマンドパスの設定
+ * 3. 子プロセスを作成してコマンドを実行
+ * 4. 親プロセスでファイルディスクリプタを閉じてPIDを保存
+ * 
+ * @param node 実行するASTノード
+ * @param in_fd 標準入力のファイルディスクリプタ
+ * @param out_fd 標準出力のファイルディスクリプタ
+ * @param info シェル情報構造体
+ * @return pid_t 作成された子プロセスのPID、エラー時は-1
+ */
 pid_t	cmd_node(t_ast *node, int in_fd, int out_fd, t_info *info)
 {
 	pid_t	pid;
@@ -41,6 +56,25 @@ pid_t	cmd_node(t_ast *node, int in_fd, int out_fd, t_info *info)
 	return (pid);
 }
 
+/**
+ * @brief パイプノードを実行する
+ * 
+ * この関数は以下の処理を行います：
+ * 1. 右側のノードが存在する場合：
+ *    - パイプを作成
+ *    - 左側のコマンドを実行（出力をパイプに接続）
+ *    - 右側のノードを再帰的に処理（入力をパイプから受け取る）
+ * 2. 右側のノードが存在しない場合：
+ *    - ビルトインコマンドの実行を試みる
+ *    - 通常のコマンドとして実行
+ *    - 子プロセスの終了を待機
+ * 
+ * @param node 実行するASTノード
+ * @param in_fd 標準入力のファイルディスクリプタ
+ * @param out_fd 標準出力のファイルディスクリプタ
+ * @param info シェル情報構造体
+ * @return t_status 実行結果のステータスコード
+ */
 t_status	pipe_node(t_ast *node, int in_fd, int out_fd, t_info *info)
 {
 	int		pipefds[2];

@@ -12,40 +12,20 @@
 
 #include "ft_env.h"
 
-// keyを削除
+/**
+ * @brief 環境変数を削除する
+ * 
+ * この関数は以下の処理を行います：
+ * 1. 指定されたキーに一致する環境変数を検索
+ * 2. 一致した環境変数をリストから削除
+ * 3. メモリを解放
+ * 
+ * @param key 削除する環境変数のキー
+ * @param info シェル情報構造体
+ * @return t_status 常にE_NONE（成功）を返す
+ */
 t_status	env_unset(char *key, t_info *info)
 {
 	ft_list_remove_if(&info->env_map, key, __cmp, free);
 	return (E_NONE);
 }
-
-// void	ft_list_remove_if(t_list **begin_list, void *data_ref,
-// int (*cmp)(void *, void *),
-// 		void (*free_fct)(void *))
-// {
-// 	t_list	*current;
-// 	t_list	*prev;
-// 	t_list	*tmp;
-
-// 	current = *begin_list;
-// 	prev = 0;
-// 	while (current)
-// 	{
-// 		if ((*cmp)(current->data, data_ref) == 0)
-// 		{
-// 			tmp = current->next;
-// 			(*free_fct)(current->data);
-// 			free(current);
-// 			if (!prev)
-// 				*begin_list = tmp;
-// 			else
-// 				prev->next = tmp;
-// 			current = tmp;
-// 		}
-// 		else
-// 		{
-// 			prev = current;
-// 			current = current->next;
-// 		}
-// 	}
-// }

@@ -17,6 +17,21 @@
 
 int			g_signal = 0;
 
+/**
+ * @brief 論理演算子ノード（&&, ||, ;）を実行する
+ * 
+ * この関数は以下の処理を行います：
+ * 1. AND演算子（&&）の場合：
+ *    - 左側を実行し、成功時のみ右側を実行
+ * 2. OR演算子（||）の場合：
+ *    - 左側を実行し、失敗時のみ右側を実行
+ * 3. セミコロン（;）の場合：
+ *    - 左側と右側を順番に実行
+ * 
+ * @param node 実行するASTノード
+ * @param info シェル情報構造体
+ * @return t_status 実行結果のステータスコード
+ */
 t_status	exec_connector(t_ast *node, t_info *info)
 {
 	if (node->ntype == NT_AND)
@@ -39,6 +54,21 @@ t_status	exec_connector(t_ast *node, t_info *info)
 	return (E_NONE);
 }
 
+/**
+ * @brief ASTを再帰的に走査して実行する
+ * 
+ * この関数は以下の処理を行います：
+ * 1. シグナルの確認（中断要求があれば終了）
+ * 2. パイプノードの場合：
+ *    - パイプラインを実行
+ *    - 全プロセスの終了を待機
+ *    - 終了ステータスを環境変数に設定
+ * 3. その他のノードは論理演算子として処理
+ * 
+ * @param node 実行するASTノード
+ * @param info シェル情報構造体
+ * @return t_status 実行結果のステータスコード
+ */
 t_status	traverse_ast_nodes(t_ast *node, t_info *info)
 {
 	if (node == NULL)

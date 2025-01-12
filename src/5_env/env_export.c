@@ -12,6 +12,20 @@
 
 #include "ft_env.h"
 
+/**
+ * @brief 環境変数を設定する
+ * 
+ * この関数は以下の処理を行います：
+ * 1. 環境変数のキーと値を分離
+ * 2. キーの妥当性をチェック
+ * 3. 既存の環境変数を検索：
+ *    - 存在する場合は値を更新
+ *    - 存在しない場合は新規作成
+ * 
+ * @param ent 環境変数エントリ（"KEY=VALUE"形式）
+ * @param info シェル情報構造体
+ * @return t_status 成功時E_NONE、失敗時エラーコード
+ */
 t_status	env_export(char *ent, t_info *info)
 {
 	char	key[PATH_MAX];
@@ -40,6 +54,18 @@ t_status	env_export(char *ent, t_info *info)
 	return (E_NONE);
 }
 
+/**
+ * @brief キーと値を指定して環境変数を設定する
+ * 
+ * この関数は以下の処理を行います：
+ * 1. キーと値を"KEY=VALUE"形式に結合
+ * 2. env_export関数を呼び出して設定
+ * 
+ * @param key 環境変数のキー
+ * @param value 環境変数の値
+ * @param info シェル情報構造体
+ * @return t_status 成功時E_NONE、失敗時エラーコード
+ */
 t_status	env_export_item(char *key, char *value, t_info *info)
 {
 	char	ent[PATH_MAX];

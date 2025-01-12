@@ -14,9 +14,24 @@
 #include "ft_env.h"
 #include "ft_system.h"
 
-static void	_display_sorted_env_line(const char *entity);
-static void	_display_sorted_env(t_info *info);
-
+/**
+ * @brief 環境変数を設定または表示する（exportコマンド）
+ * 
+ * この関数は以下の処理を行います：
+ * 1. 引数がない場合：
+ *    - 全ての環境変数をソートして表示
+ * 2. 引数がある場合：
+ *    - 各引数を"KEY=VALUE"形式として解析
+ *    - キーの妥当性をチェック
+ *    - 環境変数を設定
+ * 
+ * @param args コマンド引数の配列（args[0]はコマンド名）
+ * @param info シェル情報構造体
+ * @return t_status 
+ *    - E_NONE：正常終了
+ *    - E_ENV_KEY：無効なキー名
+ *    - E_ALLOCATE：メモリ割り当て失敗
+ */
 t_status	__export(char **argv, t_info *info)
 {
 	int	i;
@@ -42,6 +57,20 @@ static void	_swap(char **a, char **b)
 	*b = tmp;
 }
 
+/**
+ * @brief 環境変数をソートして表示する
+ * 
+ * この関数は以下の処理を行います：
+ * 1. 環境変数リストを配列に変換
+ * 2. 配列をソート
+ * 3. 各環境変数を"declare -x KEY=VALUE"形式で表示
+ * 4. メモリを解放
+ * 
+ * @param info シェル情報構造体
+ * @return t_status 
+ *    - E_NONE：正常終了
+ *    - E_ALLOCATE：メモリ割り当て失敗
+ */
 static void	_display_sorted_env(t_info *info)
 {
 	char	**envp;

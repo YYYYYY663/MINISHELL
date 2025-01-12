@@ -14,6 +14,25 @@
 #include "ft_env.h"
 #include "ft_system.h"
 
+/**
+ * @brief シェルを終了する（exitコマンド）
+ * 
+ * この関数は以下の処理を行います：
+ * 1. 引数の数をチェック
+ *    - 引数が多すぎる場合はエラー
+ * 2. 終了ステータスの処理：
+ *    - 引数がある場合：数値として解析
+ *    - 数値以外の場合はエラー
+ *    - 引数がない場合：直前のコマンドの終了ステータスを使用
+ * 3. シェルを終了
+ * 
+ * @param argv コマンド引数の配列（argv[0]はコマンド名）
+ * @param info シェル情報構造体
+ * @return t_status 
+ *    - E_TOO_MANY_ARGS：引数が多すぎる
+ *    - E_INVALID_ARG：無効な引数
+ *    - E_NONE：正常終了（実際には到達しない）
+ */
 t_status	__exit(char **argv, t_info *info)
 {
 	long	exit_status;

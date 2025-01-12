@@ -17,6 +17,25 @@
 #include "ft_system.h"
 #include "ft_token.h"
 
+/**
+ * @brief コマンド実行の準備を行う
+ * 
+ * この関数は以下の処理を行います：
+ * 1. リダイレクトの設定を適用
+ * 2. コマンドの存在確認とパスの解決
+ * 3. 引数リストの変換（t_list -> char**）
+ * 4. ファイルディスクリプタの設定
+ * 
+ * エラー発生時：
+ * - リダイレクトエラー：ステータスを1に設定
+ * - コマンドが見つからない：ステータスを127に設定
+ * 
+ * @param args コマンド引数構造体
+ * @param in_fd 標準入力のファイルディスクリプタ
+ * @param out_fd 標準出力のファイルディスクリプタ
+ * @param info シェル情報構造体
+ * @return int 成功時0、エラー時1
+ */
 int	setup_args(t_args *args, int *in_fd, int *out_fd, t_info *info)
 {
 	t_token	*token;

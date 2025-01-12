@@ -12,6 +12,23 @@
 
 #include "ft_env.h"
 
+/**
+ * @brief パスの種類を判別し、適切な解決方法を選択する
+ * 
+ * この関数は以下の処理を行います：
+ * 1. パスの先頭文字を確認し、以下の種類に分類：
+ *    - 絶対パス（'/'で始まる）
+ *    - ホームディレクトリ（'~'で始まる）
+ *    - 相対パス（'.'で始まる）
+ *    - その他（PATHから検索）
+ * 2. 各種類に応じた解決関数を呼び出す
+ * 
+ * @param path 解決されたパスを格納する配列
+ * @param src 元のパス文字列
+ * @param mode アクセス権限フラグ
+ * @param info シェル情報構造体
+ * @return int 0:成功、-1:失敗
+ */
 int	path_dispacher(char path[], char *src, int mode, t_info *info)
 {
 	path[0] = '\0';

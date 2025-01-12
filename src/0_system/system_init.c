@@ -14,6 +14,18 @@
 #include "ft_token.h"
 #include "xunistd.h"
 
+/**
+ * @brief シェルのメイン情報構造体を初期化する
+ * 
+ * この関数は以下の初期設定を行います：
+ * 1. メインのinfo構造体用にメモリを確保
+ * 2. 提供された環境変数からenv_mapを作成
+ * 3. カレントワーキングディレクトリを取得して保存
+ * 4. 終了ステータス変数を0に初期化
+ * 
+ * @param envp システムから提供される環境変数の配列
+ * @return t_info* 初期化されたinfo構造体へのポインタ、失敗時はNULL
+ */
 t_info	*system_init(char **envp)
 {
 	t_info	*info;
@@ -31,6 +43,18 @@ t_info	*system_init(char **envp)
 	return (info);
 }
 
+/**
+ * @brief 次の入力のためにコマンドライン状態を再初期化する
+ * 
+ * この関数は以下のクリーンアップを行います：
+ * 1. ソースライン用バッファを解放
+ * 2. トークンリストが存在する場合はクリア
+ * 3. AST構造体をクリア
+ * 4. 終了ステータス変数を更新
+ * 5. 次のコマンドのためにステータスを0にリセット
+ * 
+ * @param info シェルのメイン情報構造体
+ */
 void	line_init(t_info *info)
 {
 	if (!info)

@@ -13,6 +13,24 @@
 #include "ft_env.h"
 #include "ft_system.h"
 
+/**
+ * @brief PATH環境変数を使用して実行可能ファイルの絶対パスを解決する
+ * 
+ * この関数は以下の処理を行います：
+ * 1. PATH環境変数の値を取得
+ * 2. PATHをコロン区切りで分割
+ * 3. 各ディレクトリに対して：
+ *    - ソースパスと結合
+ *    - アクセス権限をチェック
+ *    - 実行可能な場合はそのパスを返す
+ * 4. 見つからない場合は失敗を返す
+ * 
+ * @param path 解決されたパスを格納する配列
+ * @param src コマンド名
+ * @param mode アクセス権限フラグ
+ * @param info シェル情報構造体
+ * @return int 0:成功、-1:失敗
+ */
 int	_resolve_path_absolute(char path[], char *src, int mode, t_info *info)
 {
 	char	*path_candidate;

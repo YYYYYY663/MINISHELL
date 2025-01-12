@@ -15,6 +15,26 @@
 #include "ft_redirect.h"
 #include "xunistd.h"
 
+/**
+ * @brief リダイレクトトークンを処理して適切なリダイレクトを設定する
+ * 
+ * この関数は以下の処理を行います：
+ * 1. トークンリストを順番に処理
+ * 2. トークンの種類に応じて適切なリダイレクトを実行：
+ *    - TT_HEREDOC：ヒアドキュメント
+ *    - TT_REDIR_IN：入力リダイレクト
+ *    - TT_REDIR_OUT/TT_APPEND：出力リダイレクト
+ * 3. エラー発生時：
+ *    - エラーメッセージを表示
+ *    - ファイルディスクリプタを閉じる
+ *    - エラーステータスを返す
+ * 
+ * @param list リダイレクトトークンのリスト
+ * @param in 標準入力のファイルディスクリプタ（更新される）
+ * @param out 標準出力のファイルディスクリプタ（更新される）
+ * @param info シェル情報構造体
+ * @return t_status 成功時E_NONE、エラー時E_FILE
+ */
 t_status	redirect_dipacher(t_list *list, int *in, int *out, t_info *info)
 {
 	t_token	*token;

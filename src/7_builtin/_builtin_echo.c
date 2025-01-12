@@ -16,6 +16,20 @@
 
 static int	_validate_option(char *arg);
 
+/**
+ * @brief 引数を標準出力に出力する（echoコマンド）
+ * 
+ * この関数は以下の処理を行います：
+ * 1. -nオプションの有無をチェック
+ *    - -nオプション：最後の改行を出力しない
+ * 2. 引数を順番に出力
+ *    - 引数と引数の間にスペースを挿入
+ *    - -nオプションがない場合は最後に改行を出力
+ * 
+ * @param args コマンド引数の配列（args[0]はコマンド名）
+ * @param info シェル情報構造体
+ * @return t_status 常にE_NONE（成功）を返す
+ */
 t_status	__echo(char **argv, t_info *info)
 {
 	int	is_option_n;

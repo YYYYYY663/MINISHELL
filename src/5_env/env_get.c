@@ -12,7 +12,20 @@
 
 #include "ft_env.h"
 
-// keyから値を取得、なかったら""
+/**
+ * @brief 環境変数の値を取得する
+ * 
+ * この関数は以下の処理を行います：
+ * 1. 特殊な1文字キーの場合、特殊環境変数配列から値を取得
+ * 2. 通常の環境変数の場合：
+ *    - 環境変数リストから指定されたキーを検索
+ *    - キーが見つからない場合は空文字列を返す
+ *    - キーが見つかった場合は値を抽出して返す
+ * 
+ * @param key 取得する環境変数のキー
+ * @param info シェル情報構造体
+ * @return char* 環境変数の値（見つからない場合は空文字列）
+ */
 char	*env_get(char *key, t_info *info)
 {
 	t_list	*lst;
@@ -24,16 +37,3 @@ char	*env_get(char *key, t_info *info)
 		return (ft_strdup(""));
 	return (ft_substr_r(lst->data, '='));
 }
-// char	*env_get(t_list *env, char *key)
-// {
-// 	t_list	*lst;
-
-// 	lst = ft_list_find(env, key, __cmp);
-// 	// note leak!!!MAX_PATHとして持っても良い
-// 	if (!lst)
-// 		return (ft_strdup(""));
-// 	t_map *map = (t_map *)lst->data;
-// 	if (!map)
-// 		return (ft_strdup(""));
-// 	return (ft_strdup(map->val));
-// }

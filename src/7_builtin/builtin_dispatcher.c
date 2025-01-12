@@ -29,6 +29,26 @@ int	setup_builtin_args(t_args *args, int *in_fd, int *out_fd, t_info *info)
 	return (0);
 }
 
+/**
+ * @brief ビルトインコマンドを識別して実行する
+ * 
+ * この関数は以下の処理を行います：
+ * 1. コマンド名が組み込みコマンドかチェック
+ * 2. 組み込みコマンドの場合：
+ *    - 対応する関数を呼び出す
+ *    - 実行結果を返す
+ * 3. 組み込みコマンドでない場合：
+ *    - E_NOT_FOUND（未実装）を返す
+ * 
+ * @param args コマンド引数の配列（args[0]はコマンド名）
+ * @param in_fd 入力ファイルディスクリプタ
+ * @param out_fd 出力ファイルディスクリプタ
+ * @param info シェル情報構造体
+ * @return t_status 
+ *    - E_NONE：正常終了
+ *    - E_NOT_FOUND：コマンドが見つからない
+ *    - その他：各ビルトインコマンドのエラーコード
+ */
 t_status	builtin_dispatcher(t_args *args, int *in_fd, int *out_fd,
 		t_info *info)
 {

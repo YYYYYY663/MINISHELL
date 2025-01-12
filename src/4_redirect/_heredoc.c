@@ -13,8 +13,25 @@
 #include "ft_redirect.h"
 #include "xunistd.h"
 
-// ctrol Dでも終了
-// ctrol C
+/**
+ * @brief ヒアドキュメントの入力を処理する
+ * 
+ * この関数は以下の処理を行います：
+ * 1. パイプを作成して入力を受け付ける準備
+ * 2. プロンプト（>）を表示して行入力を待機
+ * 3. 入力された行をデリミタと比較：
+ *    - 一致した場合：入力終了
+ *    - 不一致の場合：パイプに書き込んで継続
+ * 4. 終了時にパイプの書き込み側を閉じ、読み込み側を返す
+ * 
+ * 注意点：
+ * - Ctrl+Dで入力を終了可能
+ * - Ctrl+Cでシグナル処理
+ * 
+ * @param delimiter 終了を示すデリミタ文字列
+ * @param in 標準入力のファイルディスクリプタ（更新される）
+ * @param info シェル情報構造体
+ */
 void	heredoc(const char *delimiter, int *in, t_info *info)
 {
 	int		pipefds[2];

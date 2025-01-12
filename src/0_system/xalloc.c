@@ -12,6 +12,18 @@
 
 #include "ft_system.h"
 
+/**
+ * @brief 失敗時に終了する安全なメモリ確保ラッパー関数
+ * 
+ * この関数は以下の処理を行います：
+ * 1. 指定されたサイズのメモリ確保を試みる
+ * 2. 確保したメモリをft_bzeroで0に初期化
+ * 3. 確保に失敗した場合はプログラムを終了
+ * 
+ * @param size 確保するメモリのバイト数
+ * @param info エラー処理用のシェルメイン情報構造体
+ * @return void* 確保したメモリへのポインタ
+ */
 void	*xmalloc(size_t size, t_info *info)
 {
 	char	*memory;
@@ -25,6 +37,17 @@ void	*xmalloc(size_t size, t_info *info)
 	return ((void *)memory);
 }
 
+/**
+ * @brief 失敗時に終了する安全な連結リストノード作成ラッパー関数
+ * 
+ * この関数は以下の処理を行います：
+ * 1. 提供されたデータで新しいリストノードを作成
+ * 2. ノード作成に失敗した場合はプログラムを終了
+ * 
+ * @param data 新しいノードに格納する文字列データ
+ * @param info エラー処理用のシェルメイン情報構造体
+ * @return t_list* 新しいリストノードへのポインタ
+ */
 t_list	*xlstnew(char *data, t_info *info)
 {
 	t_list	*list;
