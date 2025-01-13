@@ -30,8 +30,8 @@ t_status	__env(char **argv, t_info *info)
 {
 	char	**envp;
 
-	envp = ft_list_to_strs(info->env_map);
 	(void)argv;
+	envp = ft_list_to_strs(info->env_map);
 	ft_putstrs_fd(envp, "\n", STDOUT_FILENO);
 	ft_putendl_fd("", STDIN_FILENO);
 	ft_strs_clear(envp);

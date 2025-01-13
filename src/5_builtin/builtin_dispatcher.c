@@ -53,9 +53,9 @@ t_status	builtin_dispatcher(t_args *args, int *in_fd, int *out_fd,
 		t_info *info)
 {
 	static const char		*builtin_names[] = {"pwd", "cd", "echo", "export",
-				"unset", "exit", "env"};
+				"unset", "exit", "env","alias", "source"};
 	static t_builtin_func	builtin_funcs[] = {__pwd, __cd, __echo, __export,
-			__unset, __exit, __env};
+			__unset, __exit, __env,__alias, __source};
 	size_t					i;
 	t_token					*token;
 

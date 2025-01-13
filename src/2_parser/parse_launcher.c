@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_lexer.h"
+#include "ft_parser.h"
 
 /*
  * xlexer関数は、入力されたソースラインをトークン化し、その構文を検証します。
@@ -46,7 +47,7 @@ t_status	launch_lexer(t_info *info)
 	return (info->status);
 }
 
-#include "ft_parser.h"
+
 
 /**
  * @brief パーサーを起動し、トークンリストからASTを構築する

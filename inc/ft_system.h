@@ -59,8 +59,8 @@ typedef struct s_info
 
 void							token_clear(void *ptr);
 void							ast_clear(t_ast *node);
-t_info							*system_init(char **envp);
 
+t_info							*system_init(char **envp);
 void							line_init(t_info *info);
 void							system_exit(t_info *info, t_status status);
 

@@ -40,6 +40,7 @@ int	var_dispacher(t_list **lst, t_info *info)
 	{
 		if (ft_strchr(token->value, '*'))
 		{
+            
 			// expand_astarisk(&head, info);
 			// DOUBLE QUOTE noexpand
 		}

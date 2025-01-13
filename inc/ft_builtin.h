@@ -30,5 +30,8 @@ t_status			__export(char **argv, t_info *info);
 t_status			__unset(char **argv, t_info *info);
 t_status			__exit(char **argv, t_info *info);
 t_status			__env(char **argv, t_info *info);
+t_status			__alias(char **argv, t_info *info);
+t_status			__source(char **argv, t_info *info);
+
 
 #endif
