@@ -1,0 +1,98 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   _ast_node.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/04 22:17:59 by ymizukam          #+#    #+#             */
+/*   Updated: 2025/01/12 21:52:38 by ymizukam         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "mish_executor.h"
+/**
+ * @brief コマンドノードを実行する
+ *
+ * この関数は以下の処理を行います：
+ * 1. パイプノードの場合は左側のノードを再帰的に処理
+ * 2. リダイレクトとコマンドパスの設定
+ * 3. 子プロセスを作成してコマンドを実行
+ * 4. 親プロセスでファイルディスクリプタを閉じてPIDを保存
+ *
+ * @param node 実行するASTノード
+ * @param in_fd 標準入力のファイルディスクリプタ
+ * @param out_fd 標準出力のファイルディスクリプタ
+ * @param info シェル情報構造体
+ * @return pid_t 作成された子プロセスのPID、エラー時は-1
+ */
+pid_t	cmd_node(t_ast *node, int in_fd, int out_fd, t_info *info)
+{
+	pid_t	pid;
+
+	if (node->ntype == NT_PIPE)
+		return (cmd_node(node->left, in_fd, out_fd, info));
+	if (setup_args(node->args, &in_fd, &out_fd, info))
+		return (-1);
+	pid = xfork(info);
+	if (pid == 0)
+	{
+		xdup2(in_fd, STDIN_FILENO, info);
+		xdup2(out_fd, STDOUT_FILENO, info);
+		execve(node->args->path, node->args->cargv,
+			ft_list_to_strs(info->env_map));
+		ft_dprintf(2, "minishell: %s: %s\n", node->args->cargv[0],
+			strerror(errno));
+		exit(1);
+	}
+	xclose(&node->args->fds[0]);
+	xclose(&node->args->fds[1]);
+	node->args->pid = pid;
+	return (pid);
+}
+
+/**
+ * @brief パイプノードを実行する
+ *
+ * この関数は以下の処理を行います：
+ * 1. 右側のノードが存在する場合：
+ *    - パイプを作成
+ *    - 左側のコマンドを実行（出力をパイプに接続）
+ *    - 右側のノードを再帰的に処理（入力をパイプから受け取る）
+ * 2. 右側のノードが存在しない場合：
+ *    - ビルトインコマンドの実行を試みる
+ *    - 通常のコマンドとして実行
+ *    - 子プロセスの終了を待機
+ *
+ * @param node 実行するASTノード
+ * @param in_fd 標準入力のファイルディスクリプタ
+ * @param out_fd 標準出力のファイルディスクリプタ
+ * @param info シェル情報構造体
+ * @return t_status 実行結果のステータスコード
+ */
+t_status	pipe_node(t_ast *node, int in_fd, int out_fd, t_info *info)
+{
+	int		pipefds[2];
+	int		status;
+	pid_t	pid;
+
+	status = 0;
+	if (node->right != NULL)
+	{
+		xpipe(pipefds, info);
+		cmd_node(node->left, in_fd, pipefds[1], info);
+		return (pipe_node(node->right, pipefds[0], out_fd, info));
+	}
+	else
+	{
+		status = builtin_dispatcher(node->left->args, &in_fd, &out_fd, info);
+		if (status != E_NOT_BUITIN_CMD)
+			return (status);
+		pid = cmd_node(node->left, in_fd, out_fd, info);
+		if (pid == -1)
+			return (E_COMMAND_NOT_FOUND);
+		waitpid(pid, &status, 0);
+		node->left->args->pid = -1;
+	}
+	return ((t_status)status);
+}
