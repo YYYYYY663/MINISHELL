@@ -23,6 +23,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+#include  <string.h>
 
 extern volatile sig_atomic_t	g_signal_status;
 // # define MAX_FD 1024
