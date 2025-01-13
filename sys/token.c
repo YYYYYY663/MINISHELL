@@ -10,47 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_system.h"
-#include "ft_token.h"
+#include "system.h"
+#include "token.h"
 #include "xunistd.h"
 
-/**
- * @brief トークンの連結リストを文字列配列（argv形式）に変換する
- * 
- * この関数は以下の処理を行います：
- * 1. トークン値からNULL終端の文字列配列を作成
- * 2. 配列と各文字列用のメモリを確保
- * 3. エラー発生時は確保したメモリを適切に解放
- * 
- * @param lst t_token構造体の連結リスト
- * @return char** 文字列配列（argv形式）、エラー時はNULL
- */
-char	**convert_argv(t_list *lst)
-{
-	char	**cargv;
-	t_token	*token;
-	size_t	i;
-
-	if (!lst || !lst->data)
-		return (NULL);
-	cargv = ft_calloc(ft_lstsize(lst) + 1, sizeof(char *));
-	if (!cargv)
-		return (NULL);
-	i = 0;
-	while (lst)
-	{
-		token = lst->data;
-		if (!token || !token->value)
-			return (ft_strs_clear(cargv), NULL);
-		cargv[i] = ft_strdup(token->value);
-		if (!cargv[i])
-			return (ft_strs_clear(cargv), NULL);
-		i++;
-		lst = lst->next;
-	}
-	cargv[i] = NULL;
-	return (cargv);
-}
 
 /**
  * @brief トークン構造体に関連する全てのメモリを解放する
@@ -72,4 +35,57 @@ void	token_clear(void *ptr)
 	if (token->value)
 		free(token->value);
 	free(token);
+}
+
+/**
+ * 指定されたトークンタイプと値を持つ新しいトークンを作成
+ *
+ * @param type トークンのタイプを指定する `t_token_type` 列挙型。
+ * @param value トークンに関連付ける文字列値。
+ * @param info メモリ確保のために使用されるシェルの状態情報。
+ * @return 成功した場合は新しいトークンのポインタを返し、失敗した場合は `NULL` を返します。
+ */
+t_token	*create_token(t_token_type type, char *value, t_info *info)
+{
+	t_token	*tok;
+
+	tok = (t_token *)xmalloc(sizeof(t_token), info);
+	if (!tok)
+		return (NULL);
+	tok->type = type;
+	tok->value = value;
+	return (tok);
+}
+
+/**
+ * トークンをトークンリストに追加
+ *
+ * @param info トークンリストを保持する `t_info` 構造体へのポインタ。
+ * @param tok 追加するトークンを指す `t_token` 構造体へのポインタ。
+ * @return 成功した場合は1を返し、失敗した場合は0を返します。
+ */
+int	add_token(t_info *info, t_token *tok)
+{
+	t_list	*node;
+	t_list	*tmp;
+
+	if (!tok)
+		return (0);
+	node = ft_lstnew(tok);
+	if (!node)
+	{
+		free(tok->value);
+		free(tok);
+		return (0);
+	}
+	if (!info->token_list)
+		info->token_list = node;
+	else
+	{
+		tmp = info->token_list;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = node;
+	}
+	return (1);
 }

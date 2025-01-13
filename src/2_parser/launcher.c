@@ -46,47 +46,25 @@ t_status	launch_lexer(t_info *info)
 	return (info->status);
 }
 
-const char	*type_to_str(t_token_type t)
+#include "ft_parser.h"
+
+/**
+ * @brief パーサーを起動し、トークンリストからASTを構築する
+ * 
+ * この関数は以下の処理を行います：
+ * 1. トークンリストの先頭を保持
+ * 2. 式全体をパースしてASTを生成
+ * 3. 生成したASTをinfo構造体に保存
+ * 
+ * @param info シェル情報構造体（トークンリストとAST保存用）
+ * @return t_status パース処理の結果（成功時はE_NONE）
+ */
+t_status	launch_parser(t_info *info)
 {
-	if (t == TT_WORD)
-		return ("TT_WORD");
-	if (t == TT_PIPE)
-		return ("TT_PIPE");
-	if (t == TT_REDIR_IN)
-		return ("TT_REDIR_IN");
-	if (t == TT_APPEND)
-		return ("TT_APPEND");
-	if (t == TT_REDIR_OUT)
-		return ("TT_REDIR_OUT");
-	if (t == TT_HEREDOC)
-		return ("TT_HEREDOC");
-	if (t == TT_LPAREN)
-		return ("TT_LPAREN");
-	if (t == TT_RPAREN)
-		return ("TT_RPAREN");
-	if (t == TT_AND_AND)
-		return ("TT_AND_AND");
-	if (t == TT_OR_OR)
-		return ("TT_OR_OR");
-	if (t == TT_SEMICOLON)
-		return ("TT_SEMICOLON");
-	if (t == TT_EOF)
-		return ("TT_EOF");
-	return ("TT_ERROR");
+	t_list	*head;
+
+	head = info->token_list;
+	info->ast = expr(&head, info);
+	return (E_NONE);
 }
 
-void	debug_print_token_list(t_list *list)
-{
-	t_token	*tok;
-
-	while (list)
-	{
-		tok = (t_token *)list->data;
-		ft_printf("type: %s, value: ", type_to_str(tok->type));
-		if (tok->value)
-			ft_printf("[%s]\n", tok->value);
-		else
-			ft_printf("NULL\n");
-		list = list->next;
-	}
-}

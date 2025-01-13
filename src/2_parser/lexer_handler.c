@@ -46,7 +46,7 @@ t_token_type	get_one_char_op(char c)
 	if (c == '<')
 		return (TT_REDIR_IN);
 	if (c == '|')
-		return (TT_PIPE);
+		return (PIPE);
 	if (c == '(')
 		return (TT_LPAREN);
 	if (c == ')')

@@ -82,7 +82,7 @@ static char	*read_command_line(const char *prompt)
  * @param prompt メインのプロンプト文字列
  * @return char* 完全な入力文字列、EOFまたはエラー時はNULL
  */
-char	*read_line_until_balanced(const char *prompt)
+char	*launch_readline(const char *prompt)
 {
 	char	*line;
 	char	*tmp;

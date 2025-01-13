@@ -10,8 +10,9 @@
 /*                                                                            */
 /******************************************************************************/
 
-#include "ft_system.h"
-#include "ft_token.h"
+#include "system.h"
+#include "token.h"
+#include "ast.h"
 #include "xunistd.h"
 
 /**
@@ -47,43 +48,6 @@ void ast_clear(t_ast *node)
 	free(node);
 }
 
-/**
- * @brief 引数を消費し、新しい引数リストを作成する
- *
- * この関数は以下の処理を行います：
- * 1. 新しい引数リスト構造体を作成
- * 2. CMD_ARG型のトークンのみを抽出
- * 3. トークンをコピーして新しいリストに追加
- *
- * @param lst 現在の引数リストの先頭を指すポインタ
- * @return t_args* 新しい引数リストの先頭を指すポインタ
- */
-t_args *consume_args(t_list **lst)
-{
-	t_args *args;
-	t_list *new_lst;
-	t_token *token;
-	t_token *cpy;
-
-	args = ast_args_new();
-	if (!args)
-		return (NULL);
-	token = (t_token *)(*lst)->data;
-	while ((token->type & 0xF000) == CMD_ARG)
-	{
-		cpy = malloc(sizeof(t_token));
-		cpy->type = token->type;
-		cpy->value = ft_strdup(token->value);
-		new_lst = ft_lstnew(cpy);
-		if (token->type == TT_WORD)
-			ft_lstadd_back(&args->argv, new_lst);
-		if ((token->type & 0xF00) == REDIRECT)
-			ft_lstadd_back(&args->redr, new_lst);
-		(*lst) = (*lst)->next;
-		token = (t_token *)(*lst)->data;
-	}
-	return (args);
-}
 
 /**
  * @brief 新しい引数リスト構造体を作成する
@@ -134,47 +98,3 @@ t_ast *ast_node_new(int type, t_ast *left, t_ast *right)
 	return (node);
 }
 
-/**
- * @brief 次のトークンが期待する種類の場合、トークンを消費する
- * 
- * この関数は以下の処理を行います：
- * 1. 現在のトークンの種類をチェック
- * 2. 期待する種類と一致する場合、トークンリストを進める
- * 
- * @param type 期待するトークンの種類
- * @param lst トークンリストのポインタ
- * @return int 消費に成功した場合は1、失敗した場合は0
- */
-int consume(t_token_type type, t_list **lst)
-{
-	t_token *token;
-
-	token = (t_token *)(*lst)->data;
-	if (type != token->type)
-		return (0);
-	*lst = (*lst)->next;
-	return (1);
-}
-
-/**
- * @brief 次のトークンが期待する種類であることを確認し、トークンを進める
- * 
- * この関数は以下の処理を行います：
- * 1. 現在のトークンの種類をチェック
- * 2. 期待する種類と一致しない場合は何もせずに返る
- * 3. 一致する場合はトークンリストを進める
- * 
- * @param type 期待するトークンの種類
- * @param lst トークンリストのポインタ
- */
-void expect(t_token_type type, t_list **lst)
-{
-	t_token *token;
-
-	token = (t_token *)(*lst)->data;
-	if (type != token->type)
-	{
-		return;
-	}
-	*lst = (*lst)->next;
-}

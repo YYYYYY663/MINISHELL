@@ -21,7 +21,7 @@ void	shell_loop(t_info *info)
 	{
 		line_init(info);
 		ft_dprintf(2, BG_GREEN WHITE "%s" RESET "\n", info->cwd);
-		info->source_line = read_line_until_balanced(PROMPT);
+		info->source_line = launch_readline(PROMPT);
 		if (g_signal_status == SIGINT)
 		{
 			dprintf(2, "Ctrl C while prompt\n");
@@ -59,7 +59,7 @@ void	shell_loop(t_info *info)
 // 		printf(RESET " $ ");
 // 		fflush(stdout);
 // 		// ft_dprintf(1, BG_GREEN WHITE);
-// 		// info->source_line = read_line_until_balanced(info->cwd);
+// 		// info->source_line = launch_readline(info->cwd);
 // 		// ft_dprintf(1, RESET " $ ");
 // 		info->source_line = get_next_line(0);
 // 		launch_lexer(info);

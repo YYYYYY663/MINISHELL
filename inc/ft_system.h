@@ -50,9 +50,10 @@ typedef struct s_info
 	t_ast						*ast;
 	t_list						*env_map;
 	char						*env_spc[128];
-	int							stdin_backup;
-	int							stdout_backup;
+	t_list						*alias;
+	int							stdfile_backup[2];
 	char						cwd[PATH_MAX];
+	char						home[PATH_MAX];
 	t_status					status;
 }								t_info;
 
@@ -64,6 +65,6 @@ void							line_init(t_info *info);
 void							system_exit(t_info *info, t_status status);
 
 /**** **** **** **** READLINE **** **** **** ****/
-char							*read_line_until_balanced(const char *prompt);
+char							*launch_readline(const char *prompt);
 
 #endif

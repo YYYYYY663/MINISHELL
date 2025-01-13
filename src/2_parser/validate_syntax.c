@@ -21,7 +21,7 @@
 */
 int	is_operator_token(t_token_type ttype)
 {
-	if (ttype == TT_PIPE || ttype == TT_AND_AND || ttype == TT_OR_OR
+	if (ttype == PIPE || ttype == TT_AND_AND || ttype == TT_OR_OR
 		|| ttype == TT_SEMICOLON || ttype == TT_LPAREN || ttype == TT_RPAREN)
 		return (1);
 	return (0);

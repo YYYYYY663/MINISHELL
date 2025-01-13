@@ -60,7 +60,7 @@ t_ast	*pipeline(t_list **list, t_info *info)
 
 	pipe_node = ast_node_new(NT_PIPE, primary(list, info), NULL);
 	current_node = pipe_node;
-	while (consume(TT_PIPE, list))
+	while (consume(PIPE, list))
 	{
 		current_node->right = ast_node_new(NT_PIPE, primary(list, info), NULL);
 		current_node = current_node->right;

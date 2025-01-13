@@ -121,7 +121,7 @@ static int	next_token(const char *line, size_t *pos, t_info *info)
 	word = read_word(line, pos, info);
 	if (!word && info->status == E_SYNTAX)
 		return (-1);
-	add_token(info, create_token(TT_WORD, word, info));
+	add_token(info, create_token(WORD, word, info));
 	return (1);
 }
 
