@@ -7,7 +7,7 @@ t_status alias_update(const char *file, t_info *info)
     int fd;
     char absolute_path[PATH_MAX];
     char rcfile_path[PATH_MAX];
-    path_di
+    path_dispacher()
     if (!ft_strcmp(file, RCFILE))
         fd = open(file, O_RDONLY | O_CREAT);
     else

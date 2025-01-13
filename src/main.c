@@ -29,7 +29,7 @@ void	prompt(t_info *info)
 		return ;
 	if (info->source_line == NULL)
 		system_exit(info, g_signal_status | 0x80); /* (Ctrl-D) の場合 */
-	launch_parser(info) | launch_executor(info);
+	launch_parser(info) || launch_executor(info);
 }
 
 int	main(int argc, char **argv, char **envp)

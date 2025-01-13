@@ -11,48 +11,33 @@
 #******************************************************************************#
 
 
-NAME		:= minishell
+NAME		:= libmap.a
 CC			:= cc
 CFLAGS		:= -Wall -Wextra -Werror
-LFLAGS		:= -lreadline
+AR			:= ar rcs
 RM			:= rm -rf
-ROOT_DIR	:= .
-OUT_DIR		:= $(ROOT_DIR)/obj
-INCS_DIR	:= $(ROOT_DIR)/inc $(ROOT_DIR)/sys
-LIBFT_DIR	:= $(ROOT_DIR)/lib/libft
-MAP_DIR		:= $(ROOT_DIR)/lib/linkedmap
+ROOT_DIR	:= ..
+OUT_DIR		:= obj
+INCS_DIR	:= .
+LIBFT_DIR	:= ../libft
 LIBFT		:= $(LIBFT_DIR)/libft.a
-IDFLAGS		:= -I$(INCS_DIR) -I$(LIBFT_DIR) -I$(MAP_DIR)
+IDFLAGS		:= -I$(INCS_DIR) -I$(LIBFT_DIR)
 
-SRCS 		:= \
-    $(addprefix src/, \
-        main.c \
-		
-    )\
-	$(addprefix util/, \
-        
-        
-    )
+SRCS 		:= lmap_get.c callback.c lmap_export.c lmap_unset.c
 
 	
 OBJS		:= $(addprefix $(OUT_DIR)/, $(SRCS:.c=.o))
 DEPS		:= $(OBJS:.o=.d)
 
-ifeq ($(DEBUG), 1)
-	CFLAGS	+= -g -fsanitize=address
-else
-	CFLAGS	+= 
-endif
-
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) $(LIBFT) -o $@
+$(NAME): $(OBJS)
+	$(AR) $@ $^
 
 $(LIBFT): | $(LIBFT_DIR)/Makefile
 	$(MAKE) -C $(LIBFT_DIR)
 
-$(OUT_DIR)/%.o: $(ROOT_DIR)/%.c
+$(OUT_DIR)/%.o: %.c
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -MMD -MP $(IDFLAGS) -c $< -o $@
 

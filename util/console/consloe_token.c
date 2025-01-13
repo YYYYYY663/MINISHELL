@@ -1,4 +1,5 @@
-#include "ft_lexer.h"
+#include "console.h"
+
 const char	*type_to_str(t_token_type t)
 {
 	if ((t & ARG_ID) == WORD)

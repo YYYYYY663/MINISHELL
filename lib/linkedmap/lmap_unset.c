@@ -28,5 +28,5 @@ void	lmap_unset(char *key, t_lmap *lmap, int (*cmp)(void *,void *))
 {
     if (!cmp)
         cmp = default_cmp;
-	ft_list_remove_if(lmap, key, cmp, free);
+	ft_list_remove_if(&lmap, key, cmp, free);
 }

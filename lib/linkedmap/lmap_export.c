@@ -31,6 +31,5 @@ void	lmap_export(char *key, char *value, t_lmap *lmap, int (*cmp)(void *,void *)
     }
     lst = ft_lstnew(ent);
 	ft_lstadd_back(&lmap, lst);
-	return (0);
 }
 

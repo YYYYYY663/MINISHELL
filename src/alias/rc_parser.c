@@ -43,6 +43,20 @@ bool _validate_value(int index, const char *value)
 }
 
 
+static bool _alias_export(int index, char *entity, t_lmap *lmap)
+{
+    char *key = ft_substr_l(entity, '=');
+    char *value = ft_substr_r(entity, '=');
+    bool status;
+    status = _validate_key(index,key) && _validate(index,value);
+    if (status)
+        lmap_export(key,value,lmap,NULL);
+    free(key);
+    free(value);
+    return status;
+}
+
+
 t_lmap *parse_rcfile(int fd)
 {
     char *line;
@@ -51,19 +65,18 @@ t_lmap *parse_rcfile(int fd)
     int index = 1;
     while(!line)
     {
-        if (!ft_strcmp("alias ", line))
+        if (!ft_strcmp("alias", line))
         {
-            char *key = ft_substr_l(line + ft_strlen("alias "), '=');
-            char *value = ft_substr_r(line + ft_strlen("alias "), '=');
-            if (_validate_key(index,key) && _validate(index,value))
-                lmap_export(key,value,lmap,NULL);
-            free(key);
-            free(value);
+            char *entity = line;
+            while(ft_isspace(*entity))
+                entity++;
+            if (*entity && !_alias_export(index,entity, lmap))
+                return (free(line),ft_lstclear(lmap, free), NULL);
         }
         free(line);
         line = get_next_line(fd);
         index++;
     }
     free(line);
-    return lst;
+    return lmap;
 }

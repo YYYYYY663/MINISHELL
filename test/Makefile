@@ -6,9 +6,10 @@ OBJDIR       := ../obj/src
 CC			:= cc
 CFLAGS		:= -Wall -Wextra
 LIBFT_DIR	:= ../lib/libft
+MAP_DIR		:= ../lib/linkedmap
 INCS_DIR    := ../inc
 
-IFLAGS		:= -I$(INCS_DIR) -I$(LIBFT_DIR)
+IFLAGS		:= -I$(INCS_DIR) -I$(LIBFT_DIR) -I$(MAP_DIR)
 LFLAGS		:= -lreadline
 DFLAGS      := -DFUNC_OUT
 
@@ -24,21 +25,32 @@ ENV         := ../src/5_env/*.c
 BUILTIN     := ../src/7_builtin/*.c
 
 
+
 COMPILE     :=  $(CC) $(IFLAGS) $(CFLAGS) $(DFLAGS) $(LFLAGS)
 
 .PHONY: all libft system lexer parser semantic
 
-all: libft
+all: libft libmap
 
 libft:
 	make -C $(LIBFT_DIR)
 	cp $(LIBFT_DIR)/libft.a libft.a
 
+libmap:
+	make -C $(MAP_DIR)
+	cp $(MAP_DIR)/libmap.a libmap.a
 
 system:
 	$(COMPILE) $(SYSTEM) 0_test/system_main.c libft.a -o system.out
 	$(VALGRIND) ./system.out
 	rm -f system.out
+
+
+map:
+	$(COMPILE) linkedmap/*.c libft.a libmap.a -o map.out
+	./map.out
+	rm -f map.out
+
 
 
 lexer:
