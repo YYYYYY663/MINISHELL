@@ -1,14 +1,14 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+         #
+#    By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/15 18:05:31 by teando            #+#    #+#              #
-#    Updated: 2025/01/12 20:15:10 by teando           ###   ########.fr        #
+#    Updated: 2025/01/14 17:27:06 by ymizukam         ###   ########.fr        #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
 
 NAME		:= minishell
@@ -41,7 +41,7 @@ SRCS 		:= \
             redirect_dispacher.c _heredoc.c _redirect.c\
         ) \
         $(addprefix 5_env/, \
-            _env_utils.c env_export.c env_get.c env_unset.c \
+            _env_utils.c map_export.c env_get.c map_unset.c \
             path_diapacher.c _path_absolute.c _path_relative.c _path_home.c \
             var_dispacher.c \
         ) \
@@ -51,6 +51,9 @@ SRCS 		:= \
         $(addprefix 7_builtin/, \
             _builtin_env.c _builtin_unset.c _builtin_exit.c builtin_dispatcher.c _builtin_cd.c \
             _builtin_export.c _builtin_echo.c _builtin_pwd.c \
+        ) \
+        $(addprefix 8_alias/, \
+            alias_update.c alias_file_parser.c \
         ) \
         main.c \
     )

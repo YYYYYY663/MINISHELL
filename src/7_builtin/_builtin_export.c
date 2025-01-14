@@ -1,22 +1,22 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   _builtin_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:06:41 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/12 20:17:19 by teando           ###   ########.fr       */
+/*   Updated: 2025/01/14 17:21:19 by ymizukam         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "ft_builtin.h"
 #include "ft_env.h"
 #include "ft_system.h"
 
-static void _swap(char **a, char **b);
-static void _display_sorted_env(t_info *info);
-static void _display_sorted_env_line(const char *entity);
+static void	_swap(char **a, char **b);
+static void	_display_sorted_env(t_info *info);
+static void	_display_sorted_env_line(const char *entity);
 
 /**
  * @brief 環境変数を設定または表示する（exportコマンド）
@@ -36,9 +36,9 @@ static void _display_sorted_env_line(const char *entity);
  *    - E_ENV_KEY：無効なキー名
  *    - E_ALLOCATE：メモリ割り当て失敗
  */
-t_status __export(char **argv, t_info *info)
+t_status	__export(char **argv, t_info *info)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (!argv[1])
@@ -47,14 +47,14 @@ t_status __export(char **argv, t_info *info)
 	}
 	while (argv[i])
 	{
-		env_export(argv[i++], info);
+		map_export(argv[i++], info->env_map);
 	}
 	return (E_NONE);
 }
 
-static void _swap(char **a, char **b)
+static void	_swap(char **a, char **b)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = *a;
 	*a = *b;
@@ -75,12 +75,12 @@ static void _swap(char **a, char **b)
  *    - E_NONE：正常終了
  *    - E_ALLOCATE：メモリ割り当て失敗
  */
-static void _display_sorted_env(t_info *info)
+static void	_display_sorted_env(t_info *info)
 {
-	char **envp;
-	int len;
-	int i;
-	int j;
+	char	**envp;
+	int		len;
+	int		i;
+	int		j;
 
 	envp = ft_list_to_strs(info->env_map);
 	len = ft_list_size(info->env_map);
@@ -101,10 +101,10 @@ static void _display_sorted_env(t_info *info)
 	_display_sorted_env_line(envp[i]);
 }
 
-static void _display_sorted_env_line(const char *entity)
+static void	_display_sorted_env_line(const char *entity)
 {
-	char *key;
-	char *value;
+	char	*key;
+	char	*value;
 
 	key = ft_substr_l(entity, '=');
 	value = ft_substr_r(entity, '=');

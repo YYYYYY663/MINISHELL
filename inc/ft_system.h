@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:53:59 by teando            #+#    #+#             */
-/*   Updated: 2025/01/12 21:20:17 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:22:29 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 
 # include "ft_token.h"
 # include "libft.h"
+# include <errno.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/types.h>
@@ -49,6 +51,7 @@ typedef struct s_info
 	t_ast						*ast;
 	t_list						*env_map;
 	char						*env_spc[128];
+	t_list						*alias_map;
 	int							stdin_backup;
 	int							stdout_backup;
 	char						cwd[PATH_MAX];
@@ -63,6 +66,6 @@ void							line_init(t_info *info);
 void							system_exit(t_info *info, t_status status);
 
 /**** **** **** **** READLINE **** **** **** ****/
-char							*read_line_until_balanced(const char *prompt);
+char							*launch_readline(const char *prompt);
 
 #endif

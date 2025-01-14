@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:12:10 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/04 22:12:11 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:01:44 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 // 		// // builtin_dispatcher("unset", av4, info);
 // 		// printf("SAMPLE_KEY %s\n", env_get(info->env_map, "SAMPLE_KEY"));
 // 		// printf("SAMPLE_KEY2 %s\n", env_get(info->env_map, "SAMPLE_KEY2"));
-// 		// env_unset("OLDPWD",info);
+// 		// map_unset("OLDPWD",info);
 // 		printf("%s\n", env_get("OLDPWD", info));
 // 	builtin_dispatcher("pwd", av, info);
 // 	builtin_dispatcher("cd", av1, info);

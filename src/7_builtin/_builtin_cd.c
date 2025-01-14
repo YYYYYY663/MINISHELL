@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:08:25 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/12 21:55:43 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:20:58 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ t_status	__cd(char **argv, t_info *info)
 		_cd_cwd(absolute_path, argv[1], info);
 	if (chdir(absolute_path) || access(absolute_path, F_OK))
 		return (ft_dprintf(2, "cd: %s: %s\n", argv[1], strerror(errno)), 1);
-	env_export_item("OLDPWD", info->cwd, info);
+	map_export_item("OLDPWD", info->cwd, info->env_map);
 	ft_strlcpy(info->cwd, absolute_path, PATH_MAX);
-	env_export_item("PWD", info->cwd, info);
+	map_export_item("PWD", info->cwd, info->env_map);
 	return (E_NONE);
 }
 

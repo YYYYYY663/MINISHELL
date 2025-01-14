@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_export.c                                       :+:      :+:    :+:   */
+/*   map_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 19:48:52 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/04 22:07:53 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:19:28 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 /**
  * @brief 環境変数を設定する
- * 
+ *
  * この関数は以下の処理を行います：
  * 1. 環境変数のキーと値を分離
  * 2. キーの妥当性をチェック
  * 3. 既存の環境変数を検索：
  *    - 存在する場合は値を更新
  *    - 存在しない場合は新規作成
- * 
+ *
  * @param ent 環境変数エントリ（"KEY=VALUE"形式）
  * @param info シェル情報構造体
  * @return t_status 成功時E_NONE、失敗時エラーコード
  */
-t_status	env_export(char *ent, t_info *info)
+t_status	map_export(char *ent, t_list *lmap)
 {
 	char	key[PATH_MAX];
 	char	*ent_cpy;
@@ -40,7 +40,7 @@ t_status	env_export(char *ent, t_info *info)
 	ft_strlcpy(key, ent, delimiter + 1);
 	if (_check_key(key))
 		return (free(ent_cpy), E_ENV_KEY);
-	lst = ft_list_find(info->env_map, key, __cmp);
+	lst = ft_list_find(lmap, key, __cmp);
 	if (lst)
 	{
 		free(lst->data);
@@ -50,30 +50,30 @@ t_status	env_export(char *ent, t_info *info)
 	lst = ft_lstnew(ent_cpy);
 	if (!lst)
 		return (free(ent_cpy), E_ALLOCATE);
-	ft_lstadd_back(&info->env_map, lst);
+	ft_lstadd_back(&lmap, lst);
 	return (E_NONE);
 }
 
 /**
  * @brief キーと値を指定して環境変数を設定する
- * 
+ *
  * この関数は以下の処理を行います：
  * 1. キーと値を"KEY=VALUE"形式に結合
- * 2. env_export関数を呼び出して設定
- * 
+ * 2. map_export関数を呼び出して設定
+ *
  * @param key 環境変数のキー
  * @param value 環境変数の値
  * @param info シェル情報構造体
  * @return t_status 成功時E_NONE、失敗時エラーコード
  */
-t_status	env_export_item(char *key, char *value, t_info *info)
+t_status	map_export_item(char *key, char *value, t_list *lmap)
 {
 	char	ent[PATH_MAX];
 
 	ft_strlcpy(ent, key, PATH_MAX);
 	ft_strlcat(ent, "=", PATH_MAX);
 	ft_strlcat(ent, value, PATH_MAX);
-	return (env_export(ent, info));
+	return (map_export(ent, lmap));
 }
 
 // void map_append(t_info *info, char *key, char *val)
@@ -85,7 +85,7 @@ t_status	env_export_item(char *key, char *value, t_info *info)
 // 	ft_lstadd_back(&info->env_map, lst);
 // }
 
-// t_status	env_export(t_info *info, char *key, char *val)
+// t_status	map_export(t_info *info, char *key, char *val)
 // {
 // 	t_list	*lst;
 // 	if (_check_key(info, key))

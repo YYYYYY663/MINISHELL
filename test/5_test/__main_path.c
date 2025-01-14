@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:15:41 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 02:25:47 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:01:44 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int argc, char **argv, char **envp)
 	//相対パスでもopenできるらしい
 	// if (open("../0_system/xalloc.c",O_RDONLY) == -1)
 	//     perror("open");
-	env_unset("PATH", info);
+	map_unset("PATH", info);
 	printf("after PATH unset\n");
 	printf("%d: ", path_dispacher(path, "ls", X_OK, info));
 	printf("%s\n", path);

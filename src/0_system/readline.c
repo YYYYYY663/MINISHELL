@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 23:59:46 by teando            #+#    #+#             */
-/*   Updated: 2025/01/12 22:14:35 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:22:50 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static char	*read_command_line(const char *prompt)
  * @param prompt メインのプロンプト文字列
  * @return char* 完全な入力文字列、EOFまたはエラー時はNULL
  */
-char	*read_line_until_balanced(const char *prompt)
+char	*launch_readline(const char *prompt)
 {
 	char	*line;
 	char	*tmp;
