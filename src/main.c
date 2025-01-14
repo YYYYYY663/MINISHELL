@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:45:19 by teando            #+#    #+#             */
-/*   Updated: 2025/01/14 17:38:36 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:57:44 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	prompt(t_info *info)
 	ft_dprintf(2, BG_GREEN WHITE "%s" RESET "\n", info->cwd);
 	info->source_line = launch_readline(PROMPT);
 	//とりあえずの処理
-	if (info->source_line[0] == '\n')
-		return ;
+	// if (info->source_line[0] == '\n')
+	// 	return ;
 	if (g_signal_status == SIGINT)
 		return ;
 	if (info->source_line == NULL)
