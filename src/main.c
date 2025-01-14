@@ -39,11 +39,10 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	if (!init_signals())
-	{
-		ft_dprintf(2, "signal setup failure\n");
-		return (1);
-	}
+		return (ft_dprintf(2, "signal setup failure\n"),1);
+		
 	info = system_init(envp);
+	alias_update(RCFILE, info);
 	while (1)
 		prompt()
 	// system_exit(info, 0);

@@ -8,8 +8,6 @@
 #endif
 
 
-
-
 #include "libft.h"
 typedef t_list t_lmap;
 

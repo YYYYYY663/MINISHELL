@@ -15,6 +15,8 @@
 
 char	*lmap_get(char *key, t_lmap *lmap, int (*cmp)(void *,void *))
 {
+	if (!key || !lmap)
+		return NULL;
     if (!cmp)
         cmp = default_cmp;
 	t_list *lst = ft_list_find(lmap, key, cmp);

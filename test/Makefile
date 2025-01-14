@@ -41,7 +41,7 @@ libmap:
 	cp $(MAP_DIR)/libmap.a libmap.a
 
 system:
-	$(COMPILE) $(SYSTEM) 0_test/system_main.c libft.a -o system.out
+	$(COMPILE) $(SYSTEM) system/system_main.c libft.a -o system.out
 	$(VALGRIND) ./system.out
 	rm -f system.out
 

@@ -5,5 +5,7 @@
 
 #define RCFILE "~/.minishellrc"
 
+t_status alias_update(const char *file, t_info *info);
+
 
 #endif /* MISH_ALIAS_H */

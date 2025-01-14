@@ -53,7 +53,7 @@ t_status	__cd(char **argv, t_info *info)
 		path_dispacher(absolute_path, argv[1], F_OK, info);
 	else
 		_cd_cwd(absolute_path, argv[1], info);
-	while(absolute_path[ft_strlen(absolute_path)-1] == '/')
+	while(absolute_path[ft_strlen(absolute_path)-1] == '/' && ft_strlen(absolute_path) != 1)
 		absolute_path[ft_strlen(absolute_path)-1] = '\0';
 	if (chdir(absolute_path) || access(absolute_path, F_OK))
 		return (ft_dprintf(2, "cd: %s: %s\n", argv[1], strerror(errno)), 1);

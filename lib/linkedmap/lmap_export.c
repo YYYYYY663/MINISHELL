@@ -17,6 +17,8 @@ void	lmap_export(char *key, char *value, t_lmap *lmap, int (*cmp)(void *,void *)
 	char	*ent;
     int entlen = ft_strlen(key) + ft_strlen(value) + 2;
     ent = malloc(entlen);
+	if (!ent)
+		return ;
 	ft_strlcpy(ent, key, entlen);
 	ft_strlcat(ent, "=", entlen);
 	ft_strlcat(ent, value, entlen);
@@ -26,7 +28,7 @@ void	lmap_export(char *key, char *value, t_lmap *lmap, int (*cmp)(void *,void *)
 	if (lst)
 	{
 		free(lst->data);
-		lst->data = ft_strdup(ent);
+		lst->data = ent;
 		return;
     }
     lst = ft_lstnew(ent);
