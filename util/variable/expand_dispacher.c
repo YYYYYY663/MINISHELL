@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   var_dispacher.c                                    :+:      :+:    :+:   */
+/*   expand_dispacher.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 17:12:59 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 21:57:43 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/14 12:38:27 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "token.h"
 #include "variable.h"
 
 /**
  * @brief 変数展開を制御する
- * 
+ *
  * この関数は以下の処理を行います：
  * 1. トークンリストを順番に処理
  * 2. 各トークンに対して：
@@ -23,7 +24,7 @@
  *    - ドル記号（$）による環境変数展開
  *      - シングルクォート内では展開しない
  *      - ダブルクォート内では単語分割しない
- * 
+ *
  * @param lst トークンリストのヘッド
  * @param info シェル情報構造体
  * @return int 0:成功、-1:失敗
@@ -40,7 +41,6 @@ int	var_dispacher(t_list **lst, t_info *info)
 	{
 		if (ft_strchr(token->value, '*'))
 		{
-            
 			// expand_astarisk(&head, info);
 			// DOUBLE QUOTE noexpand
 		}

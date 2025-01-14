@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.h                                           :+:      :+:    :+:   */
+/*   variable.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 21:48:09 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 02:48:01 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/14 12:32:14 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PATH_H
-# define PATH_H
+#ifndef FT_ENV_H
+# define FT_ENV_H
 
-#include "sys.h"
+# include "libft.h"
+# include "lmap.h"
+# include "sys.h"
 
-int			path_dispacher(char path[], char *src, int mode, t_info *info);
-
-int			_resolve_path_absolute(char path[], char *src, int mode,
-				t_info *info);
-int			_resolve_path_home(char path[], char *src, int mode, t_info *info);
-int			_resolve_path_relative(char path[], char *src, int mode,
-				t_info *info);
+char	*var_get(char *key, t_info *info);
+int		var_dispacher(t_list **lst, t_info *info);
 
 #endif

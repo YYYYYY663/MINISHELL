@@ -6,16 +6,16 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 22:06:10 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 21:55:02 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/14 12:41:25 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "path.h"
+#include "variable.h"
 
 /**
  * @brief PATH環境変数を使用して実行可能ファイルの絶対パスを解決する
- * 
+ *
  * この関数は以下の処理を行います：
  * 1. PATH環境変数の値を取得
  * 2. PATHをコロン区切りで分割
@@ -24,7 +24,7 @@
  *    - アクセス権限をチェック
  *    - 実行可能な場合はそのパスを返す
  * 4. 見つからない場合は失敗を返す
- * 
+ *
  * @param path 解決されたパスを格納する配列
  * @param src コマンド名
  * @param mode アクセス権限フラグ
@@ -37,7 +37,7 @@ int	_resolve_path_absolute(char path[], char *src, int mode, t_info *info)
 	char	**path_candidates;
 	int		index;
 
-	path_candidate = env_get("PATH", info);
+	path_candidate = var_get("PATH", info);
 	path_candidates = ft_split(path_candidate, ':');
 	index = 0;
 	while (path_candidates[index])

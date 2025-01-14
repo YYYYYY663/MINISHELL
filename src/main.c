@@ -6,17 +6,15 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:45:19 by teando            #+#    #+#             */
-/*   Updated: 2025/01/12 22:57:16 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/14 12:59:05 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "mish_stream.h"
-#include "mish_executor.h"
 #include "mish_alias.h"
-#include "mish_util.h"
+#include "mish_executor.h"
 #include "mish_parser.h"
-
+#include "mish_stream.h"
+#include "mish_util.h"
 
 extern volatile sig_atomic_t	g_signal_status;
 
@@ -39,11 +37,10 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	if (!init_signals())
-		return (ft_dprintf(2, "signal setup failure\n"),1);
-		
+		return (ft_dprintf(2, "signal setup failure\n"), 1);
 	info = system_init(envp);
 	alias_update(RCFILE, info);
 	while (1)
-		prompt()
+		prompt(info);
 	// system_exit(info, 0);
 }

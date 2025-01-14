@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:12:10 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/04 22:12:11 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/14 12:42:20 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,23 @@
 // 	token = args->argv->data;
 // 	token->value
 // 		// builtin_dispatcher("echo", av, info);
-// 		// printf("SAMPLE_KEY %s\n", env_get(info->env_map, "SAMPLE_KEY"));
-// 		// printf("SAMPLE_KEY2 %s\n", env_get(info->env_map, "SAMPLE_KEY2"));
+// 		// printf("SAMPLE_KEY %s\n", var_get(info->env_map, "SAMPLE_KEY"));
+// 		// printf("SAMPLE_KEY2 %s\n", var_get(info->env_map, "SAMPLE_KEY2"));
 // 		// builtin_dispatcher("export", av2, info);
-// 		// printf("SAMPLE_KEY %s\n", env_get(info->env_map, "SAMPLE_KEY"));
+// 		// printf("SAMPLE_KEY %s\n", var_get(info->env_map, "SAMPLE_KEY"));
 // 		// builtin_dispatcher("export", av2, info);
 // 		// builtin_dispatcher("export", av3, info);
 // 		// // builtin_dispatcher("env", NULL, info);
 // 		// builtin_dispatcher("unset", av1, info);
 // 		// // builtin_dispatcher("unset", av4, info);
-// 		// printf("SAMPLE_KEY %s\n", env_get(info->env_map, "SAMPLE_KEY"));
-// 		// printf("SAMPLE_KEY2 %s\n", env_get(info->env_map, "SAMPLE_KEY2"));
+// 		// printf("SAMPLE_KEY %s\n", var_get(info->env_map, "SAMPLE_KEY"));
+// 		// printf("SAMPLE_KEY2 %s\n", var_get(info->env_map, "SAMPLE_KEY2"));
 // 		// env_unset("OLDPWD",info);
-// 		printf("%s\n", env_get("OLDPWD", info));
+// 		printf("%s\n", var_get("OLDPWD", info));
 // 	builtin_dispatcher("pwd", av, info);
 // 	builtin_dispatcher("cd", av1, info);
 // 	builtin_dispatcher("pwd", av, info);
-// 	printf("%s\n", env_get("OLDPWD", info));
+// 	printf("%s\n", var_get("OLDPWD", info));
 // 	// builtin_dispatcher("env", av, info);
 // 	// builtin_dispatcher("exit", NULL, info);
 // 	system_exit(info, 0);

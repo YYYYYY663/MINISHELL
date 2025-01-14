@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:15:41 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 02:25:47 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/14 12:42:20 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	info = system_init(envp);
-	// printf("PATH: %s\n",env_get("PATH",info));
+	// printf("PATH: %s\n",var_get("PATH",info));
 	printf("%d: ", path_dispacher(path, "ls", X_OK, info));
 	printf("%s\n", path);
 	printf("%d: ", path_dispacher(path, "which", X_OK, info));

@@ -1,18 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_color.h                                         :+:      :+:    :+:   */
+/*   console.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 02:43:47 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 02:43:49 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/14 12:35:21 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONSOLE_H
 # define CONSOLE_H
-
 
 # define RESET "\033[0m"
 # define RED "\033[31m"
@@ -31,17 +30,18 @@
 # define BG_CYAN "\033[46m"
 # define BG_WHITE "\033[47m"
 
+# define PROMPT "$"
 
-
-#include "ast.h"
-#include "token.h"
-
+# include "ast.h"
+# include "libft.h"
+# include "lmap.h"
+# include "token.h"
 
 const char	*e_type_to_str(int t);
 void		debug_print_ast(t_ast *ast, int depth);
 
-void			debug_print_token_list(t_list *list);
+void		debug_print_token_list(t_list *list);
 
-const char		*type_to_str(t_token_type t);
+const char	*type_to_str(t_token_type t);
 
 #endif

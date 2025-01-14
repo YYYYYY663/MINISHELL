@@ -1,20 +1,20 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   _builtin_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:06:41 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/12 20:17:19 by teando           ###   ########.fr       */
+/*   Updated: 2025/01/14 12:54:22 by ymizukam         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "mish_builtin.h"
 
-static void _swap(char **a, char **b);
-static void _display_sorted_env(t_info *info);
-static void _display_sorted_env_line(const char *entity);
+static void	_swap(char **a, char **b);
+static void	_display_sorted_env(t_info *info);
+static void	_display_sorted_env_line(const char *entity);
 
 // int	default_check(char *key)
 // {
@@ -38,25 +38,31 @@ static void _display_sorted_env_line(const char *entity);
 // 	}
 // 	return (0);
 // }
-t_status __export(char **argv, t_info *info)
+t_status	__export(char **argv, t_info *info)
 {
-	int i;
+	int		i;
+	char	*key;
+	char	*value;
 
-	i = 1;
+	i = 0;
 	if (!argv[1])
 	{
 		_display_sorted_env(info);
 	}
-	while (argv[i])
+	while (argv[++i])
 	{
-		env_export(argv[i++], info);
+		key = ft_substr_l(argv[i], '='); // todo validation
+		value = ft_substr_r(argv[i], '=');
+		lmap_export(key, value, info->env_map, NULL);
+		free(key);
+		free(value);
 	}
 	return (E_NONE);
 }
 
-static void _swap(char **a, char **b)
+static void	_swap(char **a, char **b)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = *a;
 	*a = *b;
@@ -77,12 +83,12 @@ static void _swap(char **a, char **b)
  *    - E_NONE：正常終了
  *    - E_ALLOCATE：メモリ割り当て失敗
  */
-static void _display_sorted_env(t_info *info)
+static void	_display_sorted_env(t_info *info)
 {
-	char **envp;
-	int len;
-	int i;
-	int j;
+	char	**envp;
+	int		len;
+	int		i;
+	int		j;
 
 	envp = ft_list_to_strs(info->env_map);
 	len = ft_list_size(info->env_map);
@@ -103,10 +109,10 @@ static void _display_sorted_env(t_info *info)
 	_display_sorted_env_line(envp[i]);
 }
 
-static void _display_sorted_env_line(const char *entity)
+static void	_display_sorted_env_line(const char *entity)
 {
-	char *key;
-	char *value;
+	char	*key;
+	char	*value;
 
 	key = ft_substr_l(entity, '=');
 	value = ft_substr_r(entity, '=');

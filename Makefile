@@ -1,33 +1,33 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+         #
+#    By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/15 18:05:31 by teando            #+#    #+#              #
-#    Updated: 2025/01/12 20:15:10 by teando           ###   ########.fr        #
+#    Updated: 2025/01/14 12:32:32 by ymizukam         ###   ########.fr        #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
 
 NAME		:= minishell
 CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror
+CFLAGS		:= -Wall -Wextra #-Werror
 LFLAGS		:= -lreadline
 RM			:= rm -rf
 ROOT_DIR	:= .
 OUT_DIR		:= $(ROOT_DIR)/obj
-INCS_DIR	:= $(ROOT_DIR)/inc $(ROOT_DIR)/sys
+INCS_DIR	:= $(ROOT_DIR)/inc
 LIBFT_DIR	:= $(ROOT_DIR)/lib/libft
 LIBMAP_DIR		:= $(ROOT_DIR)/lib/linkedmap
 
 LIBFT		:= $(LIBFT_DIR)/libft.a
-LIBMAP      := $(MAP_DIR)/libmap.a
-IDFLAGS		:= -I$(INCS_DIR) -I$(LIBFT_DIR) -I$(MAP_DIR)
+LIBMAP      := $(LIBMAP_DIR)/libmap.a
+IDFLAGS		:= -I$(INCS_DIR) -I$(LIBFT_DIR) -I$(LIBMAP_DIR)
 
 SRCS 		:= \
-	SRC = $(shell find src -name "*.c") $(shell find util -name "*.c") 
+    $(shell find src -name "*.c") $(shell find util -name "*.c") 
 
     # $(addprefix src/, \
     #     main.c \

@@ -23,60 +23,61 @@
 // 	return (0);
 // }
 
-bool _validate_key(int index, const char *key)
+bool	_validate_key(int index, const char *key)
 {
-    //keyに無効な文字が入っている、、、
-    //valueが二単語
-    //quoteが閉じられていない
-    if (0)
-        ft_dprintf(2,"minishell: %d: %s\n",index,"error msg");
-    return true;
+	// keyに無効な文字が入っている、、、
+	// valueが二単語
+	// quoteが閉じられていない
+	if (0)
+		ft_dprintf(2, "minishell: %d: %s\n", index, "error msg");
+	return (true);
 }
-bool _validate_value(int index, const char *value)
+bool	_validate_value(int index, const char *value)
 {
-    //keyに無効な文字が入っている、、、
-    //valueが二単語
-    //quoteが閉じられていない
-    if (0)
-        ft_dprintf(2,"minishell: %d: %s\n",index,"error msg");
-    return true;
-}
-
-
-static bool _alias_export(int index, char *entity, t_lmap *lmap)
-{
-    char *key = ft_substr_l(entity, '=');
-    char *value = ft_substr_r(entity, '=');
-    bool status;
-    status = _validate_key(index,key) && _validate(index,value);
-    if (status)
-        lmap_export(key,value,lmap,NULL);
-    free(key);
-    free(value);
-    return status;
+	// keyに無効な文字が入っている、、、
+	// valueが二単語
+	// quoteが閉じられていない
+	if (0)
+		ft_dprintf(2, "minishell: %d: %s\n", index, "error msg");
+	return (true);
 }
 
-
-t_lmap *parse_rcfile(int fd)
+static bool	_alias_export(int index, char *entity, t_lmap *lmap)
 {
-    char *line;
-    t_lmap *lmap = NULL;
-    line = get_next_line(fd);
-    int index = 1;
-    while(!line)
-    {
-        if (!ft_strcmp("alias", line))
-        {
-            char *entity = line;
-            while(ft_isspace(*entity))
-                entity++;
-            if (*entity && !_alias_export(index,entity, lmap))
-                return (free(line),ft_lstclear(lmap, free), NULL);
-        }
-        free(line);
-        line = get_next_line(fd);
-        index++;
-    }
-    free(line);
-    return lmap;
+	char	*key;
+	char	*value;
+	bool	status;
+
+	key = ft_substr_l(entity, '=');
+	value = ft_substr_r(entity, '=');
+	status = _validate_key(index, key) && _validate_value(index, value);
+	if (status)
+		lmap_export(key, value, lmap, NULL);
+	free(key);
+	free(value);
+	return (status);
+}
+
+t_lmap	*parse_rcfile(int fd)
+{
+	char *line;
+	t_lmap *lmap = NULL;
+	line = get_next_line(fd);
+	int index = 1;
+	while (!line)
+	{
+		if (!ft_strcmp("alias", line))
+		{
+			char *entity = line;
+			while (ft_isspace(*entity))
+				entity++;
+			if (*entity && !_alias_export(index, entity, lmap))
+				return (free(line), ft_lstclear(&lmap, free), NULL);
+		}
+		free(line);
+		line = get_next_line(fd);
+		index++;
+	}
+	free(line);
+	return (lmap);
 }

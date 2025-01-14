@@ -1,8 +1,9 @@
 #ifndef AST_H
-#define AST_H
+# define AST_H
 
-#include "libft.h"
-#include "sys.h"
+# include "libft.h"
+# include "lmap.h"
+# include <fcntl.h>
 
 typedef enum e_ntype
 {
@@ -13,11 +14,9 @@ typedef enum e_ntype
 	NT_OR
 }					t_ntype;
 
-
 /* -------------------------------------------------------------------------- */
 /*                                   STRUCT                                   */
 /* -------------------------------------------------------------------------- */
-
 
 typedef struct s_args
 {
@@ -29,14 +28,13 @@ typedef struct s_args
 	pid_t			pid;
 }					t_args;
 
-struct s_ast
+typedef struct s_ast
 {
 	struct s_ast	*left;
 	struct s_ast	*right;
 	t_ntype			ntype;
 	t_args			*args;
-};	
-
+}					t_ast;
 
 /* -------------------------------------------------------------------------- */
 /*                                   FUNCS                                    */

@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:08:25 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/12 21:55:43 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/14 12:52:36 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,9 @@ t_status	__cd(char **argv, t_info *info)
 		path_dispacher(absolute_path, argv[1], F_OK, info);
 	else
 		_cd_cwd(absolute_path, argv[1], info);
-	while(absolute_path[ft_strlen(absolute_path)-1] == '/' && ft_strlen(absolute_path) != 1)
-		absolute_path[ft_strlen(absolute_path)-1] = '\0';
+	while (absolute_path[ft_strlen(absolute_path) - 1] == '/'
+		&& ft_strlen(absolute_path) != 1)
+		absolute_path[ft_strlen(absolute_path) - 1] = '\0';
 	if (chdir(absolute_path) || access(absolute_path, F_OK))
 		return (ft_dprintf(2, "cd: %s: %s\n", argv[1], strerror(errno)), 1);
 	lmap_export("OLDPWD", info->cwd, info->env_map, NULL);
@@ -82,7 +83,7 @@ static int	_cd_home(char path[], char *arg, t_info *info)
 {
 	char	*home;
 
-	home = env_get("HOME", info);
+	home = var_get("HOME", info);
 	if (home[0] == '\0')
 	{
 		printf("cd: HOME not set\n");
@@ -117,7 +118,7 @@ static int	_cd_oldpwd(char path[], char *arg, t_info *info)
 	char	*oldpwd;
 
 	(void)arg;
-	oldpwd = env_get("OLDPWD", info);
+	oldpwd = var_get("OLDPWD", info);
 	if (oldpwd[0] == '\0')
 	{
 		ft_dprintf(2, "cd: OLDPWD not set\n");

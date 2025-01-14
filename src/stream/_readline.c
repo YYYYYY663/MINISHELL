@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   readline.c                                         :+:      :+:    :+:   */
+/*   _readline.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 23:59:46 by teando            #+#    #+#             */
-/*   Updated: 2025/01/12 22:14:35 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/14 12:58:28 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ extern volatile sig_atomic_t	g_signal_status;
  * @param line チェックする入力文字列
  * @return int クォートが正しく閉じられている場合は1、そうでない場合は0
  */
-static int	is_quotes_balanced(const char *line)
+int	is_quotes_balanced(const char *line)
 {
 	int		single_open;
 	int		double_open;
@@ -58,7 +58,7 @@ static int	is_quotes_balanced(const char *line)
  * @param prompt 表示するプロンプト文字列
  * @return char* 入力された行、EOFまたはエラー時はNULL
  */
-static char	*read_command_line(const char *prompt)
+char	*read_command_line(const char *prompt)
 {
 	char	*line;
 

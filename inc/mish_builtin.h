@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_builtin.h                                       :+:      :+:    :+:   */
+/*   mish_builtin.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:01:24 by teando            #+#    #+#             */
-/*   Updated: 2025/01/05 21:57:27 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/14 12:34:28 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MISH_BUILTIN_H
 # define MISH_BUILTIN_H
 
-#include "mish_util.h"
+# include "mish_util.h"
 
 t_status			builtin_dispatcher(t_args *args, int *in_fd, int *out_fd,
 						t_info *info);
@@ -31,6 +31,5 @@ t_status			__exit(char **argv, t_info *info);
 t_status			__env(char **argv, t_info *info);
 t_status			__alias(char **argv, t_info *info);
 t_status			__source(char **argv, t_info *info);
-
 
 #endif /* MISH_BUILTIN_H */
