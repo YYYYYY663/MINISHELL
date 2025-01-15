@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 16:58:58 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/15 20:43:53 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/15 20:59:58 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,27 @@ int	_resolve_path_current(char path[], char *src, int mode, t_info *info)
  * //tmp//////  -> /tmp
  *
  */
-void	normalize_path(char path[], char *src)
+void	normalize_path(char dst[], char *src)
 {
-	// while (*src && *src ==)
-	ft_strlcpy(path, src, PATH_MAX);
+	// size_t	src_i;
+	// size_t	dst_i;
+	// src_i = 0;
+	// dst_i = 0;
+	// if (src[0] == '/')
+	// {
+	// 	dst[dst_i++] = '/';
+	// 	while (src[++src_i] == '/')
+	// 		;
+	// }
+	// while (src[src_i])
+	// {
+	// 	dst[dst_i++] = src[src_i++];
+	// }
+	// while (src_i > 0 && src[--src_i] == '/')
+	// 	dst[--dst_i] = '\0';
+	// dst[--dst_i] = '\0';
+	// printf("path %s\n", dst);
+	ft_strlcpy(dst, src, PATH_MAX);
 }
 
 /**
