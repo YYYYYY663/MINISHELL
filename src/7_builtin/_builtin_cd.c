@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:08:25 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/14 17:20:58 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/15 20:32:25 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 
 static int	_cd_home(char path[], char *arg, t_info *info);
 static int	_cd_oldpwd(char path[], char *arg, t_info *info);
-static int	_cd_cwd(char path[], char *arg, t_info *info);
 
 /**
  * @brief カレントディレクトリを変更する（cdコマンド）
@@ -55,10 +54,8 @@ t_status	__cd(char **argv, t_info *info)
 		if (_cd_oldpwd(absolute_path, argv[1], info))
 			return (1);
 	}
-	else if (argv[1][0] == '.' || argv[1][0] == '/')
-		path_dispacher(absolute_path, argv[1], F_OK, info);
 	else
-		_cd_cwd(absolute_path, argv[1], info);
+		path_dispacher(absolute_path, argv[1], F_OK, info);
 	if (chdir(absolute_path) || access(absolute_path, F_OK))
 		return (ft_dprintf(2, "cd: %s: %s\n", argv[1], strerror(errno)), 1);
 	map_export_item("OLDPWD", info->cwd, info->env_map);
@@ -130,26 +127,5 @@ static int	_cd_oldpwd(char path[], char *arg, t_info *info)
 	}
 	path_dispacher(path, oldpwd, F_OK, info);
 	free(oldpwd);
-	return (0);
-}
-
-/**
- * @brief カレントディレクトリに相対パスを追加して移動する
- *
- * この関数は以下の処理を行います：
- * 1. カレントディレクトリのパスを取得
- * 2. 相対パスを追加
- *
- * @param path 移動先のパス
- * @param arg コマンド引数
- * @param info シェル情報構造体
- * @return int
- *    - 0：正常終了
- */
-static int	_cd_cwd(char path[], char *arg, t_info *info)
-{
-	ft_strlcpy(path, info->cwd, PATH_MAX);
-	ft_strlcat(path, "/", PATH_MAX);
-	ft_strlcat(path, arg, PATH_MAX);
 	return (0);
 }
