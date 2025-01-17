@@ -1,54 +1,38 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:45:19 by teando            #+#    #+#             */
-/*   Updated: 2025/01/12 22:07:36 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/18 00:25:14 by teando           ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "ft_color.h"
 #include "minishell.h"
 
-extern volatile sig_atomic_t	g_signal_status;
+extern volatile sig_atomic_t g_signal_status;
 
-void	shell_loop(t_info *info)
+void shell_loop(t_info *info)
 {
 	while (1)
 	{
 		line_init(info);
 		ft_dprintf(2, BG_GREEN WHITE "%s" RESET "\n", info->cwd);
 		info->source_line = read_line_until_balanced(PROMPT);
-		if (g_signal_status == SIGINT)
-		{
-			g_signal_status = 0;
-			dprintf(2, "Ctrl C while prompt\n");
-			continue ;
-		}
 		if (info->source_line == NULL)
-		{
-			break ; /* (Ctrl-D) の場合 */
-		}
-		// if (g_signal_status == SIGINT)
-		// {
-		// 	g_signal_status = 0;
-		// 	free(info->source_line);
-		// 	info->source_line = NULL;
-		// 	continue ;
-		// }
-		// else if (g_signal_status == SIGQUIT)
-		// {
-		// 	g_signal_status = 0; /* SIGQUITは無視 (bash互換) */
-		// }
+			break;
+		if (g_signal_status == SIGINT)
+			continue;
+		// if (g_signal_status == SIGQUIT)
 		if (launch_lexer(info))
-			continue ;
+			continue;
 		if (launch_parser(info))
-			continue ;
+			continue;
 		if (launch_executor(info))
-			continue ;
+			continue;
 	}
 }
 
@@ -72,9 +56,9 @@ void	shell_loop(t_info *info)
 // 	}
 // }
 
-int	main(int argc, char **argv, char **envp)
+int main(int argc, char **argv, char **envp)
 {
-	t_info	*info;
+	t_info *info;
 
 	(void)argc;
 	(void)argv;

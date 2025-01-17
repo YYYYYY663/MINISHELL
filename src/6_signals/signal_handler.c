@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 01:35:45 by teando            #+#    #+#             */
-/*   Updated: 2025/01/12 22:50:18 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/17 22:30:59 by teando           ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "ft_signals.h"
 #include <readline/history.h>
@@ -18,20 +18,20 @@
 /*
  * グローバル変数の定義
  */
-volatile sig_atomic_t	g_signal_status = 0;
+volatile sig_atomic_t g_signal_status = 0;
 
 /*
  * SIGINT (Ctrl+C) ハンドラ
  * シグナル受信を記録し、必要最小限の処理のみを行う
  */
-static void	sigint_handler(int signum)
+static void sigint_handler(int signum)
 {
 	if (signum == SIGINT)
 	{
 		g_signal_status = SIGINT;
-		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
-		rl_replace_line("\n", 0);
+		rl_replace_line("", 0);
+		write(STDOUT_FILENO, "\n", 1);
 		rl_redisplay();
 	}
 }
@@ -40,7 +40,7 @@ static void	sigint_handler(int signum)
  * SIGQUIT (Ctrl+\) ハンドラ
  * シグナル受信を記録するのみ
  */
-static void	sigquit_handler(int signum)
+static void sigquit_handler(int signum)
 {
 	if (signum == SIGQUIT)
 		g_signal_status = SIGQUIT;
@@ -49,10 +49,10 @@ static void	sigquit_handler(int signum)
 /*
  * シグナルハンドラの初期化
  */
-int	init_signals(void)
+int init_signals(void)
 {
-	struct sigaction	sa_int;
-	struct sigaction	sa_quit;
+	struct sigaction sa_int;
+	struct sigaction sa_quit;
 
 	/* SIGINT の設定 */
 	sa_int.sa_handler = sigint_handler;
