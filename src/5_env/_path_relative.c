@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 17:06:28 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/04 22:11:45 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/19 19:30:00 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 /**
  * @brief 相対パスを絶対パスに解決する
- * 
+ *
  * この関数は以下の処理を行います：
  * 1. カレントディレクトリのパスを取得
  * 2. 相対パスの各要素を処理：
@@ -23,7 +23,7 @@
  *    - '.'：現在のディレクトリを維持
  *    - その他：パスに追加
  * 3. 最終的な絶対パスを生成
- * 
+ *
  * @param path 解決されたパスを格納する配列
  * @param src 相対パス
  * @param mode アクセス権限フラグ
@@ -44,15 +44,16 @@ int	_resolve_path_relative(char path[], char *src, int mode, t_info *info)
 			last_slash = ft_strrchr(path, '/');
 			if (last_slash != path)
 				*last_slash = '\0';
+			else
+				return (path[1] = '\0', access(path, mode));
 			src = dotdot + ft_strlen("..");
-			continue ;
 		}
-		if (*src == '.')
+		else if (*src == '.')
 		{
 			src++;
-			continue ;
 		}
-		break ;
+		else
+			break ;
 	}
 	ft_strlcat(path, src, PATH_MAX);
 	return (access(path, mode));

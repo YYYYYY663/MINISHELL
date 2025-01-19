@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 16:58:58 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/15 20:59:58 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/19 19:16:42 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 int	_resolve_path_current(char path[], char *src, int mode, t_info *info)
 {
 	ft_strlcpy(path, info->cwd, PATH_MAX);
-	ft_strlcat(path, "/", PATH_MAX);
+	if (ft_strcmp(path, "/"))
+		ft_strlcat(path, "/", PATH_MAX);
 	ft_strlcat(path, src, PATH_MAX);
 	return (access(path, mode));
 }
 /**
- * @brief パスのサニタイズ
+ * @brief パスをuniqueにする
  * //tmp//////  -> /tmp
  *
  */
@@ -49,20 +50,8 @@ void	normalize_path(char dst[], char *src)
 
 /**
  * @brief パスの種類を判別し、適切な解決方法を選択する
- *
- * この関数は以下の処理を行います：
- * 1. パスの先頭文字を確認し、以下の種類に分類：
- *    - 絶対パス（'/'で始まる）
- *    - ホームディレクトリ（'~'で始まる）
- *    - 相対パス（'.'で始まる）
- *    - その他（PATHから検索）
- * 2. 各種類に応じた解決関数を呼び出す
- *
- * @param path 解決されたパスを格納する配列
- * @param src 元のパス文字列
- * @param mode アクセス権限フラグ
- * @param info シェル情報構造体
- * @return int 0:成功、-1:失敗
+ * X_OK && map_find(PATH)  相対パス、絶対パス、PATHから探す
+ *　else 相対パス、絶対パス、CWDから探す
  */
 int	path_dispacher(char path[], char *src, int mode, t_info *info)
 {
@@ -71,7 +60,7 @@ int	path_dispacher(char path[], char *src, int mode, t_info *info)
 	path[0] = '\0';
 	normalize_path(normalized_src, src);
 	// F_OK /../などを弾けていない
-	if (normalized_src[0] == '/' && access(normalized_src, mode) == 0)
+	if (normalized_src[0] == '/')
 		return (ft_strlcpy(path, normalized_src, PATH_MAX), access(path, mode));
 	if (normalized_src[0] == '~')
 		return (_resolve_path_home(path, normalized_src, mode, info));
