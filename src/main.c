@@ -6,7 +6,7 @@
 /*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:45:19 by teando            #+#    #+#             */
-/*   Updated: 2025/01/18 00:25:14 by teando           ###   ########.fr       */
+/*   Updated: 2025/01/20 02:00:15 by teando           ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -15,46 +15,24 @@
 
 extern volatile sig_atomic_t g_signal_status;
 
-void shell_loop(t_info *info)
+static void shell_loop(t_info *info)
 {
 	while (1)
 	{
+		int status;
+
 		line_init(info);
 		ft_dprintf(2, BG_GREEN WHITE "%s" RESET "\n", info->cwd);
-		info->source_line = read_line_until_balanced(PROMPT);
+		info->source_line = launch_readline(PROMPT);
 		if (info->source_line == NULL)
-			break;
+			system_exit(info, info->status);
 		if (g_signal_status == SIGINT)
 			continue;
-		// if (g_signal_status == SIGQUIT)
-		if (launch_lexer(info))
-			continue;
-		if (launch_parser(info))
-			continue;
-		if (launch_executor(info))
-			continue;
+		status = launch_lexer(info) || launch_parser(info) || launch_executor(info);
+		if (status != E_NONE)
+			system_exit(info, status);
 	}
 }
-
-// void	shell_loop(t_info *info)
-// {
-// 	while (1)
-// 	{
-// 		printf(BG_GREEN WHITE "%s", info->cwd);
-// 		printf(RESET " $ ");
-// 		fflush(stdout);
-// 		// ft_dprintf(1, BG_GREEN WHITE);
-// 		// info->source_line = read_line_until_balanced(info->cwd);
-// 		// ft_dprintf(1, RESET " $ ");
-// 		info->source_line = get_next_line(0);
-// 		launch_lexer(info);
-// 		// debug_print_token_list(info->token_list);
-// 		launch_parser(info);
-// 		// debug_print_ast(info->ast, 0);
-// 		launch_executor(info);
-// 		line_init(info);
-// 	}
-// }
 
 int main(int argc, char **argv, char **envp)
 {
@@ -63,11 +41,9 @@ int main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	if (!init_signals())
-	{
-		ft_dprintf(2, "signal setup failure\n");
-		return (1);
-	}
+		return (ft_dprintf(2, "signal setup failure\n"), 1);
 	info = system_init(envp);
+	// alias_update(RCFILE, info);
 	shell_loop(info);
-	system_exit(info, 0);
+	system_exit(info, info->status);
 }

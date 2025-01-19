@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_system.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:53:59 by teando            #+#    #+#             */
-/*   Updated: 2025/01/12 21:20:17 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/20 01:56:43 by teando           ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef FT_SYSTEM_H
 # define FT_SYSTEM_H
@@ -63,6 +63,6 @@ void							line_init(t_info *info);
 void							system_exit(t_info *info, t_status status);
 
 /**** **** **** **** READLINE **** **** **** ****/
-char							*read_line_until_balanced(const char *prompt);
+char							*launch_readline(const char *prompt);
 
 #endif

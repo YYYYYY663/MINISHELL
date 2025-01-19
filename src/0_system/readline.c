@@ -1,18 +1,18 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: teando <teando@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 23:59:46 by teando            #+#    #+#             */
-/*   Updated: 2025/01/12 22:14:35 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/20 01:56:29 by teando           ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "ft_system.h"
 
-extern volatile sig_atomic_t	g_signal_status;
+extern volatile sig_atomic_t g_signal_status;
 
 /**
  * @brief 入力文字列内のクォートが正しく閉じられているかチェックする
@@ -25,11 +25,11 @@ extern volatile sig_atomic_t	g_signal_status;
  * @param line チェックする入力文字列
  * @return int クォートが正しく閉じられている場合は1、そうでない場合は0
  */
-static int	is_quotes_balanced(const char *line)
+static int is_quotes_balanced(const char *line)
 {
-	int		single_open;
-	int		double_open;
-	size_t	i;
+	int single_open;
+	int double_open;
+	size_t i;
 
 	single_open = 0;
 	double_open = 0;
@@ -58,9 +58,9 @@ static int	is_quotes_balanced(const char *line)
  * @param prompt 表示するプロンプト文字列
  * @return char* 入力された行、EOFまたはエラー時はNULL
  */
-static char	*read_command_line(const char *prompt)
+static char *read_command_line(const char *prompt)
 {
-	char	*line;
+	char *line;
 
 	line = readline(prompt);
 	if (line && *line)
@@ -82,11 +82,11 @@ static char	*read_command_line(const char *prompt)
  * @param prompt メインのプロンプト文字列
  * @return char* 完全な入力文字列、EOFまたはエラー時はNULL
  */
-char	*read_line_until_balanced(const char *prompt)
+char *launch_readline(const char *prompt)
 {
-	char	*line;
-	char	*tmp;
-	char	*cont_line;
+	char *line;
+	char *tmp;
+	char *cont_line;
 
 	line = read_command_line(prompt);
 	if (!line)
