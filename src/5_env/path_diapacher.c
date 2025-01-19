@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 16:58:58 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/19 19:16:42 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/19 20:55:18 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	normalize_path(char dst[], char *src)
  * @brief パスの種類を判別し、適切な解決方法を選択する
  * X_OK && map_find(PATH)  相対パス、絶対パス、PATHから探す
  *　else 相対パス、絶対パス、CWDから探す
+ * todo cd /bin/..など対応できていないのでslash区切りで解析したほうが良さそう
+ * todo 今の実装ではcd ...などがエラーにならない
  */
 int	path_dispacher(char path[], char *src, int mode, t_info *info)
 {
