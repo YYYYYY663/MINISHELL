@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:45:19 by teando            #+#    #+#             */
-/*   Updated: 2025/01/14 17:57:44 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/23 08:07:14 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	if (!init_signals())
+	if (init_signals())
 		return (ft_dprintf(2, "signal setup failure\n"), 1);
 	info = system_init(envp);
 	// alias_update(RCFILE, info);

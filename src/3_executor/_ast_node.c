@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:17:59 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/12 21:52:38 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/23 02:24:08 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ pid_t	cmd_node(t_ast *node, int in_fd, int out_fd, t_info *info)
 	pid = xfork(info);
 	if (pid == 0)
 	{
+		// close
 		xdup2(in_fd, STDIN_FILENO, info);
 		xdup2(out_fd, STDOUT_FILENO, info);
 		execve(node->args->path, node->args->cargv,
