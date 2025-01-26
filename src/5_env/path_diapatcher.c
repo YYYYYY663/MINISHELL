@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 16:58:58 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/27 06:44:10 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/27 06:51:00 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ void	normalize_path(char *dst, char *src)
 	char	*dstp;
 
 	dstp = dst;
+	if (ft_strncmp(src, "/", 2) == 0)
+	{
+		ft_strlcpy(dst, src, PATH_MAX);
+		return ;
+	}
 	while (*src)
 	{
 		if (*src == '/')
@@ -46,7 +51,6 @@ void	normalize_path(char *dst, char *src)
 		*--dstp = '\0';
 	}
 	printf("path %s\n", dst); // debug
-								// ft_strlcpy(dst, src, PATH_MAX);
 }
 
 /**
@@ -63,7 +67,7 @@ int	path_dispatcher(char path[], char *src, int mode, t_info *info)
 	path[0] = '\0';
 	normalize_path(normalized_src, src);
 	// F_OK /../などを弾けていない
-	if (normalized_src[0] == '/')
+	if (src[0] == '/')
 		return (ft_strlcpy(path, normalized_src, PATH_MAX), access(path, mode));
 	if (normalized_src[0] == '~')
 		return (_resolve_path_home(path, normalized_src, mode, info));
