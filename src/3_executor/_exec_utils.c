@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:17:47 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 21:54:32 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/27 06:07:47 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@
 
 /**
  * @brief コマンド実行の準備を行う
- * 
+ *
  * この関数は以下の処理を行います：
  * 1. リダイレクトの設定を適用
  * 2. コマンドの存在確認とパスの解決
  * 3. 引数リストの変換（t_list -> char**）
  * 4. ファイルディスクリプタの設定
- * 
+ *
  * エラー発生時：
  * - リダイレクトエラー：ステータスを1に設定
  * - コマンドが見つからない：ステータスを127に設定
- * 
+ *
  * @param args コマンド引数構造体
  * @param in_fd 標準入力のファイルディスクリプタ
  * @param out_fd 標準出力のファイルディスクリプタ
@@ -40,7 +40,7 @@ int	setup_args(t_args *args, int *in_fd, int *out_fd, t_info *info)
 {
 	t_token	*token;
 
-	if (redirect_dipacher(args->redr, in_fd, out_fd, info))
+	if (redirect_dipatcher(args->redr, in_fd, out_fd, info))
 	{
 		info->status = 1;
 		return (1);
@@ -50,7 +50,7 @@ int	setup_args(t_args *args, int *in_fd, int *out_fd, t_info *info)
 	{
 		return (1);
 	}
-	if (path_dispacher(args->path, token->value, X_OK, info))
+	if (path_dispatcher(args->path, token->value, X_OK, info))
 	{
 		ft_dprintf(2, "minishell: %s: command not found\n", token->value);
 		info->status = 127;

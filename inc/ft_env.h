@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 21:48:09 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/15 20:08:40 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/27 06:07:47 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int		_check_key(char *key);
 int		__cmp(void *data, void *key);
 
 /**** **** **** ****  VAR  **** **** **** ****/
-int		var_dispacher(t_list **lst, t_info *info);
+int		var_dispatcher(t_list **lst, t_info *info);
 
 /**** **** **** **** PATH **** **** **** ****/
 // todo accessは関数ポインタとして渡す、infoを渡す
-int		path_dispacher(char path[], char *src, int mode, t_info *info);
+int		path_dispatcher(char path[], char *src, int mode, t_info *info);
 
 int		_resolve_path_cmd(char path[], char *src, int mode, t_info *info);
 int		_resolve_path_home(char path[], char *src, int mode, t_info *info);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirect_dispacher.c                               :+:      :+:    :+:   */
+/*   redirect_dispatcher.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:16:47 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 21:54:52 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/27 06:05:35 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
  * @param info シェル情報構造体
  * @return t_status 成功時E_NONE、エラー時E_FILE
  */
-t_status	redirect_dipacher(t_list *list, int *in, int *out, t_info *info)
+t_status	redirect_dipatcher(t_list *list, int *in, int *out, t_info *info)
 {
 	t_token	*token;
 

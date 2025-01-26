@@ -6,7 +6,7 @@
 #    By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/15 18:05:31 by teando            #+#    #+#              #
-#    Updated: 2025/01/15 19:55:50 by ymizukam         ###   ########.fr        #
+#    Updated: 2025/01/27 06:07:47 by ymizukam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,12 +40,12 @@ SRCS 		:= \
     #         executor.c ast_traverse.c _ast_node.c _ast_pipeline.c _exec_utils.c \
     #     ) \
     #     $(addprefix 4_redirect/, \
-    #         redirect_dispacher.c _heredoc.c _redirect.c\
+    #         redirect_dispatcher.c _heredoc.c _redirect.c\
     #     ) \
     #     $(addprefix 5_env/, \
     #         _env_utils.c map_export.c env_get.c map_unset.c \
     #         path_diapacher.c _path_absolute.c _path_relative.c _path_home.c \
-    #         var_dispacher.c \
+    #         var_dispatcher.c \
     #     ) \
     #     $(addprefix 6_signals/, \
 	# 		signal_handler.c \

@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:10:42 by teando            #+#    #+#             */
-/*   Updated: 2025/01/05 21:57:57 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/27 06:19:14 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ t_status	launch_lexer(t_info *info)
 	}
 	if (!validate_syntax(info))
 		return (info->status);
+
+	
 	return (info->status);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:00:28 by teando            #+#    #+#             */
-/*   Updated: 2025/01/05 22:12:02 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/27 06:05:35 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 int	setup_builtin_args(t_args *args, int *in_fd, int *out_fd, t_info *info)
 {
-	if (redirect_dipacher(args->redr, in_fd, out_fd, info))
+	if (redirect_dipatcher(args->redr, in_fd, out_fd, info))
 	{
 		return (1);
 	}

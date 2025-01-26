@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 19:30:22 by teando            #+#    #+#             */
-/*   Updated: 2025/01/05 03:31:55 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/27 06:05:35 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ void		redirect_out(t_token_type type, char *file, int *out);
 
 void		redirect_in(t_token_type type, char *file, int *in);
 
-t_status	redirect_dipacher(t_list *list, int *in, int *out, t_info *info);
+t_status	redirect_dipatcher(t_list *list, int *in, int *out, t_info *info);
 
 #endif

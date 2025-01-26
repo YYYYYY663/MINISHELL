@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:45:19 by teando            #+#    #+#             */
-/*   Updated: 2025/01/23 08:07:14 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/27 06:20:04 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	prompt(t_info *info)
 	if (info->source_line == NULL)
 		system_exit(info, g_signal_status | 0x80); /* (Ctrl-D) の場合 */
 	launch_lexer(info) || launch_parser(info) || launch_executor(info);
+	debug_print_token_list(info->token_list);
 }
 
 int	main(int argc, char **argv, char **envp)

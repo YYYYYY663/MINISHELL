@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:17:15 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 03:04:09 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/27 06:05:35 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int argc, char **argv, char **env)
 	in_fd = STDIN_FILENO;
 	out_fd = STDOUT_FILENO;
 	debug_print_token_list(info->token_list);
-	redirect_dipacher(info->token_list, &in_fd, &out_fd, info);
+	redirect_dipatcher(info->token_list, &in_fd, &out_fd, info);
 	printf("in %d   out %d\n", in_fd, out_fd);
 	system_exit(info, 0);
 }

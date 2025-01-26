@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:08:25 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/19 19:25:54 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/27 06:07:47 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_status	__cd(char **argv, t_info *info)
 			return (1);
 	}
 	else
-		path_dispacher(absolute_path, argv[1], F_OK, info);
+		path_dispatcher(absolute_path, argv[1], F_OK, info);
 	// ft_dprintf(2, "%s\n", absolute_path);
 	if (chdir(absolute_path))
 		return (ft_dprintf(2, "cd: %s: %s\n", argv[1], strerror(errno)), 1);
@@ -93,9 +93,9 @@ static int	_cd_home(char path[], char *arg, t_info *info)
 	}
 	free(home);
 	if (arg == NULL)
-		path_dispacher(path, "~", F_OK, info);
+		path_dispatcher(path, "~", F_OK, info);
 	else
-		path_dispacher(path, arg, F_OK, info);
+		path_dispatcher(path, arg, F_OK, info);
 	return (0);
 }
 
@@ -126,7 +126,7 @@ static int	_cd_oldpwd(char path[], char *arg, t_info *info)
 		free(oldpwd);
 		return (1);
 	}
-	path_dispacher(path, oldpwd, F_OK, info);
+	path_dispatcher(path, oldpwd, F_OK, info);
 	free(oldpwd);
 	return (0);
 }

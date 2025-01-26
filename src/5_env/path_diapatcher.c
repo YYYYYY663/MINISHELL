@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path_diapacher.c                                   :+:      :+:    :+:   */
+/*   path_diapatcher.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 16:58:58 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/19 20:55:18 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/27 06:44:10 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,30 +22,31 @@ int	_resolve_path_current(char path[], char *src, int mode, t_info *info)
 }
 /**
  * @brief パスをuniqueにする
- * //tmp//////  -> /tmp
- *
+ * ///のように重なっていたら/にする
+ * 最後の/を取る
  */
-void	normalize_path(char dst[], char *src)
+void	normalize_path(char *dst, char *src)
 {
-	// size_t	src_i;
-	// size_t	dst_i;
-	// src_i = 0;
-	// dst_i = 0;
-	// if (src[0] == '/')
-	// {
-	// 	dst[dst_i++] = '/';
-	// 	while (src[++src_i] == '/')
-	// 		;
-	// }
-	// while (src[src_i])
-	// {
-	// 	dst[dst_i++] = src[src_i++];
-	// }
-	// while (src_i > 0 && src[--src_i] == '/')
-	// 	dst[--dst_i] = '\0';
-	// dst[--dst_i] = '\0';
-	// printf("path %s\n", dst);
-	ft_strlcpy(dst, src, PATH_MAX);
+	char	*dstp;
+
+	dstp = dst;
+	while (*src)
+	{
+		if (*src == '/')
+		{
+			while (*src == '/')
+				src++;
+			src--;
+		}
+		*dstp++ = *src++;
+	}
+	*dstp = '\0';
+	if (dstp != dst && *--src == '/')
+	{
+		*--dstp = '\0';
+	}
+	printf("path %s\n", dst); // debug
+								// ft_strlcpy(dst, src, PATH_MAX);
 }
 
 /**
@@ -55,7 +56,7 @@ void	normalize_path(char dst[], char *src)
  * todo cd /bin/..など対応できていないのでslash区切りで解析したほうが良さそう
  * todo 今の実装ではcd ...などがエラーにならない
  */
-int	path_dispacher(char path[], char *src, int mode, t_info *info)
+int	path_dispatcher(char path[], char *src, int mode, t_info *info)
 {
 	char	normalized_src[PATH_MAX];
 
