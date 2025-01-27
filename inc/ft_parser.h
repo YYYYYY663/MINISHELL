@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 19:27:53 by teando            #+#    #+#             */
-/*   Updated: 2025/01/05 05:45:53 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/27 11:02:02 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 /*
 ** parse_tokens:
-**   info->token_list を読んで、AST (t_btree*) を構築。
+**   info->token を読んで、AST (t_btree*) を構築。
 **   戻り値: ASTのルートノード (t_btree*)。エラー時はNULL。
 */
 

@@ -6,89 +6,158 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:10:42 by teando            #+#    #+#             */
-/*   Updated: 2025/01/27 06:19:14 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/27 12:45:04 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_lexer.h"
 
-/*
- * xlexer関数は、入力されたソースラインをトークン化し、その構文を検証します。
- *
- * 引数:
- * - info: 現在のシステム情報を保持するt_info構造体へのポインタ。トークンリストやステータスを管理します。
- *
- * 戻り値:
- * - トークン化および構文検証に成功した場合はE_NONEが返されます。
- * - エラーが発生した場合、対応するステータスがinfo->statusに設定され、同じ値が返されます。
- *
- * 処理の詳細:
- * 1. info->source_lineがNULLでないことを確認します。
- * 2. tokenize_line関数を呼び出してソースラインをトークン化します。
- * 3. トークン化に失敗した場合はステータスをE_SYNTAXに設定します。
- * 4. validate_syntax関数を呼び出して、得られたトークンの構文を検証します。
- * 5. すべての処理が成功した場合、E_NONEを返します。
- */
+#define METACHARS "|&;()<> \t\n"
+#define IFS " \t\n"
+
+t_token	*consume_word(char **linep, t_status *status)
+{
+	size_t	len;
+	char	*line;
+
+	line = *linep;
+	len = 0;
+	while (line[len] && !ft_strchr(METACHARS, line[len]))
+	{
+		if (line[len] == '"')
+			while (line[++len] && line[len] != '"')
+				len++;
+		else if (line[++len] && line[len] == '\'')
+			while (line[len] != '\'')
+				len++;
+		else
+			len++;
+	}
+	*linep += len;
+	return (token_new(TT_WORD, ft_strndup(line, len)));
+}
+
+t_token_type	identify_redirect(char **line, t_status *status)
+{
+	if (!ft_strncmp(*line, ">>", 2))
+	{
+		(*line) += 2;
+		return (TT_APPEND);
+	}
+	if (!ft_strncmp(*line, "<<", 2))
+	{
+		(*line) += 2;
+		return (TT_HEREDOC);
+	}
+	if (**line == '<')
+	{
+		(*line)++;
+		return (TT_REDIR_IN);
+	}
+	(*line)++;
+	return (TT_REDIR_OUT);
+}
+
+t_token	*consume_redirect(char **line, t_status *status)
+{
+	t_token_type	type;
+	t_token			*token;
+
+	type = identify_redirect(line, status);
+	token = consume_word(line, status);
+	if (*status)
+		return (NULL);
+	token->type = type;
+	return (token);
+}
+t_token	*consume_connector(char **line, t_status *status)
+{
+	t_token	*token;
+
+	if (!ft_strncmp(*line, "&&", 2))
+	{
+		(*line)++;
+		token = token_new(TT_AND_AND, NULL);
+	}
+	else if (!ft_strncmp(*line, "||", 2))
+	{
+		(*line)++;
+		token = token_new(TT_OR_OR, NULL);
+	}
+	else if (**line == '|')
+		token = token_new(TT_PIPE, NULL);
+	else if (**line == ';')
+		token = token_new(TT_EOF, NULL);
+	else if (**line == '&')
+	{
+		ft_dprintf(2, "ERROR: sorry we don't manage background jobs :(\n");
+		*status = E_SYNTAX;
+		return (NULL);
+	}
+	(*line)++;
+	// expect(TT_WORD);
+	return (token);
+}
+
+t_token	*consume_metachars(char **line, t_status *status)
+{
+	t_token	*token;
+
+	if (ft_strchr(IFS, **line))
+		return ((*line)++, NULL);
+	if (**line == '<' || **line == '>')
+		return (consume_redirect(line, status));
+	if (**line == '&' || **line == '|' || **line == ';')
+		return (consume_connector(line, status));
+	if (**line == '(')
+	{
+		(*line)++;
+		return (token_new(TT_LPAREN, NULL));
+	}
+	else
+	{
+		(*line)++;
+		return (token_new(TT_RPAREN, NULL));
+	}
+}
+
+t_list	*tokenize_line(char *line, t_status *status)
+{
+	t_list	*lst;
+	t_token	*token;
+
+	lst = NULL;
+	if (ft_strchr("|&;)", *line))
+	{
+		ft_dprintf(2, "minishell: syntax error near unexpected token `%c'\n",
+			*line);
+		*status = E_SYNTAX;
+		return (NULL);
+	}
+	while (*line)
+	{
+		if (ft_strchr(METACHARS, *line))
+		{
+			token = consume_metachars(&line, status);
+		}
+		else
+		{
+			token = consume_word(&line, status);
+		}
+		if (token)
+			ft_lstadd_back(&lst, ft_lstnew(token));
+		if (*status)
+			return (ft_lstclear(&lst, token_clear), NULL);
+	}
+	ft_lstadd_back(&lst, ft_lstnew(token_new(TT_EOF, NULL)));
+	return (lst);
+}
+
 t_status	launch_lexer(t_info *info)
 {
-	info->token_list = NULL;
-	info->status = E_NONE;
-	if (!info->source_line)
-		return (info->status);
-	if (!tokenize_line(info))
-	{
-		if (info->status == E_NONE)
-			info->status = E_SYNTAX;
-		return (info->status);
-	}
-	if (!validate_syntax(info))
-		return (info->status);
-
-	
+	if (!info->line)
+		return (E_SYNTAX);
+	info->token = tokenize_line(info->line, &info->status);
+	// return (1);
 	return (info->status);
-}
-
-const char	*type_to_str(t_token_type t)
-{
-	if (t == TT_WORD)
-		return ("TT_WORD");
-	if (t == TT_PIPE)
-		return ("TT_PIPE");
-	if (t == TT_REDIR_IN)
-		return ("TT_REDIR_IN");
-	if (t == TT_APPEND)
-		return ("TT_APPEND");
-	if (t == TT_REDIR_OUT)
-		return ("TT_REDIR_OUT");
-	if (t == TT_HEREDOC)
-		return ("TT_HEREDOC");
-	if (t == TT_LPAREN)
-		return ("TT_LPAREN");
-	if (t == TT_RPAREN)
-		return ("TT_RPAREN");
-	if (t == TT_AND_AND)
-		return ("TT_AND_AND");
-	if (t == TT_OR_OR)
-		return ("TT_OR_OR");
-	if (t == TT_SEMICOLON)
-		return ("TT_SEMICOLON");
-	if (t == TT_EOF)
-		return ("TT_EOF");
-	return ("TT_ERROR");
-}
-
-void	debug_print_token_list(t_list *list)
-{
-	t_token	*tok;
-
-	while (list)
-	{
-		tok = (t_token *)list->data;
-		ft_printf("type: %s, value: ", type_to_str(tok->type));
-		if (tok->value)
-			ft_printf("[%s]\n", tok->value);
-		else
-			ft_printf("NULL\n");
-		list = list->next;
-	}
 }

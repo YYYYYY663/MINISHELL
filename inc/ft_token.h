@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 18:20:59 by teando            #+#    #+#             */
-/*   Updated: 2025/01/14 17:55:26 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/27 10:25:44 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,5 +132,7 @@ int					consume(t_token_type type, t_list **lst);
 void				expect(t_token_type type, t_list **lst);
 
 t_args				*consume_args(t_list **lst);
+
+t_token				*token_new(t_token_type type, char *value);
 
 #endif

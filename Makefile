@@ -6,14 +6,14 @@
 #    By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/15 18:05:31 by teando            #+#    #+#              #
-#    Updated: 2025/01/27 06:07:47 by ymizukam         ###   ########.fr        #
+#    Updated: 2025/01/27 12:03:44 by ymizukam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME		:= minishell
 CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror
+CFLAGS		:= -Wall -Wextra #-Werror
 LFLAGS		:= -lreadline
 RM			:= rm -rf
 ROOT_DIR	:= .

@@ -10,10 +10,10 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	info = system_init(envp);
-	info->source_line = ft_strdup("$NOEXIST $EXIST");
+	info->line = ft_strdup("$NOEXIST $EXIST");
 	launch_lexer(info);
-	debug_print_token_list(info->token_list);
-	var_dispatcher(info->token_list, info);
-	debug_print_token_list(info->token_list);
+	debug_print_token(info->token);
+	var_dispatcher(info->token, info);
+	debug_print_token(info->token);
 	system_exit(info, 0);
 }

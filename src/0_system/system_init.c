@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 16:33:27 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/12 21:33:17 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/27 11:02:02 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ void	line_init(t_info *info)
 {
 	if (!info)
 		exit(1);
-	xfree((void **)&info->source_line);
-	if (info->token_list != NULL)
+	xfree((void **)&info->line);
+	if (info->token != NULL)
 	{
-		ft_lstclear(&info->token_list, token_clear);
+		ft_lstclear(&info->token, token_clear);
 	}
 	ast_clear(info->ast);
 	info->ast = NULL;

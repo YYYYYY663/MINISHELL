@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:53:59 by teando            #+#    #+#             */
-/*   Updated: 2025/01/23 08:03:31 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/27 12:45:34 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef enum e_status
 	E_NONE = 0,
 	E_ALLOCATE = 1,
 	E_ENV_KEY = 1,
-	E_SYNTAX = 1,
+	E_SYNTAX = 2,
 	E_PIPE = 1,
 	E_FILE,
 	E_ARGUMENT,
@@ -46,12 +46,12 @@ typedef enum e_status
 
 typedef struct s_info
 {
-	char						*source_line;
-	t_list						*token_list;
+	char						*line;
+	t_list						*token;
 	t_ast						*ast;
 	t_list						*env_map;
 	char						*env_spc[128];
-	t_list						*alias_map;
+	// t_list						*alias_map;
 	int							stdin_backup;
 	int							stdout_backup;
 	char						cwd[PATH_MAX];

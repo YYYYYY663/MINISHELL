@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:15:51 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/05 21:58:02 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/27 10:25:25 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 
 /**
  * @brief トークンの連結リストを文字列配列（argv形式）に変換する
- * 
+ *
  * この関数は以下の処理を行います：
  * 1. トークン値からNULL終端の文字列配列を作成
  * 2. 配列と各文字列用のメモリを確保
  * 3. エラー発生時は確保したメモリを適切に解放
- * 
+ *
  * @param lst t_token構造体の連結リスト
  * @return char** 文字列配列（argv形式）、エラー時はNULL
  */
@@ -54,12 +54,12 @@ char	**convert_argv(t_list *lst)
 
 /**
  * @brief トークン構造体に関連する全てのメモリを解放する
- * 
+ *
  * この関数は以下の処理を行います：
  * 1. トークンの値文字列が存在する場合は解放
  * 2. トークン構造体自体を解放
  * トークンリスト操作のクリーンアップ関数として使用
- * 
+ *
  * @param ptr 解放するトークン構造体へのポインタ（互換性のためvoid*）
  */
 void	token_clear(void *ptr)
@@ -72,4 +72,16 @@ void	token_clear(void *ptr)
 	if (token->value)
 		free(token->value);
 	free(token);
+}
+
+t_token	*token_new(t_token_type type, char *value)
+{
+	t_token	*tok;
+
+	tok = (t_token *)ft_calloc(1, sizeof(t_token));
+	if (!tok)
+		return (NULL);
+	tok->type = type;
+	tok->value = value;
+	return (tok);
 }

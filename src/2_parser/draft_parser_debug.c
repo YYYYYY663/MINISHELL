@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 21:52:24 by teando            #+#    #+#             */
-/*   Updated: 2025/01/04 22:25:21 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/27 11:02:02 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 
 /**
  * @brief ノードタイプを文字列に変換する
- * 
+ *
  * この関数は以下のノードタイプを文字列に変換します：
  * - NT_CMD  → "NT_CMD" （コマンドノード）
  * - NT_PIPE → "NT_PIPE"（パイプノード）
  * - NT_AND  → "NT_AND" （AND論理演算子ノード）
  * - NT_EOF  → "NT_EOF" （セミコロンノード）
  * - NT_OR   → "NT_OR"  （OR論理演算子ノード）
- * 
+ *
  * @param t ノードタイプ
  * @return const char* 対応する文字列、未知の型の場合は"UNKNOWN"
  */
@@ -43,18 +43,18 @@ const char	*e_type_to_str(int t)
 
 /**
  * @brief ASTをデバッグ用に再帰的に表示する
- * 
+ *
  * この関数は以下の処理を行います：
  * 1. インデントを深さに応じて出力
  * 2. ノードの種類を表示
  * 3. コマンドノードの場合は引数リストを表示
  * 4. 左右の子ノードを再帰的に表示（深さを増やして）
- * 
+ *
  * 出力形式：
  * [ノードタイプ] args=[引数1, 引数2, ...]
  *   [子ノード1]
  *   [子ノード2]
- * 
+ *
  * @param ast 表示するASTノード
  * @param depth 現在の深さ（インデント用）
  */
@@ -92,4 +92,49 @@ void	debug_print_ast(t_ast *ast, int depth)
 	ft_dprintf(STDOUT_FILENO, "\n");
 	debug_print_ast(ast->left, depth + 1);
 	debug_print_ast(ast->right, depth + 1);
+}
+
+const char	*type_to_str(t_token_type t)
+{
+	if (t == TT_WORD)
+		return ("TT_WORD");
+	if (t == TT_PIPE)
+		return ("TT_PIPE");
+	if (t == TT_REDIR_IN)
+		return ("TT_REDIR_IN");
+	if (t == TT_APPEND)
+		return ("TT_APPEND");
+	if (t == TT_REDIR_OUT)
+		return ("TT_REDIR_OUT");
+	if (t == TT_HEREDOC)
+		return ("TT_HEREDOC");
+	if (t == TT_LPAREN)
+		return ("TT_LPAREN");
+	if (t == TT_RPAREN)
+		return ("TT_RPAREN");
+	if (t == TT_AND_AND)
+		return ("TT_AND_AND");
+	if (t == TT_OR_OR)
+		return ("TT_OR_OR");
+	if (t == TT_SEMICOLON)
+		return ("TT_SEMICOLON");
+	if (t == TT_EOF)
+		return ("TT_EOF");
+	return ("TT_ERROR");
+}
+
+void	debug_print_token(t_list *list)
+{
+	t_token *tok;
+
+	while (list)
+	{
+		tok = (t_token *)list->data;
+		ft_printf("type: %s, value: ", type_to_str(tok->type));
+		if (tok->value)
+			ft_printf("[%s]\n", tok->value);
+		else
+			ft_printf("NULL\n");
+		list = list->next;
+	}
 }
