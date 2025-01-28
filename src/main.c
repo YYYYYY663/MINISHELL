@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:45:19 by teando            #+#    #+#             */
-/*   Updated: 2025/01/27 11:02:02 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/28 09:29:11 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ extern volatile sig_atomic_t	g_signal_status;
 void	prompt(t_info *info)
 {
 	line_init(info);
-	ft_dprintf(2, BG_GREEN WHITE "%s" RESET "\n", info->cwd);
-	info->line = launch_readline(PROMPT);
+	info->line = launch_readline(info->cwd);
 	//とりあえずの処理
 	// if (info->line[0] == '\n')
 	// 	return ;

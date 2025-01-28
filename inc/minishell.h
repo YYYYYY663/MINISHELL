@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 18:41:18 by teando            #+#    #+#             */
-/*   Updated: 2025/01/14 17:13:26 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/28 09:30:40 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@
 # include "ft_signals.h"
 # include "ft_system.h"
 # include "ft_token.h"
-
-# define PROMPT "$ "
 
 /* <----------- 0_core: exec_builtin -----------> */
 // int		is_builtin(char *cmd);

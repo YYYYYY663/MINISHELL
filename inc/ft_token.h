@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 18:20:59 by teando            #+#    #+#             */
-/*   Updated: 2025/01/27 10:25:44 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/28 09:14:23 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ typedef int			t_token_type;
 # define TT_SEMICOLON 0x2003
 # define TT_EOF 0x2004
 # define TT_ERROR 0x002
+
+# define TT_NOTWORD 0x00
 
 typedef enum e_ntype
 {

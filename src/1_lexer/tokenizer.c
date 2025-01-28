@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:10:42 by teando            #+#    #+#             */
-/*   Updated: 2025/01/28 08:59:17 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/28 09:35:06 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_token	*consume_word(char **linep, t_status *status)
 	size_t	len;
 	char	*line;
 
+	(void)status;
 	line = *linep;
 	len = 0;
 	while (line[len] && !ft_strchr(METACHARS, line[len]))
@@ -58,15 +59,35 @@ t_token_type	identify_redirect(char **line, t_status *status)
 	return (TT_REDIR_OUT);
 }
 
+/**
+ * @return next token's type
+ */
+t_token_type	consume_ifs(char **line, t_status *status)
+{
+	(void)status;
+	while (**line && ft_strchr(IFS, **line))
+		(*line)++;
+	if (**line == '\0')
+		return (TT_EOF);
+	if (ft_strchr(METACHARS, **line))
+		return (TT_NOTWORD);
+	return (TT_WORD);
+}
+
 t_token	*consume_redirect(char **line, t_status *status)
 {
 	t_token_type	type;
 	t_token			*token;
 
 	type = identify_redirect(line, status);
-	token = consume_word(line, status);
-	if (*status)
+	if (consume_ifs(line, status) != TT_WORD)
+	{
+		*status = E_SYNTAX;
+		ft_dprintf(2, "minishell: syntax error near unexpected token `%c'\n",
+			**line);
 		return (NULL);
+	}
+	token = consume_word(line, status);
 	token->type = type;
 	return (token);
 }

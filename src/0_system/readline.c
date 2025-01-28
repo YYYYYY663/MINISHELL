@@ -6,10 +6,11 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 23:59:46 by teando            #+#    #+#             */
-/*   Updated: 2025/01/28 09:01:18 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/28 09:31:17 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_color.h"
 #include "ft_system.h"
 
 extern volatile sig_atomic_t	g_signal_status;
@@ -82,19 +83,20 @@ static int	is_quotes_balanced(const char *line)
  * @param prompt メインのプロンプト文字列
  * @return char* 完全な入力文字列、EOFまたはエラー時はNULL
  */
-char	*launch_readline(const char *prompt)
+char	*launch_readline(const char *cwd)
 {
 	char	*line;
 
 	// char	*tmp;
 	// char	*cont_line;
-	line = readline(prompt);
+	ft_dprintf(2, BG_GREEN WHITE "%s" RESET, cwd);
+	line = readline(PS1);
 	if (line && *line == '\0')
 	{
 		free(line);
 		if (g_signal_status == SIGINT)
 			return (NULL);
-		line = launch_readline(prompt);
+		line = launch_readline(cwd);
 	}
 	// if (g_signal_status == SIGINT)
 	// 	return (free(line), NULL);

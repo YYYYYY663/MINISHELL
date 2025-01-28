@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:53:59 by teando            #+#    #+#             */
-/*   Updated: 2025/01/27 12:45:34 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/28 09:31:01 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 extern volatile sig_atomic_t	g_signal_status;
 // # define MAX_FD 1024
 
+# define PS1 "$ "
 typedef enum e_status
 {
 	E_NONE = 0,
@@ -66,6 +67,6 @@ void							line_init(t_info *info);
 void							system_exit(t_info *info, t_status status);
 
 /**** **** **** **** READLINE **** **** **** ****/
-char							*launch_readline(const char *prompt);
+char							*launch_readline(const char *cwd);
 
 #endif
