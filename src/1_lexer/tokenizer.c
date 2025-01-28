@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:10:42 by teando            #+#    #+#             */
-/*   Updated: 2025/01/28 09:35:06 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/28 09:36:39 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ t_token	*consume_word(char **linep, t_status *status)
 		else if (line[len] == '\'')
 			while (line[++len] && line[len] != '\'')
 				;
-		else
-			len++;
+		len++;
 	}
 	*linep += len;
 	return (token_new(TT_WORD, ft_strndup(line, len)));
