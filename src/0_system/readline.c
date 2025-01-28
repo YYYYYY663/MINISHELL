@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 23:59:46 by teando            #+#    #+#             */
-/*   Updated: 2025/01/23 08:03:39 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/28 09:01:18 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,17 @@ static int	is_quotes_balanced(const char *line)
  * @param prompt 表示するプロンプト文字列
  * @return char* 入力された行、EOFまたはエラー時はNULL
  */
-static char	*read_command_line(const char *prompt)
-{
-	char	*line;
+// static char	*read_command_line(const char *prompt)
+// {
+// 	char	*line;
 
-	line = readline(prompt);
-	if (line && *line)
-	{
-		add_history(line);
-	}
-	return (line);
-}
+// 	line = readline(prompt);
+// 	if (line && *line)
+// 	{
+// 		add_history(line);
+// 	}
+// 	return (line);
+// }
 
 /**
  * @brief クォートが正しく閉じられるまで入力を読み続ける
@@ -85,24 +85,33 @@ static char	*read_command_line(const char *prompt)
 char	*launch_readline(const char *prompt)
 {
 	char	*line;
-	char	*tmp;
-	char	*cont_line;
 
-	line = read_command_line(prompt);
-	if (!line)
-		return (NULL);
-	while (!is_quotes_balanced(line))
+	// char	*tmp;
+	// char	*cont_line;
+	line = readline(prompt);
+	if (line && *line == '\0')
 	{
+		free(line);
 		if (g_signal_status == SIGINT)
 			return (NULL);
-		cont_line = read_command_line("> ");
-		if (!cont_line)
-			return (free(line), NULL);
-		tmp = ft_strjoin(line, "\n");
-		free(line);
-		line = ft_strjoin_free(tmp, cont_line);
-		if (!line)
-			return (NULL);
+		line = launch_readline(prompt);
 	}
+	// if (g_signal_status == SIGINT)
+	// 	return (free(line), NULL);
+	// if (!line)
+	// 	return (NULL);
+	// while (!is_quotes_balanced(line))
+	// {	printf("%s", info->line);
+	// 	if (g_signal_status == SIGINT)
+	// 		return (NULL);
+	// 	cont_line = read_command_line("> ");
+	// 	if (!cont_line)
+	// 		return (free(line), NULL);
+	// 	tmp = ft_strjoin(line, "\n");
+	// 	free(line);
+	// 	line = ft_strjoin_free(tmp, cont_line);
+	// 	if (!line)
+	// 		return (NULL);
+	// }
 	return (line);
 }

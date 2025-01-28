@@ -16,6 +16,8 @@ t_status	launch_parser(t_info *info)
 	t_list	*head;
 
 	head = info->token;
+	if (((t_token *)head->data)->type == TT_EOF)
+		return (E_NONE);
 	info->ast = expr(&head, info);
 	return (E_NONE);
 }
