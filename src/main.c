@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:45:19 by teando            #+#    #+#             */
-/*   Updated: 2025/01/28 09:29:11 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/28 12:19:41 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,10 @@ void	prompt(t_info *info)
 {
 	line_init(info);
 	info->line = launch_readline(info->cwd);
-	//とりあえずの処理
-	// if (info->line[0] == '\n')
-	// 	return ;
 	if (g_signal_status == SIGINT)
 		return ;
 	if (info->line == NULL)
-		system_exit(info, g_signal_status | 0x80); /* (Ctrl-D) の場合 */
+		system_exit(info, g_signal_status | 0x80);
 	launch_lexer(info) || launch_parser(info) || launch_executor(info);
 	debug_print_token(info->token);
 }
@@ -41,5 +38,5 @@ int	main(int argc, char **argv, char **envp)
 	// alias_update(RCFILE, info);
 	while (1)
 		prompt(info);
-	// system_exit(info, 0);
+	system_exit(info, info->status);
 }
