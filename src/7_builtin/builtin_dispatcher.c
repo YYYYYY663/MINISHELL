@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:00:28 by teando            #+#    #+#             */
-/*   Updated: 2025/01/27 06:05:35 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/29 19:45:54 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "ft_system.h"
 #include "xunistd.h"
 
-int	setup_builtin_args(t_args *args, int *in_fd, int *out_fd, t_info *info)
+int	setup_builtin_args(t_cmd *args, int *in_fd, int *out_fd, t_info *info)
 {
 	if (redirect_dipatcher(args->redr, in_fd, out_fd, info))
 	{
@@ -49,7 +49,7 @@ int	setup_builtin_args(t_args *args, int *in_fd, int *out_fd, t_info *info)
  *    - E_NOT_FOUND：コマンドが見つからない
  *    - その他：各ビルトインコマンドのエラーコード
  */
-t_status	builtin_dispatcher(t_args *args, int *in_fd, int *out_fd,
+t_status	builtin_dispatcher(t_cmd *args, int *in_fd, int *out_fd,
 		t_info *info)
 {
 	static const char		*builtin_names[] = {"pwd", "cd", "echo", "export",

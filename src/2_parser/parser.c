@@ -19,5 +19,6 @@ t_status	launch_parser(t_info *info)
 	if (((t_token *)head->data)->type == TT_EOF)
 		return (E_NONE);
 	info->ast = expr(&head, info);
+	debug_print_ast(info->ast, 0);
 	return (E_NONE);
 }

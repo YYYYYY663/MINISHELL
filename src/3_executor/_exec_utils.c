@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:17:47 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/27 06:07:47 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/29 19:45:54 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
  * @param info シェル情報構造体
  * @return int 成功時0、エラー時1
  */
-int	setup_args(t_args *args, int *in_fd, int *out_fd, t_info *info)
+int	setup_args(t_cmd *args, int *in_fd, int *out_fd, t_info *info)
 {
 	t_token	*token;
 

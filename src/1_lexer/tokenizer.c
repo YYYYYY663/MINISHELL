@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:10:42 by teando            #+#    #+#             */
-/*   Updated: 2025/01/29 19:05:09 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/29 19:25:03 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,7 @@ t_token	*consume_connector(char **line, t_status *status)
 	else if (**line == '|')
 		token = token_new(TT_PIPE, NULL);
 	else if (**line == ';')
-	{
 		token = token_new(TT_SEMICOLON, NULL);
-		(*line)++;
-		return (token);
-	}
 	else if (**line == '&')
 	{
 		ft_dprintf(2, "ERROR: sorry we don't manage background jobs :(\n");
@@ -126,7 +122,6 @@ t_token	*consume_connector(char **line, t_status *status)
 			**line);
 		*status = E_SYNTAX;
 	}
-	// expect(TT_WORD);
 	return (token);
 }
 

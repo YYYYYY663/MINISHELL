@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 19:28:38 by teando            #+#    #+#             */
-/*   Updated: 2025/01/05 02:48:52 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/29 19:45:54 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ void		kill_pipeline(t_ast *node, t_info *info);
 
 /**** **** **** **** UTILS **** **** **** ****/
 
-int			setup_args(t_args *args, int *in_fd, int *out_fd, t_info *info);
+int			setup_args(t_cmd *args, int *in_fd, int *out_fd, t_info *info);
 
 #endif

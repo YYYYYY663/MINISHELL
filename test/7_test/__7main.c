@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:12:10 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/14 17:01:44 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/29 19:45:54 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@
 // 	static char	*av4[5] = {"unset", "SAMPLE_KEY2", NULL};
 // 	static char	*av2[5] = {"export", "SAMPLE_KEY=AIOUE", NULL};
 // 	static char	*av3[5] = {"export", "SAMPLE_KEY2=TSET", NULL};
-// 	t_args		*args;
+// 	t_cmd		*args;
 // 	t_token		*token;
 
 // 	info = system_init(env);
-// 	args = ast_args_new(info);
+// 	args = ast_cmd_new(info);
 // 	token = args->argv->data;
 // 	token->value
 // 		// builtin_dispatcher("echo", av, info);

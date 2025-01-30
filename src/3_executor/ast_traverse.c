@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 16:28:15 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/12 21:32:08 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/29 19:14:41 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ t_status	exec_connector(t_ast *node, t_info *info)
 	else if (node->ntype == NT_EOF)
 	{
 		traverse_ast_nodes(node->left, info);
-		traverse_ast_nodes(node->right, info);
+		printf("type %d\n", node->right->ntype);
+		if (node->right)
+			traverse_ast_nodes(node->right, info);
 	}
 	return (E_NONE);
 }

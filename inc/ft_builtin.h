@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 22:01:24 by teando            #+#    #+#             */
-/*   Updated: 2025/01/05 21:57:27 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/29 19:45:54 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "ft_env.h"
 # include "ft_system.h"
 
-t_status			builtin_dispatcher(t_args *args, int *in_fd, int *out_fd,
+t_status			builtin_dispatcher(t_cmd *args, int *in_fd, int *out_fd,
 						t_info *info);
 
 // wrapper関数の定義　関数ポインタ型の宣言

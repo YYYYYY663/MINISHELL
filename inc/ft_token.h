@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 18:20:59 by teando            #+#    #+#             */
-/*   Updated: 2025/01/28 09:14:23 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/01/29 19:47:36 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ typedef enum e_ntype
 	NT_OR
 }					t_ntype;
 
-typedef struct s_args
+typedef struct s_cmd
 {
 	char			path[PATH_MAX];
 	char			**cargv;
@@ -110,14 +110,15 @@ typedef struct s_args
 	t_list			*redr;
 	int				fds[2];
 	pid_t			pid;
-}					t_args;
+	struct s_cmd	*next;
+}					t_cmd;
 
 typedef struct s_ast
 {
 	struct s_ast	*left;
 	struct s_ast	*right;
 	t_ntype			ntype;
-	t_args			*args;
+	t_cmd			*args;
 }					t_ast;
 
 typedef struct s_token
@@ -128,12 +129,12 @@ typedef struct s_token
 
 char				**convert_argv(t_list *lst);
 
-t_args				*ast_args_new(void);
+t_cmd				*ast_cmd_new(void);
 t_ast				*ast_node_new(int type, t_ast *left, t_ast *right);
 int					consume(t_token_type type, t_list **lst);
 void				expect(t_token_type type, t_list **lst);
 
-t_args				*consume_args(t_list **lst);
+t_cmd				*consume_args(t_list **lst);
 
 t_token				*token_new(t_token_type type, char *value);
 
