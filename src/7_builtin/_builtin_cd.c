@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 22:08:25 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/27 06:07:47 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/02/12 18:46:41 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_status	__cd(char **argv, t_info *info)
 		if (_cd_home(absolute_path, argv[1], info))
 			return (1);
 	}
-	else if (strncmp(argv[1], "-", 2) == 0)
+	else if (ft_strncmp(argv[1], "-", 2) == 0)
 	{
 		if (_cd_oldpwd(absolute_path, argv[1], info))
 			return (1);

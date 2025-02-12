@@ -28,7 +28,7 @@
  * @param info シェル情報構造体
  * @return int 0:成功、-1:失敗
  */
-int	var_dispatcher(t_list **lst, t_info *info)
+/* int	var_dispatcher(t_list **lst, t_info *info)
 {
 	t_list	*head;
 	t_token	*token;
@@ -58,4 +58,4 @@ int	var_dispatcher(t_list **lst, t_info *info)
 		}
 	}
 	return (0);
-}
+} */

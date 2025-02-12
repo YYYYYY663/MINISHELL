@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 23:59:46 by teando            #+#    #+#             */
-/*   Updated: 2025/01/28 09:31:17 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/02/12 18:30:36 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	*launch_readline(const char *cwd)
 
 	// char	*tmp;
 	// char	*cont_line;
-	ft_dprintf(2, BG_GREEN WHITE "%s" RESET, cwd);
+	// ft_dprintf(2, BG_GREEN WHITE "%s" RESET, cwd);
 	line = readline(PS1);
 	if (line && *line == '\0')
 	{
