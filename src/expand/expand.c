@@ -6,14 +6,12 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:28:16 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/01/28 12:29:40 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/02/12 19:07:20 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_env.h"
 
-
-t_status launch_expander(t_list **lst, t_info *s_info)
+t_status	launch_expander(t_list **lst, t_info *s_info)
 {
-       
 }

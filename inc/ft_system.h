@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:53:59 by teando            #+#    #+#             */
-/*   Updated: 2025/02/12 18:30:29 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/02/12 18:53:24 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ typedef struct s_info
 	t_ast						*ast;
 	t_list						*env_map;
 	char						*env_spc[128];
-	// t_list						*alias_map;
 	int							stdin_backup;
 	int							stdout_backup;
 	char						cwd[PATH_MAX];
 	t_status					status;
 }								t_info;
+// t_list						*alias_map;
 
 void							token_clear(void *ptr);
 void							ast_clear(t_ast *node);

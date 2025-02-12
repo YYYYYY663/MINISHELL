@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 16:33:27 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/02/12 18:29:11 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/02/12 19:06:07 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ t_info	*system_init(char **envp)
 		system_exit(info, 1);
 	}
 	info->env_spc['?'] = ft_itoa(0);
+	if (!info->env_spc['?'])
+		system_exit(info, E_ALLOCATE);
 	return (info);
 }
 

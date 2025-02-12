@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 19:27:53 by teando            #+#    #+#             */
-/*   Updated: 2025/01/27 11:02:02 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/02/12 19:08:19 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_status	launch_parser(t_info *info);
 
 t_ast		*primary(t_list **list, t_info *info);
 t_ast		*pipeline(t_list **list, t_info *info);
-t_ast		*expr(t_list **list, t_info *info);
+t_ast		*jobs(t_list **list, t_info *info);
 
 /*
 ** デバッグ用: AST の中身 (t_ast_node_item) を再帰的に表示

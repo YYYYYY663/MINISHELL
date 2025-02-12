@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 18:31:08 by ymizukam          #+#    #+#             */
-/*   Updated: 2025/02/12 18:31:11 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/02/12 19:08:19 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_status	launch_parser(t_info *info)
 	head = info->token;
 	if (((t_token *)head->data)->type == TT_EOF)
 		return (E_NONE);
-	info->ast = expr(&head, info);
-	debug_print_ast(info->ast, 0);
+	info->ast = jobs(&head, info);
 	return (E_NONE);
 }
+// debug_print_ast(info->ast, 0);

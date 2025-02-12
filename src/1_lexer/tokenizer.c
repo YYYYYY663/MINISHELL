@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:10:42 by teando            #+#    #+#             */
-/*   Updated: 2025/02/12 18:29:30 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/02/12 19:07:13 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_token	*consume_word(char **linep, t_status *status)
 	(void)status;
 	line = *linep;
 	len = 0;
-	// &&ft_strchr("()", line[len]) ;
 	while (line[len] && !ft_strchr(METACHARS, line[len]))
 	{
 		if (line[len] == '"')
@@ -154,7 +153,6 @@ t_list	*tokenize_line(char *line, t_status *status)
 	t_token	*token;
 
 	lst = NULL;
-	// expected("|&;)", *line, status)
 	if (ft_strchr("|&;)", *line))
 	{
 		ft_dprintf(2, "minishell: syntax error near unexpected token `%c'\n",
@@ -165,13 +163,9 @@ t_list	*tokenize_line(char *line, t_status *status)
 	while (*line)
 	{
 		if (ft_strchr(METACHARS, *line))
-		{
 			token = consume_metachars(&line, status);
-		}
 		else
-		{
 			token = consume_word(&line, status);
-		}
 		if (token)
 			ft_lstadd_back(&lst, ft_lstnew(token));
 		if (*status)
@@ -187,6 +181,5 @@ t_status	launch_lexer(t_info *info)
 		return (E_SYNTAX);
 	info->token = tokenize_line(info->line, &info->status);
 	add_history(info->line);
-	// return (1);
 	return (info->status);
 }

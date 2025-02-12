@@ -6,7 +6,7 @@
 /*   By: ymizukam <ymizukam@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 23:59:46 by teando            #+#    #+#             */
-/*   Updated: 2025/02/12 18:30:36 by ymizukam         ###   ########.fr       */
+/*   Updated: 2025/02/12 18:59:48 by ymizukam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,7 @@ char	*launch_readline(const char *cwd)
 {
 	char	*line;
 
-	// char	*tmp;
-	// char	*cont_line;
-	// ft_dprintf(2, BG_GREEN WHITE "%s" RESET, cwd);
+	ft_dprintf(2, BG_GREEN WHITE "%s" RESET, cwd);
 	line = readline(PS1);
 	if (line && *line == '\0')
 	{
@@ -98,22 +96,5 @@ char	*launch_readline(const char *cwd)
 			return (NULL);
 		line = launch_readline(cwd);
 	}
-	// if (g_signal_status == SIGINT)
-	// 	return (free(line), NULL);
-	// if (!line)
-	// 	return (NULL);
-	// while (!is_quotes_balanced(line))
-	// {	printf("%s", info->line);
-	// 	if (g_signal_status == SIGINT)
-	// 		return (NULL);
-	// 	cont_line = read_command_line("> ");
-	// 	if (!cont_line)
-	// 		return (free(line), NULL);
-	// 	tmp = ft_strjoin(line, "\n");
-	// 	free(line);
-	// 	line = ft_strjoin_free(tmp, cont_line);
-	// 	if (!line)
-	// 		return (NULL);
-	// }
 	return (line);
 }
