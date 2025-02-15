@@ -59,3 +59,37 @@
 	}
 	return (0);
 } */
+
+
+int	var_dispatcher(t_list **lst, t_info *info)
+{
+	t_list	*head;
+	t_token	*token;
+
+	head = *lst;
+	token = (t_token *)head->data;
+	(void)info;
+	while (head)
+	{
+        if (ft_strchr(token->value, '$'))
+		{
+			expand_dollar(&head, info);
+			// SINGLE QUOTE no expand
+			// DOUBLE QUOTE no word split
+		}
+		if (ft_strchr(token->value, '*'))
+		{
+//			expand_astarisk(&head, info);
+			// DOUBLE QUOTE noexpand
+		}
+        head = head->next;
+		// head may change
+		// token = (t_token *)head->data;
+		// if (ft_strchr(token->value, '$') == NULL)
+		// {
+		// 	head = head->next;
+		// 	token = (t_token *)head->data;
+		// }
+	}
+	return (0);
+}
