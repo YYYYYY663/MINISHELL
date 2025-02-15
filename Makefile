@@ -105,7 +105,7 @@ debug:
 	$(MAKE) DEBUG=1
 
 neko:
-	echo nyan
+	echo wanwan
 
 .PHONY: all clean fclean re initsub sub norm debug neko
 
