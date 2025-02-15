@@ -104,6 +104,9 @@ norm:
 debug:
 	$(MAKE) DEBUG=1
 
-.PHONY: all clean fclean re initsub sub norm debug
+neko:
+	echo nyan
+
+.PHONY: all clean fclean re initsub sub norm debug neko
 
 -include $(DEPS)
