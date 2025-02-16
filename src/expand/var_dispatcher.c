@@ -74,19 +74,15 @@ int	var_dispatcher(t_list **lst, t_info *info)
 		token = (t_token *)head->data;
         while(token->value && ft_strchr(token->value, '$') && !in_single_quote)
 		{
-			//printf("Before expansion: %s\n", token->value);
 			expand_dollar(&head, info, &in_single_quote);
-			//printf("After expansion: %s\n", token->value);
-			//token = (t_token *)head->data;
-			//printf("After expansion: %s\n", token->value);
 		}
-		/*if (ft_strchr(token->value, '*'))
+		/*
+		if (token->value && ft_strchr(token->value, '*'))
 		{
 			expand_astarisk(&head, info);
-			// DOUBLE QUOTE noexpand
-		}*/
+		}
+		*/
         head = head->next;
-		
 	}
 	return (0);
 }

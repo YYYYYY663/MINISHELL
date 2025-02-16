@@ -78,5 +78,5 @@ void	line_init(t_info *info)
 #endif
 	info->env_spc['?'] = ft_itoa(info->status);
 	g_signal_status = 0;
-	info->status = 0;
+	info->last_status = info->status;
 }

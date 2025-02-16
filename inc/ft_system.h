@@ -57,6 +57,7 @@ typedef struct s_info
 	int							stdout_backup;
 	char						cwd[PATH_MAX];
 	t_status					status;
+	t_status 					last_status;
 }								t_info;
 // t_list						*alias_map;
 

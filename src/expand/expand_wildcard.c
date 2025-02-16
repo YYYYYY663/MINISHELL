@@ -32,60 +32,60 @@
  * @param info シェル情報構造体
  * @return int 0:成功、-1:失敗
  */
-/* int expand_astarisk(t_list **head, t_info *info)
-{
-	t_list *node;
-	t_token *token;
-	DIR *dir;
-	struct dirent *entry;
-	t_list *new_list;
+// int expand_astarisk(t_list **head, t_info *info)
+// {
+// 	t_list *node;
+// 	t_token *token;
+// 	DIR *dir;
+// 	struct dirent *entry;
+// 	t_list *new_list;
 
-	node = *head;
-	token = (t_token *)node->data;
-	if (ft_strcmp(token->value, "*") != 0)
-		return (0);
-	char *current_dir = env_get("PWD", info);
-	if (!current_dir)
-		current_dir = ".";
-	dir = opendir(current_dir);
-	if (!dir)
-	{
-		ft_dprintf(2, "expand_astarisk: opendir failed: %s\n", strerror(errno));
-		return (0);
-	}
-	new_list = NULL;
-	while ((entry = readdir(dir)) != NULL)
-	{
-		t_token *new_token;
+// 	node = *head;
+// 	token = (t_token *)node->data;
+// 	if (ft_strcmp(token->value, "*") != 0)
+// 		return (0);
+// 	char *current_dir = env_get("PWD", info);
+// 	if (!current_dir)
+// 		current_dir = ".";
+// 	dir = opendir(current_dir);
+// 	if (!dir)
+// 	{
+// 		ft_dprintf(2, "expand_astarisk: opendir failed: %s\n", strerror(errno));
+// 		return (0);
+// 	}
+// 	new_list = NULL;
+// 	while ((entry = readdir(dir)) != NULL)
+// 	{
+// 		t_token *new_token;
 
-		new_token = malloc(sizeof(t_token));
-		if (!new_token)
-		{
-			closedir(dir);
-			return (0);
-		}
-		new_token->type = TT_WORD;
-		new_token->value = ft_strdup(entry->d_name);
-		ft_lstadd_back(&new_list, ft_lstnew(new_token));
-	}
-	closedir(dir);
-	ft_lstdelone(*head, token_clear);
-	t_list *last;
-	t_list *old_next;
+// 		new_token = malloc(sizeof(t_token));
+// 		if (!new_token)
+// 		{
+// 			closedir(dir);
+// 			return (0);
+// 		}
+// 		new_token->type = TT_WORD;
+// 		new_token->value = ft_strdup(entry->d_name);
+// 		ft_lstadd_back(&new_list, ft_lstnew(new_token));
+// 	}
+// 	closedir(dir);
+// 	ft_lstdelone(*head, token_clear);
+// 	t_list *last;
+// 	t_list *old_next;
 
-	last = new_list;
-	if (last)
-	{
-		while (last->next)
-			last = last->next;
-	}
-	old_next = node->next;
-	if (last)
-		last->next = old_next;
-	if (new_list)
-		*head = new_list;
-	else
-		*head = old_next;
-	(void)info;
-	return (0);
-} */
+// 	last = new_list;
+// 	if (last)
+// 	{
+// 		while (last->next)
+// 			last = last->next;
+// 	}
+// 	old_next = node->next;
+// 	if (last)
+// 		last->next = old_next;
+// 	if (new_list)
+// 		*head = new_list;
+// 	else
+// 		*head = old_next;
+// 	(void)info;
+// 	return (0);
+// }

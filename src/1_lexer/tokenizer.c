@@ -34,6 +34,7 @@ t_token	*consume_word(char **linep, t_status *status)
 		len++;
 	}
 	*linep += len;
+	*status = 0; //エラーでない時はstatusを更新
 	return (token_new(TT_WORD, ft_strndup(line, len)));
 }
 
@@ -122,6 +123,7 @@ t_token	*consume_connector(char **line, t_status *status)
 			**line);
 		*status = E_SYNTAX;
 	}
+	*status = 0; //エラーでない時はstatusを更新
 	return (token);
 }
 

@@ -42,7 +42,12 @@ static char *expand_variable(const char **value, t_info *info)
     size_t var_len;
 
     var_len = 0;
-    (*value)++; // '$' をスキップ
+    (*value)++;
+    if(**value == '?')
+    {
+        (*value)++;
+        return(ft_itoa(info->last_status));
+    }
     while ((*value)[var_len] && (ft_isalnum((*value)[var_len]) || (*value)[var_len] == '_'))
     {
         var_name[var_len] = (*value)[var_len];
