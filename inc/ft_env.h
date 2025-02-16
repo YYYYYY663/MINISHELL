@@ -25,7 +25,7 @@ int		__cmp(void *data, void *key);
 
 /**** **** **** ****  VAR  **** **** **** ****/
 int		var_dispatcher(t_list **lst, t_info *info);
-void expand_dollar(t_list **list, t_info *info);
+void expand_dollar(t_list **list, t_info *info, int *sin_q_flag);
 int expand_astarisk(t_list **head, t_info *info);
 
 /**** **** **** **** PATH **** **** **** ****/

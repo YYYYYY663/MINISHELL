@@ -19,7 +19,7 @@ LEXER       := ../src/1_lexer/*.c
 PARSER      := ../src/2_parser/*.c
 EXECUTOR    := ../src/3_executor/*.c
 REDIRECT    := ../src/4_redirect/*.c
-ENV         := ../src/5_env/*.c
+ENV         := ../src/expand/var_dispatcher.c
 # SIGNAL     	:= ../src/6_signal/*.c
 BUILTIN     := ../src/7_builtin/*.c
 

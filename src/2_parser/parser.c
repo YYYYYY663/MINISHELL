@@ -30,6 +30,7 @@ t_status	launch_parser(t_info *info)
 	head = info->token;
 	if (((t_token *)head->data)->type == TT_EOF)
 		return (E_NONE);
+	var_dispatcher(&info->token, info);
 	info->ast = jobs(&head, info);
 	return (E_NONE);
 }

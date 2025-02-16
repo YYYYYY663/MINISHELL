@@ -65,31 +65,28 @@ int	var_dispatcher(t_list **lst, t_info *info)
 {
 	t_list	*head;
 	t_token	*token;
+	int in_single_quote;
 
 	head = *lst;
-	token = (t_token *)head->data;
-	(void)info;
 	while (head)
 	{
-        if (ft_strchr(token->value, '$'))
+		in_single_quote = 0;
+		token = (t_token *)head->data;
+        while(token->value && ft_strchr(token->value, '$') && !in_single_quote)
 		{
-			expand_dollar(&head, info);
-			// SINGLE QUOTE no expand
-			// DOUBLE QUOTE no word split
+			//printf("Before expansion: %s\n", token->value);
+			expand_dollar(&head, info, &in_single_quote);
+			//printf("After expansion: %s\n", token->value);
+			//token = (t_token *)head->data;
+			//printf("After expansion: %s\n", token->value);
 		}
-		if (ft_strchr(token->value, '*'))
+		/*if (ft_strchr(token->value, '*'))
 		{
-//			expand_astarisk(&head, info);
+			expand_astarisk(&head, info);
 			// DOUBLE QUOTE noexpand
-		}
+		}*/
         head = head->next;
-		// head may change
-		// token = (t_token *)head->data;
-		// if (ft_strchr(token->value, '$') == NULL)
-		// {
-		// 	head = head->next;
-		// 	token = (t_token *)head->data;
-		// }
+		
 	}
 	return (0);
 }
