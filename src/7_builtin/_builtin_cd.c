@@ -40,29 +40,74 @@ static int	_cd_oldpwd(char path[], char *arg, t_info *info);
  *    - E_TOO_MANY_ARGS：引数が多すぎる
  *    - E_CHDIR：ディレクトリ変更失敗
  */
+
+// t_status	__cd(char **argv, t_info *info)
+// {
+// 	char	absolute_path[PATH_MAX];
+
+// 	if (argv[1] == NULL || argv[1][0] == '~')
+// 	{
+// 		if (_cd_home(absolute_path, argv[1], info))
+// 			return (1);
+// 	}
+// 	else if (ft_strncmp(argv[1], "-", 2) == 0)
+// 	{
+// 		if (_cd_oldpwd(absolute_path, argv[1], info))
+// 			return (1);
+// 	}
+// 	else
+// 		path_dispatcher(absolute_path, argv[1], F_OK, info);
+// 	// ft_dprintf(2, "%s\n", absolute_path);
+// 	if (chdir(absolute_path))
+// 	 	return (ft_dprintf(2, "cd: %s: %s\n", argv[1], strerror(errno)), 1);
+// 	map_export_item("OLDPWD", info->cwd, info->env_map);
+// 	ft_strlcpy(info->cwd, absolute_path, PATH_MAX);
+// 	map_export_item("PWD", info->cwd, info->env_map);
+// 	return (E_NONE);
+// }
+static t_status change_directory(char *path, char new_pwd[PATH_MAX])
+{
+	if(!new_pwd[0])
+	{
+		if(chdir(path))
+			return (ft_dprintf(2, "cd: %s: %s\n", path, strerror(errno)), 1);	
+	}
+	else if (chdir(new_pwd))
+		return (ft_dprintf(2, "cd: %s: %s\n", new_pwd, strerror(errno)), 1);
+	if (getcwd(new_pwd, PATH_MAX) == NULL)
+		return (ft_dprintf(2, "getcwd failure: %s\n", strerror(errno)), 1);
+	return(E_NONE);
+}
+
+
+
 t_status	__cd(char **argv, t_info *info)
 {
-	char	absolute_path[PATH_MAX];
+	char	new_pwd[PATH_MAX];
+	int argc;
 
+	argc = 0;
+	while(argv[argc])
+		argc++;
+	if (argc > 2)
+		return(ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO), 1);
+	new_pwd[0] = '\0';
 	if (argv[1] == NULL || argv[1][0] == '~')
 	{
-		if (_cd_home(absolute_path, argv[1], info))
+		if (_cd_home(new_pwd, argv[1], info))
 			return (1);
 	}
 	else if (ft_strncmp(argv[1], "-", 2) == 0)
 	{
-		if (_cd_oldpwd(absolute_path, argv[1], info))
+		if (_cd_oldpwd(new_pwd, argv[1], info))
 			return (1);
-	}
-	else
-		path_dispatcher(absolute_path, argv[1], F_OK, info);
-	// ft_dprintf(2, "%s\n", absolute_path);
-	if (chdir(absolute_path))
-		return (ft_dprintf(2, "cd: %s: %s\n", argv[1], strerror(errno)), 1);
+	}	
+	if(change_directory(argv[1], new_pwd))
+		return(1);
 	map_export_item("OLDPWD", info->cwd, info->env_map);
-	ft_strlcpy(info->cwd, absolute_path, PATH_MAX);
+	ft_strlcpy(info->cwd, new_pwd, PATH_MAX);
 	map_export_item("PWD", info->cwd, info->env_map);
-	return (E_NONE);
+	return(E_NONE);
 }
 
 /**
